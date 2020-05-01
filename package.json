@@ -6,8 +6,12 @@
     "start": "next start"
   },
   "dependencies": {
+    "@emotion/babel-preset-css-prop": "^10.0.27",
+    "@emotion/core": "^10.0.28",
+    "@emotion/styled": "^10.0.27",
     "@hapi/iron": "6.0.0",
     "cookie": "0.4.0",
+    "emotion": "^10.0.27",
     "next": "latest",
     "next-connect": "0.6.1",
     "passport": "0.4.1",
@@ -15,6 +19,12 @@
     "react": "latest",
     "react-dom": "latest",
     "swr": "0.1.16"
+  },
+  "devDependencies": {
+    "@types/node": "^13.13.4",
+    "@types/react": "^16.9.34",
+    "prettier": "^2.0.5",
+    "typescript": "^3.8.3"
   },
   "license": "ISC"
 }
