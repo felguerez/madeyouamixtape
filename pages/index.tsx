@@ -7,7 +7,6 @@ const Home = () => {
   return (
     <Layout>
       <h1>Made You A Mixtape</h1>
-
       {user && <p>Currently logged in as: {JSON.stringify(user)}</p>}
     </Layout>
   );
