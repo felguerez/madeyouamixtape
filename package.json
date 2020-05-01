@@ -19,6 +19,7 @@
     "passport-local": "1.0.0",
     "react": "latest",
     "react-dom": "latest",
+    "serverless-mysql": "^1.5.4",
     "swr": "0.1.16"
   },
   "devDependencies": {
