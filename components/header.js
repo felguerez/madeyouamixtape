@@ -1,8 +1,12 @@
-import Link from 'next/link'
-import { useUser } from '../lib/hooks'
+import Link from "next/link";
+import { useUser } from "../lib/hooks";
+import { openSignInWindow } from "../utils/open-popup";
+import { AUTH_ENDPOINT, REDIRECT_URI, SCOPES } from "../lib/constants";
+import { stringify } from "query-string";
+import { SpotifyLoginLink } from "./spotify-login-link";
 
 const Header = () => {
-  const user = useUser()
+  const user = useUser();
 
   return (
     <header>
@@ -25,11 +29,16 @@ const Header = () => {
               </li>
             </>
           ) : (
-            <li>
-              <Link href="/login">
-                <a>Login</a>
-              </Link>
-            </li>
+            <>
+              <li>
+                <Link href="/login">
+                  <a>Login</a>
+                </Link>
+              </li>
+              <li>
+                <SpotifyLoginLink />
+              </li>
+            </>
           )}
         </ul>
       </nav>
@@ -51,17 +60,13 @@ const Header = () => {
         li:first-child {
           margin-left: auto;
         }
-        a {
-          color: #fff;
-          text-decoration: none;
-        }
         header {
           color: #fff;
           background-color: #333;
         }
       `}</style>
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

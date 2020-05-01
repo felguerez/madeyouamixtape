@@ -16,6 +16,7 @@ const globals: SerializedStyles = css`
   a {
     color: rgba(94, 215, 255, 1);
     font-weight: bold;
+    text-decoration: none;
     &:visited {
       color: rgba(94, 215, 255, 1);
       //color: rgba(140, 92, 158, 1);
