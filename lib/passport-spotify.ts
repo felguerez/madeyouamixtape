@@ -16,14 +16,16 @@ export const spotifyStrategy = new Spotify.Strategy(
     profile: SpotifyProfile,
     done
   ) => {
-    models.user
-      .findOrCreate(profile)
-      .then((user) => {
-        done(null, user);
-      })
-      .catch((err) => {
-        console.log("err:", err);
-        done(err);
-      });
+    models.spotifyUser.findOrCreate(profile).then((spotifyUser) => {
+      models.user
+        .findOrCreate(spotifyUser)
+        .then((user) => {
+          done(null, user);
+        })
+        .catch((err) => {
+          console.log("err:", err);
+          done(err);
+        });
+    });
   }
 );

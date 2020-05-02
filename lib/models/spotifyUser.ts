@@ -1,7 +1,7 @@
 import { db } from "../db";
 import escape from "sql-template-strings";
 
-type SpotifyUser = {
+export type SpotifyUser = {
   display_name: string;
   external_url: string;
   spotify_id: string;
@@ -26,19 +26,38 @@ export const spotifyUser = {
       `);
     return spotifyUser;
   },
-  create: async function create(attributes: SpotifyProfile) {
+  getBySpotifyId: async function getBySpotifyId(
+    id: string
+  ): Promise<SpotifyUser> {
+    const [spotifyUser] = await db.query(escape`
+        SELECT *
+        FROM spotify_user
+        WHERE spotify_id = ${id}
+      `);
+    return spotifyUser;
+  },
+  create: async function create(
+    attributes: SpotifyProfile
+  ): Promise<SpotifyUser> {
     const {
       display_name,
       external_url,
       spotify_id,
       image_url,
     } = this.serialize(attributes);
-    return await db.query(escape`
+    const query = escape`
         INSERT INTO spotify_user
           (display_name, external_url, spotify_id, image_url)
         VALUES
           (${display_name}, ${external_url}, ${spotify_id}, ${image_url})
-      `);
+      `;
+    await db.query(query);
+    return this.getBySpotifyId(spotify_id);
+  },
+  findOrCreate: async function findOrCreate(profile) {
+    const spotifyUser = await this.getBySpotifyId(profile.id);
+    if (spotifyUser) return spotifyUser;
+    return await this.create(profile);
   },
   update: async function update({ id, ...attributes }) {
     const updates = Object.keys(attributes).map((field) => {
