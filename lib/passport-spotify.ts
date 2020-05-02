@@ -1,7 +1,8 @@
-import { Strategy as SpotifyStrategy } from "passport-spotify";
-import { REDIRECT_URI } from "../constants";
+import Spotify from "passport-spotify";
+import { REDIRECT_URI } from "./constants";
+import { findUser } from "./user";
 
-export const strategy = new SpotifyStrategy(
+export const spotifyStrategy = new Spotify.Strategy(
   {
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
@@ -9,13 +10,12 @@ export const strategy = new SpotifyStrategy(
   },
   (accessToken, refreshToken, expires_in, profile, done) => {
     // upsert user here
-    console.log(
-      "accessToken, refreshToken, expires_in:",
-      accessToken,
-      refreshToken,
-      expires_in
-    );
-    console.log("profile:", profile);
-    return done(null, profile);
+    findUser({ username: profile.displayName, password: "" })
+      .then((user) => {
+        done(null, user);
+      })
+      .catch((error) => {
+        done(error);
+      });
   }
 );

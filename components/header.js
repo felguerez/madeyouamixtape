@@ -36,7 +36,9 @@ const Header = () => {
                 </Link>
               </li>
               <li>
-                <SpotifyLoginLink />
+                <Link href="/api/auth/spotify">
+                  <a>Spotify</a>
+                </Link>
               </li>
             </>
           )}
