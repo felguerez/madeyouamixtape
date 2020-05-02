@@ -1,4 +1,5 @@
 import Link from "next/link";
+import styled from "@emotion/styled";
 import { useUser } from "../lib/hooks";
 
 const Header = () => {
@@ -8,11 +9,11 @@ const Header = () => {
     <header>
       <nav>
         <ul>
-          <li>
+          <HomeNavItem>
             <Link href="/">
               <a>Home</a>
             </Link>
-          </li>
+          </HomeNavItem>
           {user ? (
             <>
               <li>
@@ -21,22 +22,25 @@ const Header = () => {
                 </Link>
               </li>
               <li>
+                <Link href="/swaps">
+                  <a>Swaps</a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/mixtapes">
+                  <a>Mixtapes</a>
+                </Link>
+              </li>
+              <li>
                 <a href="/api/logout">Logout</a>
               </li>
             </>
           ) : (
-            <>
-              <li>
-                <Link href="/login">
-                  <a>Login</a>
-                </Link>
-              </li>
-              <li>
-                <Link href="/api/auth/spotify">
-                  <a>Spotify</a>
-                </Link>
-              </li>
-            </>
+            <li>
+              <Link href="/api/auth/spotify">
+                <a>Login with Spotify</a>
+              </Link>
+            </li>
           )}
         </ul>
       </nav>
@@ -67,4 +71,7 @@ const Header = () => {
   );
 };
 
+const HomeNavItem = styled.li`
+  margin-right: auto;
+`;
 export default Header;
