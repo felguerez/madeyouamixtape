@@ -1,4 +1,3 @@
-export const AUTH_ENDPOINT: string = "https://accounts.spotify.com/authorize/";
 export const REDIRECT_URI: string =
   process.env.NODE_ENV === "production"
     ? "https://yf-playlist.now.sh/api/callback"

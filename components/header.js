@@ -1,9 +1,5 @@
 import Link from "next/link";
 import { useUser } from "../lib/hooks";
-import { openSignInWindow } from "../utils/open-popup";
-import { AUTH_ENDPOINT, REDIRECT_URI, SCOPES } from "../lib/constants";
-import { stringify } from "query-string";
-import { SpotifyLoginLink } from "./spotify-login-link";
 
 const Header = () => {
   const user = useUser();
