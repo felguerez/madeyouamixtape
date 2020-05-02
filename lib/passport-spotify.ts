@@ -1,6 +1,7 @@
 import Spotify from "passport-spotify";
 import { REDIRECT_URI } from "./constants";
-import { findUser } from "./user";
+import * as models from "./models";
+import { SpotifyProfile } from "./models/spotifyUser";
 
 export const spotifyStrategy = new Spotify.Strategy(
   {
@@ -8,14 +9,21 @@ export const spotifyStrategy = new Spotify.Strategy(
     clientSecret: process.env.CLIENT_SECRET,
     callbackURL: REDIRECT_URI,
   },
-  (accessToken, refreshToken, expires_in, profile, done) => {
-    // upsert user here
-    findUser({ username: profile.displayName, password: "" })
+  (
+    accessToken: string,
+    refreshToken: string,
+    expires_in: number,
+    profile: SpotifyProfile,
+    done
+  ) => {
+    models.user
+      .findOrCreate(profile)
       .then((user) => {
         done(null, user);
       })
-      .catch((error) => {
-        done(error);
+      .catch((err) => {
+        console.log("err:", err);
+        done(err);
       });
   }
 );

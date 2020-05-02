@@ -25,6 +25,7 @@ export async function createUser({
 export async function findUser({
   username,
   password,
+
 }: {
   username: string;
   password: string;
