@@ -64,7 +64,7 @@ const Header = () => {
         }
         header {
           color: #fff;
-          background-color: #333;
+          background: #282828;
         }
       `}</style>
     </header>

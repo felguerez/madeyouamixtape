@@ -34,10 +34,9 @@ const Profile = ({
       <div>
         {playlists.length ? (
           <>
-            <p>{playlists.length} playlists</p>
+            <p>{playlists.length} playlists. Send one of these to your boys!</p>
             <Playlists>
               {playlists.map((playlist) => {
-                console.log("playlist:", playlist);
                 return (
                   <Playlist key={playlist.id}>
                     <CoverArt src={playlist.images[0].url} />
@@ -56,7 +55,7 @@ const Profile = ({
             </Playlists>
           </>
         ) : (
-          <p>Loading your playlists</p>
+          <p>Loading your playlists...</p>
         )}
       </div>
     </Layout>

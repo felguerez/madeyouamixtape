@@ -11,10 +11,10 @@ const Home = () => {
           justify-content: space-between;
         `}
       >
-        <span>Made You A Mixtape</span> <span>👨‍🎤✌️🎤</span>
+        <span>Made You A Mixtape</span>
       </h1>
       <p>Share some music with people you know or random strangers.</p>
-      <p>Make it a party and invite your friends with great taste.</p>
+      <p>Make it a party and invite your friends with great taste. </p>
     </Layout>
   );
 };

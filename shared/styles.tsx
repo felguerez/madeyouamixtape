@@ -13,6 +13,9 @@ const globals: SerializedStyles = css`
     background: rgba(19, 28, 31, 1);
     color: rgba(255, 183, 72, 1);
   }
+  p {
+    color: #b0bec5;
+  }
   a {
     color: rgba(94, 215, 255, 1);
     font-weight: bold;
