@@ -1,8 +1,11 @@
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
 import Layout from "../components/layout";
 import { getSession } from "../lib/iron";
 import * as models from "../lib/models";
+import styled from "@emotion/styled";
 
-const Swaps = ({ swaps }: { swaps: {}[] }) => {
+const Swaps = ({ swaps, spotify_id }: { swaps: {}[]; spotify_id: string }) => {
   return (
     <Layout>
       <h1>Playlist Swaps</h1>
@@ -11,7 +14,10 @@ const Swaps = ({ swaps }: { swaps: {}[] }) => {
         <div>swaps go here</div>
       ) : (
         <div>
-          <p>You aren't participating in any swaps.</p>
+          <p>
+            You aren't participating in any swaps.{" "}
+            <SwapStarter spotify_id={spotify_id}>Start one now.</SwapStarter>
+          </p>
         </div>
       )}
     </Layout>
@@ -26,8 +32,41 @@ export async function getServerSideProps({ req }) {
   return {
     props: {
       swaps: [],
+      spotify_id: spotifyUser.spotify_id,
     },
   };
 }
+
+const SwapStarter = ({ children, spotify_id }) => {
+  return (
+    <form
+      method="post"
+      action="/api/swaps"
+      css={css`
+        display: inline;
+      `}
+    >
+      <input type="hidden" name="spotify_id" value={spotify_id} />
+      <ButtonLink type="submit" name="submit_param" value="submit_value">
+        {children}
+      </ButtonLink>
+    </form>
+  );
+};
+
+const ButtonLink = styled.button`
+  background: none;
+  border: none;
+  color: rgba(94, 215, 255, 1);
+  &:visited {
+    color: rgba(94, 215, 255, 1);
+  }
+  &:hover {
+    color: rgba(172, 234, 110);
+  }
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1em;
+`;
 
 export default Swaps;

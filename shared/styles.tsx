@@ -17,16 +17,14 @@ const globals: SerializedStyles = css`
     color: #b0bec5;
   }
   a {
-    color: rgba(94, 215, 255, 1);
     font-weight: bold;
     text-decoration: none;
+    color: rgba(94, 215, 255, 1);
     &:visited {
       color: rgba(94, 215, 255, 1);
-      //color: rgba(140, 92, 158, 1);
     }
     &:hover {
       color: rgba(172, 234, 110);
-      //color: rgba(255, 183, 72, 1);
     }
   }
 `;
