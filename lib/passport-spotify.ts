@@ -20,7 +20,7 @@ export const spotifyStrategy = new Spotify.Strategy(
       models.user
         .findOrCreate(spotifyUser)
         .then((user) => {
-          done(null, user);
+          done(null, { ...user, accessToken });
         })
         .catch((err) => {
           console.log("err:", err);

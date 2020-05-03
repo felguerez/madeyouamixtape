@@ -1,9 +1,14 @@
 import { getSession } from "../../lib/iron";
+import * as models from "../../lib/models";
 
 export default async function user(req, res) {
-  const session = await getSession(req);
-  // After getting the session you may want to fetch for the user instead
-  // of sending the session's payload directly, this example doesn't have a DB
-  // so it won't matter in this case
-  res.status(200).json({ user: session || null });
+  let session, user;
+  try {
+    session = await getSession(req);
+  } catch (e) {}
+  // TODO: is this db query necessary if we have the user in the session?
+  if (session) {
+    user = await models.user.getById(session.id);
+  }
+  res.status(200).json({ user: user || null });
 }

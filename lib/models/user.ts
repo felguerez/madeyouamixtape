@@ -1,6 +1,6 @@
 import { db } from "../db";
 import escape from "sql-template-strings";
-import { SpotifyProfile, SpotifyUser } from "./spotifyUser";
+import { SpotifyUser } from "./spotifyUser";
 
 type User = {
   display_name: string;
@@ -11,7 +11,7 @@ export const user = {
   getById: async function getById(id: string) {
     const [user] = await db.query(escape`
         SELECT *
-        FROM "user"
+        FROM user
         WHERE id = ${id}
       `);
     return user;

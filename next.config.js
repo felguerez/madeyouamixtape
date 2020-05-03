@@ -7,9 +7,6 @@ module.exports = {
     mysql_password: process.env.MYSQL_PASSWORD,
     client_id: process.env.CLIENT_ID,
     client_secret: process.env.CLIENT_SECRET,
-    base_url:
-      process.env.NODE_ENV === "development"
-        ? "http://localhost:3000"
-        : "https://yf-playlist.now.sh",
+    base_url: process.env.BASE_URL,
   },
 };

@@ -1,11 +1,8 @@
 /** @jsx jsx */
-import { useUser } from "../lib/hooks";
 import Layout from "../components/layout";
 import { css, jsx } from "@emotion/core";
 
 const Home = () => {
-  const user = useUser();
-
   return (
     <Layout>
       <h1

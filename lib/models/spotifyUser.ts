@@ -18,7 +18,7 @@ export type SpotifyProfile = {
 };
 
 export const spotifyUser = {
-  getById: async function getById(id: string): Promise<SpotifyUser> {
+  getById: async function getById(id: number): Promise<SpotifyUser> {
     const [spotifyUser] = await db.query(escape`
         SELECT *
         FROM spotify_user
@@ -60,9 +60,11 @@ export const spotifyUser = {
     return await this.create(profile);
   },
   update: async function update({ id, ...attributes }) {
-    const updates = Object.keys(attributes).map((field) => {
-      return escape`${field}=${attributes[field]}`;
-    });
+    const updates = Object.keys(attributes)
+      .map((field) => {
+        return escape`${field}=${attributes[field]}`;
+      })
+      .join(",");
     const query = escape`
       UPDATE spotify_user
         set ${updates}
