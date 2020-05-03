@@ -46,7 +46,7 @@ const Header = () => {
       </nav>
       <style jsx>{`
         nav {
-          max-width: 42rem;
+          max-width: 64rem;
           margin: 0 auto;
           padding: 0.2rem 1.25rem;
         }

@@ -15,7 +15,7 @@ const Layout = (props) => (
 
     <style jsx global>{`
       .container {
-        max-width: 42rem;
+        max-width: 64rem;
         margin: 0 auto;
         padding: 2rem 1.25rem;
       }
