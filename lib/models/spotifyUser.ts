@@ -8,6 +8,8 @@ export type SpotifyUser = {
   image_url: string;
 };
 
+export type Seconds = number;
+
 export type SpotifyProfile = {
   id: string;
   username: string;

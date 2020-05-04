@@ -1,7 +1,7 @@
 import Spotify from "passport-spotify";
 import { REDIRECT_URI } from "./constants";
 import * as models from "./models";
-import { SpotifyProfile } from "./models/spotifyUser";
+import { Seconds, SpotifyProfile } from "./models/spotifyUser";
 
 export const spotifyStrategy = new Spotify.Strategy(
   {
@@ -12,7 +12,7 @@ export const spotifyStrategy = new Spotify.Strategy(
   (
     accessToken: string,
     refreshToken: string,
-    expires_in: number,
+    expires_in: Seconds,
     profile: SpotifyProfile,
     done
   ) => {
@@ -24,7 +24,7 @@ export const spotifyStrategy = new Spotify.Strategy(
             ...user,
             accessToken,
             refreshToken,
-            expiresAt: new Date().getTime() + expires_in,
+            expiresAt: new Date().getTime() + expires_in * 1000,
           });
         })
         .catch((err) => {
