@@ -69,9 +69,11 @@ export const spotifyUser = {
       .join(",");
     const query = escape`
       UPDATE spotify_user
-        set ${updates}
+        SET ${updates}
        WHERE id = ${id}
     `;
+    await db.query(query);
+    return await this.getById(id);
   },
   serialize: function serialize({
     displayName,

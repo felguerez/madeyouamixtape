@@ -1,6 +1,5 @@
 import { db } from "../db";
 import escape from "sql-template-strings";
-import { SpotifyUser } from "./spotifyUser";
 
 type SwapGroup = {
   swap_id: number;

@@ -3,17 +3,7 @@ import nextConnect from "next-connect";
 import { localStrategy } from "../../lib/password-local";
 import { encryptSession } from "../../lib/iron";
 import { setTokenCookie } from "../../lib/auth-cookies";
-
-const authenticate = (method, req, res) =>
-  new Promise((resolve, reject) => {
-    passport.authenticate(method, { session: false }, (error, token) => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(token);
-      }
-    })(req, res);
-  });
+import { authenticate } from "../../lib/passport-authenticate";
 
 passport.use(localStrategy);
 
