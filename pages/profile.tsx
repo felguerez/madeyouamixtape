@@ -5,6 +5,7 @@ import { SpotifyUser } from "../lib/models/spotifyUser";
 import { getSession } from "../lib/iron";
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 const Profile = ({
   spotifyUser: { display_name, spotify_id },
@@ -14,25 +15,26 @@ const Profile = ({
   token: string;
 }) => {
   const [playlists, setPlaylists] = useState<any>([]);
+  const router = useRouter();
   useEffect(() => {
     async function fetchData() {
-      const playlists = await fetch(
+      const request = await fetch(
         `/api/spotify/users/${spotify_id}/playlists?token=${token}`
       ).catch((err) => {
         console.log("err:", err);
       });
-      const { items } = await playlists.json();
+      const { items } = await request.json();
       setPlaylists(items);
     }
     if (token && spotify_id) {
-      fetchData();
+      fetchData().catch((err) => {});
     }
   }, [token, spotify_id]);
   return (
     <Layout>
       <h1>Playlists by {display_name}</h1>
       <div>
-        {playlists.length ? (
+        {playlists && playlists.length ? (
           <>
             <p>{playlists.length} playlists. Send one of these to your boys!</p>
             <Playlists>
@@ -62,17 +64,21 @@ const Profile = ({
   );
 };
 
-export async function getServerSideProps({ req }) {
-  // TODO: how can baseUrl be set by environment variable?
-  const baseUrl = "http://localhost:3000";
+export async function getServerSideProps({ req, res }) {
   const session = await getSession(req);
+  // if (!session) {
+  //   res.writeHead(302, {
+  //     Location: "/",
+  //   });
+  //   return res.end();
+  // }
   const spotifyUser = await models.spotifyUser.getBySpotifyId(
     session.spotify_id
   );
   return {
     props: {
       spotifyUser: { ...spotifyUser } || {},
-      token: session.accessToken,
+      token: session?.accessToken || "",
     },
   };
 }

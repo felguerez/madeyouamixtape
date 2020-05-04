@@ -31,7 +31,7 @@ export const user = {
   create: async function create({
     display_name,
     spotify_id,
-  }: User): Promise<User> {
+  }: User): Promise<User & { id: number }> {
     const query = escape`
         INSERT INTO user
           (display_name, spotify_id)
@@ -44,7 +44,7 @@ export const user = {
   findOrCreate: async function findOrCreate({
     display_name,
     spotify_id,
-  }: SpotifyUser): Promise<User> {
+  }: SpotifyUser): Promise<User & { id: number }> {
     const userBySpotifyId = await this.getBySpotifyId(spotify_id);
     if (userBySpotifyId) return userBySpotifyId;
     return await this.create({

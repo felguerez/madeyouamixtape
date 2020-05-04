@@ -12,6 +12,7 @@ const globals: SerializedStyles = css`
     min-height: 100%;
     background: rgba(19, 28, 31, 1);
     color: rgba(255, 183, 72, 1);
+    font-family: "Circular Spotify Text";
   }
   p {
     color: #b0bec5;

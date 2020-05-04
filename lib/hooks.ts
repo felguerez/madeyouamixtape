@@ -2,18 +2,31 @@ import { useEffect } from "react";
 import Router from "next/router";
 import useSWR from "swr";
 
-const fetcher = (url: string) =>
+const userFetcher = (url: string) =>
   fetch(url)
     .then((r) => r.json())
     .then((data) => {
       return { user: data?.user || null };
     });
 
+const swapFetcher = (url: string) =>
+  fetch(url)
+    .then((r) => r.json())
+    .then((swaps) => {
+      return { swaps: swaps || [] };
+    });
+
+export function useSwaps() {
+  const { data, error } = useSWR("/api/swaps", swapFetcher);
+  const swaps = data?.swaps;
+  return error ? null : swaps;
+}
+
 export function useUser({
   redirectTo,
   redirectIfFound,
 }: { redirectTo?: string; redirectIfFound?: string } = {}) {
-  const { data, error } = useSWR("/api/user", fetcher);
+  const { data, error } = useSWR("/api/user", userFetcher);
   const user = data?.user;
   const finished = Boolean(data);
   const hasUser = Boolean(user);

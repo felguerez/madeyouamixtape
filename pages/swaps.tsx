@@ -4,8 +4,12 @@ import Layout from "../components/layout";
 import { getSession } from "../lib/iron";
 import * as models from "../lib/models";
 import styled from "@emotion/styled";
+import useSWR from "swr";
+import { useSwaps } from "../lib/hooks";
 
-const Swaps = ({ swaps, spotify_id }: { swaps: {}[]; spotify_id: string }) => {
+const Swaps = ({ spotify_id }: { spotify_id: string }) => {
+  const swaps = useSwaps() || [];
+
   return (
     <Layout>
       <h1>Playlist Swaps</h1>
@@ -47,7 +51,7 @@ const SwapStarter = ({ children, spotify_id }) => {
       `}
     >
       <input type="hidden" name="spotify_id" value={spotify_id} />
-      <ButtonLink type="submit" name="submit_param" value="submit_value">
+      <ButtonLink type="submit" name="submit" value="true">
         {children}
       </ButtonLink>
     </form>
