@@ -66,12 +66,12 @@ const Profile = ({
 
 export async function getServerSideProps({ req, res }) {
   const session = await getSession(req);
-  // if (!session) {
-  //   res.writeHead(302, {
-  //     Location: "/",
-  //   });
-  //   return res.end();
-  // }
+  if (!session) {
+    res.writeHead(302, {
+      Location: "/",
+    });
+    return res.end();
+  }
   const spotifyUser = await models.spotifyUser.getBySpotifyId(
     session.spotify_id
   );
