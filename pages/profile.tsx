@@ -5,7 +5,6 @@ import { SpotifyUser } from "../lib/models/spotifyUser";
 import { getSession } from "../lib/iron";
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 
 const Profile = ({
   spotifyUser: { display_name, spotify_id },
@@ -15,7 +14,6 @@ const Profile = ({
   token: string;
 }) => {
   const [playlists, setPlaylists] = useState<any>([]);
-  const router = useRouter();
   useEffect(() => {
     async function fetchData() {
       const request = await fetch(
