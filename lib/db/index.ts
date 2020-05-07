@@ -11,7 +11,9 @@ export const db = mysql({
 
 export const query = async (query) => {
   try {
+    console.log("query:", query);
     const results = await db.query(query);
+    console.log("results:", results);
     await db.end();
     return results;
   } catch (error) {
