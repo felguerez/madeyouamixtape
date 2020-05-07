@@ -9,12 +9,9 @@ export default nextConnect()
   .use(passport.initialize())
   .get(async (req, res) => {
     try {
-      console.log("called back");
       await authenticate("spotify", req, res);
-      console.log("authenticated in callback");
       let session = {};
       const { accessToken, refreshToken, ...profile } = req.user; // req.user is set after authentication
-      console.log("accessToken:", accessToken);
       const spotifyUser = await models.spotifyUser.findOrCreate(profile);
       console.log("spotifyUser:", spotifyUser);
       const user = await models.user.findOrCreate(spotifyUser);
