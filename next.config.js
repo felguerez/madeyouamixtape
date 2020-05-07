@@ -9,4 +9,5 @@ module.exports = {
     client_secret: process.env.CLIENT_SECRET,
     base_url: process.env.BASE_URL,
   },
+  target: "serverless",
 };
