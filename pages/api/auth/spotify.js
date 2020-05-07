@@ -4,8 +4,11 @@ import { authenticate } from "../../../lib/passport-authenticate";
 
 export default nextConnect()
   .use(passport.initialize())
-  .get(async (req, res) => {
-    await authenticate("spotify", req, res);
-    const user = req.user;
-    res.status(200).json(user);
+  .get((req, res) => {
+    console.log("authenticating ...");
+    authenticate("spotify", req, res).catch((err) => {
+      console.log(err);
+      res.status(401).json({ error: err });
+    });
+    res.status(200).json({});
   });
