@@ -14,16 +14,21 @@ export default nextConnect()
       console.log("authenticated in callback");
       let session = {};
       const { accessToken, refreshToken, ...profile } = req.user; // req.user is set after authentication
+      console.log("accessToken:", accessToken);
       const spotifyUser = await models.spotifyUser.findOrCreate(profile);
+      console.log("spotifyUser:", spotifyUser);
       const user = await models.user.findOrCreate(spotifyUser);
+      console.log("user:", user);
 
       if (typeof user === "object") {
         session = { ...user, accessToken, refreshToken };
       }
+      console.log("session:", session);
 
       const token = await encryptSession(session);
+      console.log("token:", token);
       setTokenCookie(res, token);
-
+      console.log("cookie set");
       res.writeHead(302, {
         Location: "/",
       });
