@@ -11,8 +11,9 @@ export const connection = mysql({
 
 export const query = async (query) => {
   console.log("connecting to ", process.env.MYSQL_HOST);
-  console.log('database :', process.env.MYSQL_DATABASE);
+  console.log("database :", process.env.MYSQL_DATABASE);
   console.log("user", process.env.MYSQL_USER);
+  console.log("pw", process.env.MYSQL_PASSWORD);
   try {
     console.log("query:", query);
     const results = await connection.query(query);
