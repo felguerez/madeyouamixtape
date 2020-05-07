@@ -39,7 +39,7 @@ export const user = {
           (${display_name}, ${spotify_id})
       `;
     await db.query(query);
-    return this.getBySpotifyId(spotify_id);
+    return await this.getBySpotifyId(spotify_id);
   },
   findOrCreate: async function findOrCreate({
     display_name,

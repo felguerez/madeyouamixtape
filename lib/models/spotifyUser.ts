@@ -31,11 +31,13 @@ export const spotifyUser = {
   getBySpotifyId: async function getBySpotifyId(
     id: string
   ): Promise<SpotifyUser> {
+    console.log("getBySpotifyId id:", id);
     const [spotifyUser] = await db.query(escape`
         SELECT *
         FROM spotify_user
         WHERE spotify_id = ${id}
       `);
+    console.log("getBySpotifyId spotifyUser:", spotifyUser);
     return spotifyUser;
   },
   create: async function create(
