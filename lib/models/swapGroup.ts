@@ -1,4 +1,4 @@
-import { db } from "../db";
+import * as db from "../db";
 import escape from "sql-template-strings";
 
 type SwapGroup = {
