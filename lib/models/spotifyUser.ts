@@ -54,10 +54,11 @@ export const spotifyUser = {
           (${display_name}, ${external_url}, ${spotify_id}, ${image_url})
       `;
     await db.query(query);
-    return this.getBySpotifyId(spotify_id);
+    return await this.getBySpotifyId(spotify_id);
   },
   findOrCreate: async function findOrCreate(profile) {
     const spotifyUser = await this.getBySpotifyId(profile.id);
+    console.log("findOrCreate spotifyUser:", spotifyUser);
     if (spotifyUser) return spotifyUser;
     return await this.create(profile);
   },
