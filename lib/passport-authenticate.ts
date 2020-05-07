@@ -3,9 +3,9 @@ import { SCOPES } from "./constants";
 
 export const authenticate = (method, req, res) =>
   new Promise((resolve, reject) => {
-    passport.authenticate(
-      method,
-      { session: false, scope: SCOPES.join(" ") },
+    passport.authenticate(method, { session: false, scope: SCOPES.join(" ") })(
+      req,
+      res,
       (error, token) => {
         if (error) {
           reject(error);
@@ -13,5 +13,5 @@ export const authenticate = (method, req, res) =>
           resolve(token);
         }
       }
-    )(req, res);
+    );
   });
