@@ -27,11 +27,6 @@ const Header = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/mixtapes">
-                  <a>Mixtapes</a>
-                </Link>
-              </li>
-              <li>
                 <a href="/api/logout">Logout</a>
               </li>
             </>
