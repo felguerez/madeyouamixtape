@@ -1,7 +1,7 @@
+import fetch from "isomorphic-fetch";
 import { SPOTIFY_API_BASE } from "../../../../../lib/constants";
 
 export default async (req, res) => {
-  console.log("req.query.token in playlist:", req.query.token);
   try {
     const playlists = await fetch(
       `${SPOTIFY_API_BASE}users/${req.query.id}/playlists`,
