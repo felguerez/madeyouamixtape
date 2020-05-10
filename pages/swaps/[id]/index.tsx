@@ -6,7 +6,7 @@ import { getSession } from "../../../lib/iron";
 import { SwapManager } from "../../../components/SwapManager";
 import { User } from "../../../lib/models/user";
 import { useState } from "react";
-import { Playlists } from "../../../components/Profile";
+import { Playlists } from "../../../components/Playlists";
 
 export default function ({
   swap,
@@ -23,16 +23,29 @@ export default function ({
   return (
     <div>
       <Title>
-        <span>
-          {swap.title} by {owner.display_name}
-        </span>
+        <span>{swap.title}</span>
         {isEnrolled && <ParticipationBadge>Participating</ParticipationBadge>}
       </Title>
+      <Owner>By {owner.display_name}</Owner>
       <Description>{swap.description}</Description>
-      <ul>
-        <li onClick={() => setActiveTab("members")}>Swap Group Members</li>
-        <li onClick={() => setActiveTab("playlists")}>View your playlists</li>
-      </ul>
+      <Tabs>
+        <Tab>
+          <Button
+            isActive={activeTab === "members"}
+            onClick={() => setActiveTab("members")}
+          >
+            Swap Group Members
+          </Button>
+        </Tab>
+        <Tab>
+          <Button
+            onClick={() => setActiveTab("playlists")}
+            isActive={activeTab === "playlists"}
+          >
+            View your playlists
+          </Button>
+        </Tab>
+      </Tabs>
       {!isEnrolled && (
         <EnrollmentStatus>
           You aren't participating yet.{" "}
@@ -42,14 +55,14 @@ export default function ({
         </EnrollmentStatus>
       )}
       {activeTab === "members" && (
-        <div>
+        <BodyContent>
           <h2>Members</h2>
           <Members>
             {swapMemberUsers.map((member) => {
               return <li key={member.id}>{member.display_name}</li>;
             })}
           </Members>
-        </div>
+        </BodyContent>
       )}
       {activeTab === "playlists" && <Playlists />}
     </div>
@@ -80,6 +93,10 @@ export async function getServerSideProps({ req, params }) {
   };
 }
 
+const BodyContent = styled.div`
+  padding: 2rem;
+`;
+
 const Members = styled.ul`
   list-style: none;
   padding-left: 0;
@@ -102,6 +119,15 @@ const EnrollmentStatus = styled.p`
   margin-bottom: 0;
 `;
 
+const Owner = styled.p`
+  color: #009688;
+  font-style: italic;
+  display: inline-block;
+  padding: 0 0.5rem 0 0.5rem;
+  font-size: 1rem;
+  margin: 0 0 1rem 0;
+`;
+
 const ParticipationBadge = styled.p`
   color: #009688;
   font-style: italic;
@@ -111,4 +137,25 @@ const ParticipationBadge = styled.p`
   padding: 0.5rem;
   font-size: 1rem;
   margin: 0;
+`;
+
+const Tabs = styled.ul`
+  display: flex;
+  list-style: none;
+  padding: 0;
+`;
+
+const Tab = styled.li`
+  margin: 0 1rem 0 0;
+  background-color: #2e3c43;
+  color: #b0bec5;
+  border-radius: 0.5rem 0.5rem 0 0;
+  &:last-of-type {
+    margin: 0;
+  }
+`;
+
+const Button = styled.button<{ isActive: boolean }>`
+  background-color: ${({ isActive }) => (isActive ? "#546E7A" : "#2e3c43")};
+  border-radius: 0.5rem 0.5rem 0 0;
 `;

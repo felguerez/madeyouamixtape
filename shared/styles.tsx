@@ -28,6 +28,34 @@ const globals: SerializedStyles = css`
       color: rgba(172, 234, 110);
     }
   }
+  button {
+    display: inline-block;
+    border: none;
+    padding: 1rem 2rem;
+    margin: 0;
+    text-decoration: none;
+    font-family: sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: center;
+    transition: background 250ms ease-in-out, transform 150ms ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #2e3c43;
+    border-radius: 0.5rem;
+    color: #b0bec5;
+    &:last-of-type {
+      margin: 0;
+    }
+  }
+
+  button:focus {
+    outline: none;
+  }
+
+  button:active {
+    transform: scale(0.99);
+  }
 `;
 
 export const globalStyles: ReactElement = <Global styles={globals} />;

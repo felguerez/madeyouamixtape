@@ -2,6 +2,7 @@ import fetch from "isomorphic-fetch";
 import { useEffect, useState } from "react";
 import { PlaylistGallery } from "./PlaylistGallery";
 import { useUser } from "../lib/hooks";
+import styled from "@emotion/styled";
 
 export const Playlists = ({}: {}) => {
   const { spotifyUser } = useUser();
@@ -21,22 +22,18 @@ export const Playlists = ({}: {}) => {
     }
   }, [spotifyUser]);
   return (
-    <>
-      <h2>
-        {spotifyUser
-          ? `Playlists by ${spotifyUser.display_name}`
-          : "Loading your account ..."}
-      </h2>
+    <BodyContent>
+      <h2>{spotifyUser ? `Your Playlists` : "Loading your account ..."}</h2>
       <div>
         {playlists && playlists.length ? (
           <>
             <p>
               Select a playlist to send to one of your swap group mates. You'll
-              get someone else's playlist when the swap happens.
+              get someone else's playlist when they're shuffled.
             </p>
             <p>
-              You can choose a different playlist to share until the swap group
-              owner shuffles the mixes.
+              You can change your mind and choose a different playlist to share
+              until the swap group owner shuffles the mixes.
             </p>
             <PlaylistGallery playlists={playlists} />
           </>
@@ -44,6 +41,10 @@ export const Playlists = ({}: {}) => {
           <p>Loading your playlists...</p>
         )}
       </div>
-    </>
+    </BodyContent>
   );
 };
+
+const BodyContent = styled.div`
+  padding: 2rem;
+`;
