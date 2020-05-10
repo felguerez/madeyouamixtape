@@ -16,32 +16,27 @@ export default function ({
   memberUsers: SpotifyUser[];
 }) {
   return (
-    <>
-      {!swap && <p>Loading...</p>}
-      {swap && (
-        <div>
-          <h1>
-            {swap.title} by {owner.display_name}
-          </h1>
-          <p>{swap.description}</p>
-          <div>
-            <h2>Members</h2>
-            <Members>
-              {members.map((member) => (
-                <li key={member.user_id}>
-                  {
-                    memberUsers.find(
-                      // @ts-ignore
-                      (member) => member.user_id === memberUsers.id
-                    ).display_name
-                  }
-                </li>
-              ))}
-            </Members>
-          </div>
-        </div>
-      )}
-    </>
+    <div>
+      <h1>
+        {swap.title} by {owner.display_name}
+      </h1>
+      <p>{swap.description}</p>
+      <div>
+        <h2>Members</h2>
+        <Members>
+          {members.map((member) => (
+            <li key={member.user_id}>
+              {
+                memberUsers.find(
+                  // @ts-ignore
+                  (member) => member.user_id === memberUsers.id
+                ).display_name
+              }
+            </li>
+          ))}
+        </Members>
+      </div>
+    </div>
   );
 }
 

@@ -30,10 +30,11 @@ export const swap = {
 
   getSwapsByUserId: async function getByUserId(userId): Promise<Swap[]> {
     const query = escape`
-      SELECT *, spotify_id AS owner_spotify_id
+      SELECT swap.id, swap.title, swap.description, spotify_user.display_name AS owner_display_name
       FROM swap
       INNER JOIN swap_member ON swap.id=swap_member.swap_id
-      INNER JOIN user ON swap_member.user_id=${userId}
+      INNER JOIN user ON swap.owner_id=${userId}
+      INNER JOIN spotify_user ON user.spotify_id = spotify_user.spotify_id
     `;
     const results = await db.query(query);
     return results;

@@ -1,26 +1,13 @@
 import { useSwaps } from "../lib/hooks";
+import { SwapList } from "../components/SwapList";
 
 const Swaps = () => {
-  const swaps = useSwaps() || [];
-  if (!swaps) return <p>Loading...</p>;
+  const swaps = useSwaps();
   return (
     <>
       <h1>Playlist Swaps</h1>
       <p>Share some music with people you know or random strangers.</p>
-      {swaps.length ? (
-        <div>
-          {swaps.map((swap) => (
-            <p key={swap.id}>
-              <a href={`/swaps/${swap.id}`}>{swap.title}</a> by{" "}
-              {swap.display_name}
-            </p>
-          ))}
-        </div>
-      ) : (
-        <div>
-          <p>You aren't participating in any swaps. </p>
-        </div>
-      )}
+      {swaps ? <SwapList swaps={swaps} /> : <p>Loading...</p>}
     </>
   );
 };
