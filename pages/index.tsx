@@ -1,25 +1,16 @@
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
 import { useUser } from "../lib/hooks";
-import { SwapStarter } from "../components/SwapStarter";
+import { SwapCreator } from "../components/SwapCreator";
+import { Welcome } from "../components/home/Welcome";
 
 const Home = () => {
-  const user = useUser();
+  const identity = useUser();
+  if (!identity) return <Welcome />;
+  const { user, spotifyUser } = identity;
   return (
     <>
-      <h1
-        css={css`
-          display: flex;
-          justify-content: space-between;
-        `}
-      >
-        <span>Made You A Mixtape</span>
-      </h1>
-      <p>Share some music with people you know or random strangers.</p>
-      <p>Make it a party and invite your friends with great taste. </p>
-      {user && (
-        <SwapStarter spotify_id={user.spotify_id}>Start one now.</SwapStarter>
-      )}
+      <h1>Made You A Mixtape</h1>
+      <p>Hello, {spotifyUser.display_name}</p>
+      <SwapCreator spotify_id={user.spotify_id}>Start one now.</SwapCreator>
     </>
   );
 };

@@ -6,7 +6,10 @@ const userFetcher = (url: string) =>
   fetch(url)
     .then((r) => r.json())
     .then((data) => {
-      return { user: data?.user || null };
+      return {
+        user: data?.user || null,
+        spotifyUser: data?.spotifyUser || null,
+      };
     });
 
 const swapsFetcher = (url: string) =>
@@ -51,6 +54,7 @@ export function useUser({
 }: { redirectTo?: string; redirectIfFound?: string } = {}) {
   const { data, error } = useSWR("/api/user", userFetcher);
   const user = data?.user;
+  const spotifyUser = data?.spotifyUser;
   const finished = Boolean(data);
   const hasUser = Boolean(user);
 
@@ -66,5 +70,5 @@ export function useUser({
     }
   }, [redirectTo, redirectIfFound, finished, hasUser]);
 
-  return error ? null : user;
+  return error ? null : { user, spotifyUser };
 }

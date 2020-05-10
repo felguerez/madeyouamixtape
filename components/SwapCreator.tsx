@@ -2,7 +2,7 @@
 import { css, jsx } from "@emotion/core";
 import styled from "@emotion/styled";
 
-export const SwapStarter = ({ children, spotify_id }) => {
+export const SwapCreator = ({ children, spotify_id }) => {
   return (
     <form
       method="post"
@@ -22,6 +22,8 @@ export const SwapStarter = ({ children, spotify_id }) => {
 const ButtonLink = styled.button`
   background: none;
   border: none;
+  padding: 0;
+  margin: 0;
   color: rgba(94, 215, 255, 1);
   &:visited {
     color: rgba(94, 215, 255, 1);
