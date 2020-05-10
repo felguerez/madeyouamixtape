@@ -1,5 +1,4 @@
 import fetch from "isomorphic-fetch";
-import Layout from "../components/layout";
 import * as models from "../lib/models";
 import { SpotifyUser } from "../lib/models/spotifyUser";
 import { getSession } from "../lib/iron";
@@ -29,7 +28,7 @@ const Profile = ({
     }
   }, [token, spotify_id]);
   return (
-    <Layout>
+    <>
       <h1>Playlists by {display_name}</h1>
       <div>
         {playlists && playlists.length ? (
@@ -58,7 +57,7 @@ const Profile = ({
           <p>Loading your playlists...</p>
         )}
       </div>
-    </Layout>
+    </>
   );
 };
 

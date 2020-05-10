@@ -1,9 +1,7 @@
-import Layout from "../../../components/layout";
 import { Swap } from "../../../lib/models/swap";
 import { SpotifyUser } from "../../../lib/models/spotifyUser";
 import * as models from "../../../lib/models";
 import { SwapMember } from "../../../lib/models/swapMember";
-import { User } from "../../../lib/models/user";
 import styled from "@emotion/styled";
 
 export default function ({
@@ -18,7 +16,7 @@ export default function ({
   memberUsers: SpotifyUser[];
 }) {
   return (
-    <Layout>
+    <>
       {!swap && <p>Loading...</p>}
       {swap && (
         <div>
@@ -43,7 +41,7 @@ export default function ({
           </div>
         </div>
       )}
-    </Layout>
+    </>
   );
 }
 

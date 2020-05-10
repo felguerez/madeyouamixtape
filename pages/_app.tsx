@@ -6,6 +6,7 @@ import { CacheProvider } from "@emotion/core";
 import { cache } from "emotion";
 
 import { globalStyles } from "../shared/styles";
+import Layout from "../components/layout";
 
 export default class App extends NextApp {
   render() {
@@ -13,7 +14,9 @@ export default class App extends NextApp {
     return (
       <CacheProvider value={cache}>
         {globalStyles}
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </CacheProvider>
     );
   }

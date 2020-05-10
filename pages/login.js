@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Router from "next/router";
 import { useUser } from "../lib/hooks";
-import Layout from "../components/layout";
 import Form from "../components/form";
 
 const Login = () => {
@@ -37,7 +36,7 @@ const Login = () => {
   }
 
   return (
-    <Layout>
+    <>
       <div className="login">
         <Form isLogin errorMessage={errorMsg} onSubmit={handleSubmit} />
       </div>
@@ -50,7 +49,7 @@ const Login = () => {
           border-radius: 4px;
         }
       `}</style>
-    </Layout>
+    </>
   );
 };
 

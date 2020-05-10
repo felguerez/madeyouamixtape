@@ -1,10 +1,12 @@
 /** @jsx jsx */
-import Layout from "../components/layout";
 import { css, jsx } from "@emotion/core";
+import { useUser } from "../lib/hooks";
+import { SwapStarter } from "../components/SwapStarter";
 
 const Home = () => {
+  const user = useUser();
   return (
-    <Layout>
+    <>
       <h1
         css={css`
           display: flex;
@@ -15,7 +17,10 @@ const Home = () => {
       </h1>
       <p>Share some music with people you know or random strangers.</p>
       <p>Make it a party and invite your friends with great taste. </p>
-    </Layout>
+      {user && (
+        <SwapStarter spotify_id={user.spotify_id}>Start one now.</SwapStarter>
+      )}
+    </>
   );
 };
 
