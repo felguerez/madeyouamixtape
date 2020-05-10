@@ -5,32 +5,32 @@ import { getSession } from "../lib/iron";
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import { Playlists } from "../components/Playlists";
+import { useUser } from "../lib/hooks";
 
-const Profile = ({
-  spotifyUser: { display_name, spotify_id },
-  token,
-}: {
-  spotifyUser: SpotifyUser;
-  token: string;
-}) => {
+const Profile = ({}: {}) => {
+  const { spotifyUser } = useUser();
   const [playlists, setPlaylists] = useState<any>([]);
   useEffect(() => {
     async function fetchData() {
       const request = await fetch(
-        `/api/spotify/users/${spotify_id}/playlists?token=${token}`
+        `/api/spotify/users/${spotifyUser.spotify_id}/playlists`
       ).catch((err) => {
         console.log("err:", err);
       });
       const { items } = await request.json();
       setPlaylists(items);
     }
-    if (token && spotify_id) {
+    if (spotifyUser) {
       fetchData().catch((err) => {});
     }
-  }, [token, spotify_id]);
+  }, [spotifyUser]);
   return (
     <>
-      <h1>Playlists by {display_name}</h1>
+      <h1>
+        {spotifyUser
+          ? `Playlists by ${spotifyUser.display_name}`
+          : "Loading your account ..."}
+      </h1>
       <div>
         {playlists && playlists.length ? (
           <>
@@ -44,24 +44,5 @@ const Profile = ({
     </>
   );
 };
-
-export async function getServerSideProps({ req, res }) {
-  const session = await getSession(req);
-  if (!session) {
-    res.writeHead(302, {
-      Location: "/",
-    });
-    return res.end();
-  }
-  const spotifyUser = await models.spotifyUser.getBySpotifyId(
-    session.spotify_id
-  );
-  return {
-    props: {
-      spotifyUser: { ...spotifyUser } || {},
-      token: session?.accessToken || "",
-    },
-  };
-}
 
 export default Profile;

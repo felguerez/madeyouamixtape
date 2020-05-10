@@ -1,14 +1,16 @@
 import fetch from "isomorphic-fetch";
 import { SPOTIFY_API_BASE } from "../../../../../lib/constants";
+import { getSession } from "../../../../../lib/iron";
 
 export default async (req, res) => {
+  const { accessToken } = await getSession(req);
   try {
     const playlists = await fetch(
       `${SPOTIFY_API_BASE}users/${req.query.id}/playlists`,
       {
         headers: {
           "Access-Control-Allow-Headers": "*",
-          Authorization: `Bearer ${req.query.token}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       }
     );

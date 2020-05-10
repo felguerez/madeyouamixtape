@@ -11,12 +11,12 @@ export default nextConnect()
     try {
       await authenticate("spotify", req, res);
       let session = {};
-      const { accessToken, refreshToken, ...profile } = req.user; // req.user is set after authentication
+      const { accessToken, refreshToken, expiresAt, ...profile } = req.user; // req.user is set after authentication
       const spotifyUser = await models.spotifyUser.findOrCreate(profile);
       const user = await models.user.findOrCreate(spotifyUser);
 
       if (typeof user === "object") {
-        session = { ...user, accessToken, refreshToken };
+        session = { ...user, accessToken, refreshToken, expiresAt };
       }
 
       const token = await encryptSession(session);
