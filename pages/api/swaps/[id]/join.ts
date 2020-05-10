@@ -9,7 +9,7 @@ export default async function swaps(req, res) {
         swap_id: req.query.id,
         user_id: session.id,
       });
-      res.writeHead(302, { Location: "/swaps" });
+      res.writeHead(302, { Location: `/swaps/${req.query.id}` });
       res.end();
       break;
     default:

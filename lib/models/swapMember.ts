@@ -18,7 +18,7 @@ export const swapMember = {
 
   getBySwapId: async function getBySwapId(
     swap_id: number
-  ): Promise<SwapMember[]> {
+  ): Promise<SwapMember & { id: number }[]> {
     return db.query(escape`
       SELECT *
       FROM swap_member

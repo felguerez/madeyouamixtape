@@ -1,5 +1,5 @@
 import { useUser } from "../lib/hooks";
-import { SwapCreator } from "../components/SwapCreator";
+import { SwapManager } from "../components/SwapManager";
 import { Welcome } from "../components/home/Welcome";
 
 const Home = () => {
@@ -10,9 +10,9 @@ const Home = () => {
     <>
       <h1>Made You A Mixtape</h1>
       <p>Hello, {spotifyUser.display_name}</p>
-      <SwapCreator spotify_id={user.spotify_id}>
+      <SwapManager spotify_id={user.spotify_id}>
         Start a new playlist swap.
-      </SwapCreator>
+      </SwapManager>
     </>
   );
 };

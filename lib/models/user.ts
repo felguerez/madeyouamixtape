@@ -5,6 +5,7 @@ import { SpotifyUser } from "./spotifyUser";
 export type User = {
   display_name: string;
   spotify_id: string;
+  id: number;
 };
 
 export const user = {
@@ -17,11 +18,13 @@ export const user = {
     return user;
   },
 
-  getByIds: async function getByIds(ids: number[]) {
+  getByIds: async function getByIds(
+    ids: number[]
+  ): Promise<User & { id: number }[]> {
     return await db.query(escape`
       SELECT *
       FROM user
-      WHERE id in (${ids.join(",")})
+      WHERE id in (${ids})
     `);
   },
 

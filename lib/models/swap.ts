@@ -6,10 +6,11 @@ export type Swap = {
   description: string;
   owner_id: number;
   swap_group_id: number;
+  id: number;
 };
 
 export const swap = {
-  getById: async function getById(id: string): Promise<Swap> {
+  getById: async function getById(id: number): Promise<Swap & { id: number }> {
     const [swap] = await db.query(escape`
         SELECT *
         FROM swap
@@ -28,15 +29,34 @@ export const swap = {
     `);
   },
 
-  getSwapsByUserId: async function getByUserId(userId): Promise<Swap[]> {
+  getSwapsByUserId: async function getByUserId(
+    userId
+  ): Promise<Swap[] & { swap_member_count: number }> {
+    // table 1: swap
+    // table 2: swap_member
+    // table 3: user
+    // table 4: spotify_user
     const query = escape`
-      SELECT swap.id, swap.title, swap.description, spotify_user.display_name AS owner_display_name
+      SELECT 
+        swap.id, 
+        swap.title, 
+        swap.description, 
+        spotify_user.display_name AS owner_display_name,
+        COUNT(swap_member.id) AS swap_member_count
       FROM swap
       INNER JOIN swap_member ON swap.id=swap_member.swap_id
       INNER JOIN user ON swap.owner_id=${userId}
       INNER JOIN spotify_user ON user.spotify_id = spotify_user.spotify_id
+      WHERE swap.id=swap_member.swap_id
+      AND swap_member.user_id = user.id
+      AND user.spotify_id = spotify_user.spotify_id
+      GROUP BY swap.id, 
+        swap.title, 
+        swap.description, 
+        owner_display_name
     `;
     const results = await db.query(query);
+    console.log("results:", results);
     return results;
   },
 
