@@ -18,9 +18,7 @@ export const user = {
     return user;
   },
 
-  getByIds: async function getByIds(
-    ids: number[]
-  ): Promise<(User & { id: number }[]) | []> {
+  getByIds: async function getByIds(ids: number[]): Promise<User[]> {
     if (!ids.length) return Promise.resolve([]);
     return await db.query(escape`
       SELECT *
@@ -43,7 +41,7 @@ export const user = {
   create: async function create({
     display_name,
     spotify_id,
-  }: User): Promise<User & { id: number }> {
+  }: User): Promise<User> {
     const query = escape`
         INSERT INTO user
           (display_name, spotify_id)
@@ -56,7 +54,7 @@ export const user = {
   findOrCreate: async function findOrCreate({
     display_name,
     spotify_id,
-  }: SpotifyUser): Promise<User & { id: number }> {
+  }: SpotifyUser): Promise<User> {
     const userBySpotifyId = await this.getBySpotifyId(spotify_id);
     if (userBySpotifyId) return userBySpotifyId;
     return await this.create({
