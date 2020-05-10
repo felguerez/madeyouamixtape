@@ -123,7 +123,7 @@ const Owner = styled.p`
   color: #009688;
   font-style: italic;
   display: inline-block;
-  padding: 0 0.5rem 0 0.5rem;
+  padding: 0;
   font-size: 1rem;
   margin: 0 0 1rem 0;
 `;
@@ -143,6 +143,7 @@ const Tabs = styled.ul`
   display: flex;
   list-style: none;
   padding: 0;
+  border-bottom: 1px dotted #2e3c43;
 `;
 
 const Tab = styled.li`

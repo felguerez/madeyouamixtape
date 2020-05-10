@@ -38,7 +38,7 @@ const Header = () => {
         nav {
           max-width: 68.75rem;
           margin: 0 auto;
-          padding: 0.2rem 1.25rem;
+          padding: 0.2rem 0;
         }
         ul {
           display: flex;
@@ -51,6 +51,9 @@ const Header = () => {
         }
         li:first-child {
           margin-left: auto;
+        }
+        li:last-of-type {
+          margin-right: 0;
         }
         header {
           color: #fff;
