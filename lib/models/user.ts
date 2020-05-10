@@ -20,7 +20,8 @@ export const user = {
 
   getByIds: async function getByIds(
     ids: number[]
-  ): Promise<User & { id: number }[]> {
+  ): Promise<(User & { id: number }[]) | []> {
+    if (!ids.length) return Promise.resolve([]);
     return await db.query(escape`
       SELECT *
       FROM user

@@ -20,8 +20,6 @@ export default function ({
   swapMemberUsers: User[];
   isEnrolled: boolean;
 }) {
-  console.log("swapMemberUsers:", swapMemberUsers);
-  console.log('swapMembers:', swapMembers);
   return (
     <div>
       <h1>
@@ -57,9 +55,9 @@ export async function getServerSideProps({ req, params }) {
     swapMembers.map((member) => member.id)
   );
   const isEnrolled = Boolean(
-    swapMemberUsers.find(
+    swapMemberUsers.filter(
       (swapMemberUser) => swapMemberUser.id === sessionUser.id
-    )
+    )[0]
   );
   return {
     props: {
