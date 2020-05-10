@@ -57,6 +57,7 @@ export default function ({
       {activeTab === "members" && (
         <BodyContent>
           <h2>Members</h2>
+          <p>These people are swapping playlists with each other and finding new cool music.</p>
           <Members>
             {swapMemberUsers.map((member) => {
               return <li key={member.id}>{member.display_name}</li>;

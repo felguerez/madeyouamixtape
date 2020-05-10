@@ -29,7 +29,7 @@ export const Playlists = ({}: {}) => {
           <>
             <p>
               Select a playlist to send to one of your swap group mates. You'll
-              get someone else's playlist when they're shuffled.
+              get someone else's playlist in return when they're shuffled.
             </p>
             <p>
               You can change your mind and choose a different playlist to share
