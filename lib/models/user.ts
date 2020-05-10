@@ -2,7 +2,7 @@ import * as db from "../db";
 import escape from "sql-template-strings";
 import { SpotifyUser } from "./spotifyUser";
 
-type User = {
+export type User = {
   display_name: string;
   spotify_id: string;
 };
@@ -15,6 +15,14 @@ export const user = {
         WHERE id = ${id}
       `);
     return user;
+  },
+
+  getByIds: async function getByIds(ids: number[]) {
+    return await db.query(escape`
+      SELECT *
+      FROM user
+      WHERE id in (${ids.join(",")})
+    `);
   },
 
   getBySpotifyId: async function getBySpotifyId(

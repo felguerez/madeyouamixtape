@@ -36,7 +36,6 @@ export const spotifyUser = {
         FROM spotify_user
         WHERE spotify_id = ${id}
       `);
-    console.log("getBySpotifyId spotifyUser:", spotifyUser);
     return spotifyUser;
   },
   create: async function create(
@@ -59,7 +58,6 @@ export const spotifyUser = {
   },
   findOrCreate: async function findOrCreate(profile) {
     const spotifyUser = await this.getBySpotifyId(profile.id);
-    console.log("findOrCreate spotifyUser:", spotifyUser);
     if (spotifyUser) return spotifyUser;
     return await this.create(profile);
   },

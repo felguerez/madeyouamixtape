@@ -11,9 +11,7 @@ export const connection = mysql({
 
 export const query = async (query) => {
   try {
-    console.log("query:", query);
     const results = await connection.query(query);
-    console.log("results:", results);
     await connection.end();
     return results;
   } catch (error) {

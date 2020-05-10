@@ -1,7 +1,7 @@
 import * as db from "../db";
 import escape from "sql-template-strings";
 
-type Swap = {
+export type Swap = {
   title: string;
   description: string;
   owner_id: number;
@@ -26,6 +26,17 @@ export const swap = {
       FROM swap
       WHERE owner_id = ${userId}
     `);
+  },
+
+  getSwapsByUserId: async function getByUserId(userId): Promise<Swap[]> {
+    const query = escape`
+      SELECT *, spotify_id AS owner_spotify_id
+      FROM swap
+      INNER JOIN swap_member ON swap.id=swap_member.swap_id
+      INNER JOIN user ON swap_member.user_id=${userId}
+    `;
+    const results = await db.query(query);
+    return results;
   },
 
   create: async function create({

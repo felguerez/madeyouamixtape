@@ -4,24 +4,27 @@ import Layout from "../components/layout";
 import { getSession } from "../lib/iron";
 import * as models from "../lib/models";
 import styled from "@emotion/styled";
-import useSWR from "swr";
 import { useSwaps } from "../lib/hooks";
 
 const Swaps = ({ spotify_id }: { spotify_id: string }) => {
   const swaps = useSwaps() || [];
-
   return (
     <Layout>
       <h1>Playlist Swaps</h1>
       <p>Share some music with people you know or random strangers.</p>
       {swaps.length ? (
-        <div>swaps go here</div>
+        <div>
+          {swaps.map((swap) => (
+            <p key={swap.id}>
+              <a href={`/swaps/${swap.id}`}>{swap.title}</a> by{" "}
+              {swap.display_name}
+            </p>
+          ))}
+        </div>
       ) : (
         <div>
-          <p>
-            You aren't participating in any swaps.{" "}
-            <SwapStarter spotify_id={spotify_id}>Start one now.</SwapStarter>
-          </p>
+          <p>You aren't participating in any swaps. </p>
+          <SwapStarter spotify_id={spotify_id}>Start one now.</SwapStarter>
         </div>
       )}
     </Layout>

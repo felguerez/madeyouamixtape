@@ -9,17 +9,34 @@ const userFetcher = (url: string) =>
       return { user: data?.user || null };
     });
 
-const swapFetcher = (url: string) =>
+const swapsFetcher = (url: string) =>
   fetch(url)
     .then((r) => r.json())
     .then((swaps) => {
       return { swaps: swaps || [] };
     });
 
+const swapFetcher = (url: string) => fetch(url).then((r) => r.json());
+
 export function useSwaps() {
-  const { data, error } = useSWR("/api/swaps", swapFetcher);
+  const { data, error } = useSWR("/api/swaps", swapsFetcher);
   const swaps = data?.swaps;
   return error ? null : swaps;
+}
+
+export function useSwap(id) {
+  if (!id) return;
+  const { data, error } = useSWR(`/api/swaps/${id}`, swapFetcher);
+  const swap = data?.swap;
+  const owner = data?.owner;
+  const finished = Boolean(data);
+  const hasSwap = Boolean(swap);
+
+  useEffect(() => {
+    if (!finished) return;
+  }, [finished, hasSwap]);
+
+  return error ? null : { swap, owner };
 }
 
 export function useUser({
