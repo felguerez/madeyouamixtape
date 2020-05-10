@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import { useUser } from "../lib/hooks";
 
 const Header = () => {
-  const user = useUser();
+  const identity = useUser();
 
   return (
     <header>
@@ -14,7 +14,7 @@ const Header = () => {
               <a>Home</a>
             </Link>
           </HomeNavItem>
-          {user ? (
+          {identity.user ? (
             <>
               <li>
                 <Link href="/profile">
