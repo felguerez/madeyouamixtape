@@ -1,11 +1,12 @@
 import { Swap } from "../../../lib/models/swap";
 import { SpotifyUser } from "../../../lib/models/spotifyUser";
 import * as models from "../../../lib/models";
-import { SwapMember } from "../../../lib/models/swapMember";
 import styled from "@emotion/styled";
 import { getSession } from "../../../lib/iron";
 import { SwapManager } from "../../../components/SwapManager";
 import { User } from "../../../lib/models/user";
+import { useState } from "react";
+import { Playlists } from "../../../components/Profile";
 
 export default function ({
   swap,
@@ -18,6 +19,7 @@ export default function ({
   swapMemberUsers: User[];
   isEnrolled: boolean;
 }) {
+  const [activeTab, setActiveTab] = useState("members");
   return (
     <div>
       <Title>
@@ -27,6 +29,10 @@ export default function ({
         {isEnrolled && <ParticipationBadge>Participating</ParticipationBadge>}
       </Title>
       <Description>{swap.description}</Description>
+      <ul>
+        <li onClick={() => setActiveTab("members")}>Swap Group Members</li>
+        <li onClick={() => setActiveTab("playlists")}>View your playlists</li>
+      </ul>
       {!isEnrolled && (
         <EnrollmentStatus>
           You aren't participating yet.{" "}
@@ -35,14 +41,17 @@ export default function ({
           </SwapManager>
         </EnrollmentStatus>
       )}
-      <div>
-        <h2>Members</h2>
-        <Members>
-          {swapMemberUsers.map((member) => {
-            return <li key={member.id}>{member.display_name}</li>;
-          })}
-        </Members>
-      </div>
+      {activeTab === "members" && (
+        <div>
+          <h2>Members</h2>
+          <Members>
+            {swapMemberUsers.map((member) => {
+              return <li key={member.id}>{member.display_name}</li>;
+            })}
+          </Members>
+        </div>
+      )}
+      {activeTab === "playlists" && <Playlists />}
     </div>
   );
 }

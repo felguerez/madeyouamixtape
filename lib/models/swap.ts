@@ -32,10 +32,6 @@ export const swap = {
   getSwapsByUserId: async function getByUserId(
     userId
   ): Promise<Swap[] & { swap_member_count: number }> {
-    // table 1: swap
-    // table 2: swap_member
-    // table 3: user
-    // table 4: spotify_user
     const query = escape`
       SELECT 
         swap.id, 

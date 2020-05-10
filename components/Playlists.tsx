@@ -1,79 +1,49 @@
-import styled from "@emotion/styled";
+import fetch from "isomorphic-fetch";
+import { useEffect, useState } from "react";
+import { PlaylistGallery } from "./PlaylistGallery";
+import { useUser } from "../lib/hooks";
 
-export const Playlists = ({
-  playlists,
-}: {
-  playlists: {
-    id: number;
-    images: { url: string }[];
-    name: string;
-    owner: { href: string; display_name: string };
-  }[];
-}) => {
+export const Playlists = ({}: {}) => {
+  const { spotifyUser } = useUser();
+  const [playlists, setPlaylists] = useState<any>([]);
+  useEffect(() => {
+    async function fetchData() {
+      const request = await fetch(
+        `/api/spotify/users/${spotifyUser.spotify_id}/playlists`
+      ).catch((err) => {
+        console.log("err:", err);
+      });
+      const { items } = await request.json();
+      setPlaylists(items);
+    }
+    if (spotifyUser) {
+      fetchData().catch((err) => {});
+    }
+  }, [spotifyUser]);
   return (
-    <Container>
-      {playlists.map((playlist) => {
-        return (
-          <Playlist key={playlist.id}>
-            <CoverArt src={playlist.images[0].url} />
-            <Metadata>
-              <PlaylistName>{playlist.name}</PlaylistName>
-              <Creator>
-                by{" "}
-                <a href={playlist.owner.href} target="_blank">
-                  {playlist.owner.display_name}
-                </a>
-              </Creator>
-            </Metadata>
-          </Playlist>
-        );
-      })}
-    </Container>
+    <>
+      <h2>
+        {spotifyUser
+          ? `Playlists by ${spotifyUser.display_name}`
+          : "Loading your account ..."}
+      </h2>
+      <div>
+        {playlists && playlists.length ? (
+          <>
+            <p>
+              Select a playlist to send to one of your swap group mates. You'll
+              get someone else's playlist when the swap happens.
+            </p>
+            <p>
+              You can choose a different playlist to share until the swap group
+              owner shuffles the mixes.
+            </p>
+            <PlaylistGallery playlists={playlists} />
+          </>
+        ) : (
+          <p>Loading your playlists...</p>
+        )}
+      </div>
+    </>
   );
 };
-
-const Container = styled.ul`
-  list-style: none;
-  padding-left: 0;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 1rem;
-`;
-
-const Playlist = styled.li`
-  grid-column: span 1;
-  background: #282828;
-  font-size: 14px;
-  font-weight: bold;
-  border-radius: 8px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-`;
-
-const Creator = styled.span`
-  color: rgb(179, 179, 179);
-  font-size: 12px;
-  display: inline-block;
-`;
-
-const Metadata = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const CoverArt = styled.img`
-  height: auto;
-  width: 160px;
-  border-radius: 8px;
-  align-self: center;
-  margin-bottom: 1rem;
-`;
-
-const PlaylistName = styled.strong`
-  text-overflow: ellipsis;
-  width: 160px;
-  overflow: hidden;
-  white-space: nowrap;
-  margin-bottom: 0.5rem;
-`;
