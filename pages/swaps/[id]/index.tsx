@@ -13,10 +13,12 @@ import Selection from "../../../components/swaps/Selection";
 export default function ({
   swap,
   currentSwapMember,
+  spotifyId,
 }: {
   swap: Swap & {
     members: (SwapMember & { display_name: string })[];
     owner_display_name: string;
+    spotifyId: string;
   };
   currentSwapMember: SwapMember & { isOwner: boolean };
 }) {
@@ -61,7 +63,7 @@ export default function ({
       {!isEnrolled && (
         <EnrollmentStatus>
           You aren't participating yet.{" "}
-          <SwapManager id={swap.id} action="join" spotify_id="felguerez">
+          <SwapManager id={swap.id} action="join" spotify_id={spotifyId}>
             Join this swap
           </SwapManager>
         </EnrollmentStatus>
@@ -101,7 +103,7 @@ export async function getServerSideProps({ req, res, params }) {
       swapMemberUsers: JSON.parse(JSON.stringify(swapMemberUsers)),
       swapMembers: JSON.parse(JSON.stringify(swapMembers)),
       currentSwapMember: JSON.parse(
-        JSON.stringify({ ...currentSwapMember, isOwner })
+        JSON.stringify({ ...currentSwapMember, isOwner,  })
       ),
       spotifyId: sessionUser.spotify_id,
     },
