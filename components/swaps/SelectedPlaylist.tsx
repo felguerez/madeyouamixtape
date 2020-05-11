@@ -11,7 +11,6 @@ export const SelectedPlaylist = ({
 }) => {
   const { spotifyUser, user } = useUser();
   const [playlist, setPlaylist] = useState<any>(null);
-  console.log("user:", user);
   useEffect(() => {
     async function fetchData() {
       const request = await fetch(`/api/spotify/playlists/${selectedId}`).catch(
