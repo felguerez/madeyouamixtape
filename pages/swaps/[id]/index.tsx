@@ -11,41 +11,39 @@ import { SwapMember } from "../../../lib/models/swapMember";
 
 export default function ({
   swap,
-  owner,
-  swapMemberUsers,
-  isEnrolled,
-  swapMember,
+  currentSwapMember,
 }: {
-  swap: Swap;
-  owner: SpotifyUser;
-  swapMemberUsers: User[];
-  swapMember: SwapMember;
-  isEnrolled: boolean;
+  swap: Swap & {
+    members: (SwapMember & { display_name: string })[];
+    owner_display_name: string;
+  };
+  currentSwapMember: SwapMember;
 }) {
-  const [activeTab, setActiveTab] = useState("playlists");
+  const [activeTab, setActiveTab] = useState("members");
+  const isEnrolled = Boolean(currentSwapMember);
   return (
     <div>
       <Title>
         <span>{swap.title}</span>
         {isEnrolled && <ParticipationBadge>Participating</ParticipationBadge>}
       </Title>
-      <Owner>By {owner.display_name}</Owner>
+      <Owner>By {swap.owner_display_name}</Owner>
       <Description>{swap.description}</Description>
       <Tabs>
-        <Tab>
-          <Button
-            onClick={() => setActiveTab("playlists")}
-            isActive={activeTab === "playlists"}
-          >
-            View your playlists
-          </Button>
-        </Tab>
         <Tab>
           <Button
             isActive={activeTab === "members"}
             onClick={() => setActiveTab("members")}
           >
             Swap Group Members
+          </Button>
+        </Tab>
+        <Tab>
+          <Button
+            onClick={() => setActiveTab("playlists")}
+            isActive={activeTab === "playlists"}
+          >
+            View your playlists
           </Button>
         </Tab>
       </Tabs>
@@ -58,7 +56,7 @@ export default function ({
         </EnrollmentStatus>
       )}
       {activeTab === "playlists" && (
-        <Playlists isEnrolled={isEnrolled} swapMember={swapMember} />
+        <Playlists isEnrolled={isEnrolled} swapMember={currentSwapMember} />
       )}
       {activeTab === "members" && (
         <BodyContent>
@@ -68,8 +66,15 @@ export default function ({
             cool music.
           </p>
           <Members>
-            {swapMemberUsers.map((member) => {
-              return <li key={member.id}>{member.display_name}</li>;
+            {swap.members.map((member) => {
+              return (
+                <li key={member.id}>
+                  <MemberName>{member.display_name}</MemberName>
+                  {member.selected_playlist_uri && (
+                    <ReadyToShareStatus>Ready to share</ReadyToShareStatus>
+                  )}
+                </li>
+              );
             })}
           </Members>
         </BodyContent>
@@ -89,23 +94,19 @@ export async function getServerSideProps({ req, res, params }) {
   const swap = await models.swap.getById(params.id);
   const owner = await models.spotifyUser.getById(swap.owner_id);
   const swapMembers = await models.swapMember.getBySwapId(swap.id);
-  const swapMember = swapMembers.filter(
+  const currentSwapMember = swapMembers.filter(
     (swapMember) => swapMember.user_id === sessionUser.id
   )[0];
   const swapMemberUsers = await models.user.getByIds(
     swapMembers.map((member) => member.id)
   );
-  const swapMemberUser = swapMemberUsers.filter(
-    (user) => user.id === sessionUser.id
-  )[0];
-  const isEnrolled = Boolean(swapMemberUser);
   return {
     props: {
       swap: JSON.parse(JSON.stringify(swap)),
       owner: JSON.parse(JSON.stringify(owner)),
       swapMemberUsers: JSON.parse(JSON.stringify(swapMemberUsers)),
-      swapMember: JSON.parse(JSON.stringify(swapMember)),
-      isEnrolled,
+      swapMembers: JSON.parse(JSON.stringify(swapMembers)),
+      currentSwapMember: JSON.parse(JSON.stringify(currentSwapMember)),
       spotifyId: sessionUser.spotify_id,
     },
   };
@@ -177,4 +178,12 @@ const Tab = styled.li`
 const Button = styled.button<{ isActive: boolean }>`
   background-color: ${({ isActive }) => (isActive ? "#546E7A" : "#2e3c43")};
   border-radius: 0.5rem 0.5rem 0 0;
+`;
+
+const ReadyToShareStatus = styled.span`
+  color: rgba(172, 234, 110);
+`;
+
+const MemberName = styled.h4`
+  margin: 0;
 `;

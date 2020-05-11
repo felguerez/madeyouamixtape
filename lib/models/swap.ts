@@ -12,11 +12,29 @@ export type Swap = {
 export const swap = {
   getById: async function getById(id: number): Promise<Swap & { id: number }> {
     const [swap] = await db.query(escape`
-        SELECT *
-        FROM swap
-        WHERE id = ${id}
-      `);
-    return swap;
+      SELECT 
+        swap.title, 
+        swap.description,
+        swap.owner_id, 
+        swap.id, 
+        user.display_name AS owner_display_name
+      FROM swap
+      INNER JOIN user ON swap.owner_id = user.id
+      WHERE swap.id = ${id}
+    `);
+    const members = await db.query(escape`
+      SELECT 
+        swap_member.id, 
+        swap_member.selected_playlist_uri, 
+        user.display_name
+      FROM swap_member
+      INNER JOIN user ON swap_member.user_id = user.id
+      WHERE swap_member.swap_id = ${id}
+    `);
+    return {
+      ...swap,
+      members,
+    };
   },
 
   getSwapsByOwnerId: async function getByOwnerId(
