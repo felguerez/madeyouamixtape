@@ -7,6 +7,7 @@ import { SwapManager } from "../../../components/SwapManager";
 import { useState } from "react";
 import { Playlists } from "../../../components/Playlists";
 import { SwapMember } from "../../../lib/models/swapMember";
+import Members from "../../../components/swaps/Members";
 
 export default function ({
   swap,
@@ -67,27 +68,7 @@ export default function ({
       {activeTab === "playlists" && (
         <Playlists isEnrolled={isEnrolled} swapMember={currentSwapMember} />
       )}
-      {activeTab === "members" && (
-        <BodyContent>
-          <h2>Members</h2>
-          <p>
-            These people are swapping playlists with each other and finding new
-            cool music.
-          </p>
-          <Members>
-            {swap.members.map((member) => {
-              return (
-                <li key={member.id}>
-                  <MemberName>{member.display_name}</MemberName>
-                  {member.selected_playlist_uri && (
-                    <ReadyToShareStatus>Ready to share</ReadyToShareStatus>
-                  )}
-                </li>
-              );
-            })}
-          </Members>
-        </BodyContent>
-      )}
+      {activeTab === "members" && <Members swap={swap} />}
       {activeTab === "settings" && (
         <BodyContent>
           <h2>Settings</h2>
@@ -141,11 +122,6 @@ export async function getServerSideProps({ req, res, params }) {
 
 const BodyContent = styled.div`
   padding: 2rem;
-`;
-
-const Members = styled.ul`
-  list-style: none;
-  padding-left: 0;
 `;
 
 const Title = styled.h1`
@@ -205,12 +181,4 @@ const Tab = styled.li`
 const Button = styled.button<{ isActive: boolean }>`
   background-color: ${({ isActive }) => (isActive ? "#546E7A" : "#2e3c43")};
   border-radius: 0.5rem 0.5rem 0 0;
-`;
-
-const ReadyToShareStatus = styled.span`
-  color: rgba(172, 234, 110);
-`;
-
-const MemberName = styled.h4`
-  margin: 0;
 `;
