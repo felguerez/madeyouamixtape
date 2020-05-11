@@ -8,9 +8,13 @@ import { SwapMember } from "../lib/models/swapMember";
 export const Playlists = ({
   isEnrolled,
   swapMember,
+  selectedId,
+  setSelectedId,
 }: {
   isEnrolled: boolean;
   swapMember: SwapMember;
+  selectedId: string;
+  setSelectedId: any;
 }) => {
   const { spotifyUser } = useUser();
   const [playlists, setPlaylists] = useState<any>([]);
@@ -48,6 +52,8 @@ export const Playlists = ({
               playlists={playlists}
               isEnrolled={isEnrolled}
               swapMember={swapMember}
+              setSelectedId={setSelectedId}
+              selectedId={selectedId}
             />
           </>
         ) : (

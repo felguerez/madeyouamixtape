@@ -4,29 +4,53 @@ import { useUser } from "../../lib/hooks";
 import styled from "@emotion/styled";
 import { SwapMember } from "../../lib/models/swapMember";
 
-export const SelectedPlaylist = () => {
-  const { spotifyUser } = useUser();
-  const [playlist, setPlaylist] = useState<any>([]);
+export const SelectedPlaylist = ({
+  selectedId,
+}: {
+  selectedId: string;
+}) => {
+  const { spotifyUser, user } = useUser();
+  const [playlist, setPlaylist] = useState<any>(null);
+  console.log("user:", user);
   useEffect(() => {
     async function fetchData() {
-      const request = await fetch(
-        `/api/spotify/users/${spotifyUser.spotify_id}/playlists`
-      ).catch((err) => {
-        console.log("err:", err);
-      });
-      const { items } = await request.json();
-      setPlaylist(items);
+      const request = await fetch(`/api/spotify/playlists/${selectedId}`).catch(
+        (err) => {
+          console.log("err:", err);
+        }
+      );
+      const playlist = await request.json();
+      setPlaylist(playlist);
     }
-    if (spotifyUser) {
-      // fetchData().catch((err) => {});
+    if (selectedId) {
+      fetchData().catch((err) => {});
     }
-  }, [spotifyUser]);
+  }, [selectedId]);
   return (
     <BodyContent>
       <Title>
         {spotifyUser ? `Your Selected Playlist` : "Loading your account ..."}
       </Title>
-      <div></div>
+      {playlist && (
+        <Container>
+          <PlaylistCard>
+            <CoverArt src={playlist.images[0].url} />
+            <Metadata>
+              <PlaylistName>{playlist.name}</PlaylistName>
+              <p>{playlist.tracks.length} tracks</p>
+              <Description
+                dangerouslySetInnerHTML={{ __html: playlist.description }}
+              />
+              <Creator>
+                by{" "}
+                <a href={playlist.owner.href} target="_blank">
+                  {playlist.owner.display_name}
+                </a>
+              </Creator>
+            </Metadata>
+          </PlaylistCard>
+        </Container>
+      )}
     </BodyContent>
   );
 };
@@ -37,5 +61,44 @@ const BodyContent = styled.div`
 
 const Title = styled.h2`
   padding: 0;
-  margin: 1.25rem 0 0 0;
+  margin: 1.3rem 0 0 0;
+`;
+
+const Container = styled.div`
+  margin-top: 1rem;
+`;
+
+const PlaylistCard = styled.div`
+  background: #282828;
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+`;
+
+const PlaylistName = styled.h4`
+  padding: 0;
+  margin: 0 0 1rem 0;
+`;
+
+const Description = styled.p`
+  margin: 0;
+`;
+
+const Creator = styled.span`
+  color: rgb(179, 179, 179);
+  font-size: 12px;
+  display: inline-block;
+`;
+
+const Metadata = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const CoverArt = styled.img`
+  height: auto;
+  width: 160px;
+  border-radius: 8px;
+  align-self: center;
+  margin-right: 1rem;
 `;

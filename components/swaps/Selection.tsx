@@ -1,6 +1,6 @@
 import { Playlists } from "../Playlists";
 import { SwapMember } from "../../lib/models/swapMember";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SelectedPlaylist } from "./SelectedPlaylist";
 import styled from "@emotion/styled";
 
@@ -12,6 +12,12 @@ const Selection = ({
   swapMember: SwapMember;
 }) => {
   const [activeTab, setActiveTab] = useState("selected");
+  const [selectedId, setSelectedId] = useState("");
+  useEffect(() => {
+    if (swapMember.selected_playlist_uri) {
+      setSelectedId(swapMember.selected_playlist_uri);
+    }
+  }, [swapMember]);
   return (
     <div>
       <Tabs>
@@ -32,9 +38,14 @@ const Selection = ({
           </Button>
         </Tab>
       </Tabs>
-      {activeTab === "selected" && <SelectedPlaylist />}
+      {activeTab === "selected" && <SelectedPlaylist selectedId={selectedId} />}
       {activeTab === "playlists" && (
-        <Playlists isEnrolled={isEnrolled} swapMember={swapMember} />
+        <Playlists
+          isEnrolled={isEnrolled}
+          swapMember={swapMember}
+          selectedId={selectedId}
+          setSelectedId={setSelectedId}
+        />
       )}
     </div>
   );

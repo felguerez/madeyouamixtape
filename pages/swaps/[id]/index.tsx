@@ -109,7 +109,6 @@ export async function getServerSideProps({ req, res, params }) {
 }
 
 const Title = styled.h1`
-  margin: 0;
   display: flex;
   justify-content: space-between;
   align-items: baseline;

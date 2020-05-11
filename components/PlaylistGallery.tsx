@@ -6,6 +6,8 @@ export const PlaylistGallery = ({
   playlists,
   isEnrolled,
   swapMember,
+  selectedId,
+  setSelectedId,
 }: {
   playlists: {
     images: { url: string }[];
@@ -16,8 +18,9 @@ export const PlaylistGallery = ({
   }[];
   swapMember: SwapMember;
   isEnrolled: boolean;
+  selectedId: string;
+  setSelectedId: any;
 }) => {
-  const [activeUri, setActiveUri] = useState("");
   const onClick = async (uri) => {
     const response = await fetch(`/api/swap_members/${swapMember.id}/update`, {
       method: "post",
@@ -27,19 +30,19 @@ export const PlaylistGallery = ({
       }),
     });
     if (response.ok) {
-      setActiveUri(uri);
+      setSelectedId(uri);
     }
   };
 
   useEffect(() => {
-    if (swapMember.selected_playlist_uri) {
-      setActiveUri(swapMember.selected_playlist_uri);
+    if (selectedId) {
+      setSelectedId(selectedId);
     }
-  }, [swapMember]);
+  }, [selectedId]);
   return (
     <Container>
       {playlists.map((playlist) => {
-        const isActive = activeUri === playlist.id;
+        const isActive = selectedId === playlist.id;
         return (
           <Playlist key={playlist.id}>
             <CoverArt src={playlist.images[0].url} />
