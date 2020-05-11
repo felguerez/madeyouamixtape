@@ -3,8 +3,15 @@ import { useEffect, useState } from "react";
 import { PlaylistGallery } from "./PlaylistGallery";
 import { useUser } from "../lib/hooks";
 import styled from "@emotion/styled";
+import { SwapMember } from "../lib/models/swapMember";
 
-export const Playlists = ({ isEnrolled }: { isEnrolled: boolean }) => {
+export const Playlists = ({
+  isEnrolled,
+  swapMember,
+}: {
+  isEnrolled: boolean;
+  swapMember: SwapMember;
+}) => {
   const { spotifyUser } = useUser();
   const [playlists, setPlaylists] = useState<any>([]);
   useEffect(() => {
@@ -35,7 +42,11 @@ export const Playlists = ({ isEnrolled }: { isEnrolled: boolean }) => {
               You can change your mind and choose a different playlist to share
               until the swap group owner shuffles the mixes.
             </p>
-            <PlaylistGallery playlists={playlists} isEnrolled={isEnrolled} />
+            <PlaylistGallery
+              playlists={playlists}
+              isEnrolled={isEnrolled}
+              swapMember={swapMember}
+            />
           </>
         ) : (
           <p>Loading your playlists...</p>

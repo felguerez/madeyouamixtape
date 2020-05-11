@@ -1,20 +1,45 @@
 import styled from "@emotion/styled";
+import { SwapMember } from "../lib/models/swapMember";
+import { useEffect, useState } from "react";
 
 export const PlaylistGallery = ({
   playlists,
   isEnrolled,
+  swapMember,
 }: {
   playlists: {
-    id: number;
     images: { url: string }[];
     name: string;
     owner: { href: string; display_name: string };
+    uri: string;
+    id: string;
   }[];
+  swapMember: SwapMember;
   isEnrolled: boolean;
 }) => {
+  const [activeUri, setActiveUri] = useState("");
+  const onClick = async (uri) => {
+    const response = await fetch(`/api/swap_members/${swapMember.id}/update`, {
+      method: "post",
+      body: JSON.stringify({
+        selected_playlist_uri: uri,
+        swap_id: swapMember.swap_id,
+      }),
+    });
+    if (response.ok) {
+      setActiveUri(uri);
+    }
+  };
+
+  useEffect(() => {
+    if (swapMember.selected_playlist_uri) {
+      setActiveUri(swapMember.selected_playlist_uri);
+    }
+  }, [swapMember]);
   return (
     <Container>
       {playlists.map((playlist) => {
+        const isActive = activeUri === playlist.uri;
         return (
           <Playlist key={playlist.id}>
             <CoverArt src={playlist.images[0].url} />
@@ -27,7 +52,11 @@ export const PlaylistGallery = ({
                 </a>
               </Creator>
             </Metadata>
-            {isEnrolled && <Button>Select</Button>}
+            {isEnrolled && (
+              <Button isActive={isActive} onClick={() => onClick(playlist.uri)}>
+                {isActive ? "Selected" : "Select"}
+              </Button>
+            )}
           </Playlist>
         );
       })}
@@ -81,11 +110,15 @@ const PlaylistName = styled.strong`
   margin-bottom: 0.5rem;
 `;
 
-const Button = styled.button`
+const Button = styled.button<{ isActive: boolean }>`
   padding: 0.25rem;
   margin-top: 1rem;
   font-size: 0.875rem;
+  width: 100%;
   &:hover {
-    background-color: #546e7a;
+    background-color: ${({ isActive }) => (isActive ? "#97C4D7" : "#546e7a")};
   }
+  background-color: ${({ isActive }) => (isActive ? "#97C4D7" : "#2e3c43")};
+  border: ${({ isActive }) => (isActive ? "1px solid #B0BEC5" : null)};
+  color: ${({ isActive }) => (isActive ? "#1E272C" : "#B0BEC5")};
 `;

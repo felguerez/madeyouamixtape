@@ -7,19 +7,22 @@ import { SwapManager } from "../../../components/SwapManager";
 import { User } from "../../../lib/models/user";
 import { useState } from "react";
 import { Playlists } from "../../../components/Playlists";
+import { SwapMember } from "../../../lib/models/swapMember";
 
 export default function ({
   swap,
   owner,
   swapMemberUsers,
   isEnrolled,
+  swapMember,
 }: {
-  swap: Swap & { id: number };
+  swap: Swap;
   owner: SpotifyUser;
   swapMemberUsers: User[];
+  swapMember: SwapMember;
   isEnrolled: boolean;
 }) {
-  const [activeTab, setActiveTab] = useState("members");
+  const [activeTab, setActiveTab] = useState("playlists");
   return (
     <div>
       <Title>
@@ -31,18 +34,18 @@ export default function ({
       <Tabs>
         <Tab>
           <Button
-            isActive={activeTab === "members"}
-            onClick={() => setActiveTab("members")}
-          >
-            Swap Group Members
-          </Button>
-        </Tab>
-        <Tab>
-          <Button
             onClick={() => setActiveTab("playlists")}
             isActive={activeTab === "playlists"}
           >
             View your playlists
+          </Button>
+        </Tab>
+        <Tab>
+          <Button
+            isActive={activeTab === "members"}
+            onClick={() => setActiveTab("members")}
+          >
+            Swap Group Members
           </Button>
         </Tab>
       </Tabs>
@@ -53,6 +56,9 @@ export default function ({
             Join this swap
           </SwapManager>
         </EnrollmentStatus>
+      )}
+      {activeTab === "playlists" && (
+        <Playlists isEnrolled={isEnrolled} swapMember={swapMember} />
       )}
       {activeTab === "members" && (
         <BodyContent>
@@ -68,7 +74,6 @@ export default function ({
           </Members>
         </BodyContent>
       )}
-      {activeTab === "playlists" && <Playlists isEnrolled={isEnrolled} />}
     </div>
   );
 }
@@ -84,22 +89,22 @@ export async function getServerSideProps({ req, res, params }) {
   const swap = await models.swap.getById(params.id);
   const owner = await models.spotifyUser.getById(swap.owner_id);
   const swapMembers = await models.swapMember.getBySwapId(swap.id);
+  const swapMember = swapMembers.filter(
+    (swapMember) => swapMember.user_id === sessionUser.id
+  )[0];
   const swapMemberUsers = await models.user.getByIds(
     swapMembers.map((member) => member.id)
   );
-  let isEnrolled = false;
-  if (swapMemberUsers && swapMemberUsers.length) {
-    isEnrolled = Boolean(
-      swapMemberUsers.filter(
-        (swapMemberUser) => swapMemberUser.id === sessionUser.id
-      )[0]
-    );
-  }
+  const swapMemberUser = swapMemberUsers.filter(
+    (user) => user.id === sessionUser.id
+  )[0];
+  const isEnrolled = Boolean(swapMemberUser);
   return {
     props: {
       swap: JSON.parse(JSON.stringify(swap)),
       owner: JSON.parse(JSON.stringify(owner)),
       swapMemberUsers: JSON.parse(JSON.stringify(swapMemberUsers)),
+      swapMember: JSON.parse(JSON.stringify(swapMember)),
       isEnrolled,
       spotifyId: sessionUser.spotify_id,
     },
