@@ -2,14 +2,13 @@ import fetch from "isomorphic-fetch";
 import { useEffect, useState } from "react";
 import { useUser } from "../../lib/hooks";
 import styled from "@emotion/styled";
-import { SwapMember } from "../../lib/models/swapMember";
 
 export const SelectedPlaylist = ({
   selectedId,
 }: {
   selectedId: string;
 }) => {
-  const { spotifyUser, user } = useUser();
+  const { spotifyUser } = useUser();
   const [playlist, setPlaylist] = useState<any>(null);
   useEffect(() => {
     async function fetchData() {
