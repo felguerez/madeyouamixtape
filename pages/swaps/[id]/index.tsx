@@ -18,8 +18,8 @@ export default function ({
   swap: Swap & {
     members: (SwapMember & { display_name: string })[];
     owner_display_name: string;
-    spotifyId: string;
   };
+  spotifyId: string;
   currentSwapMember: SwapMember & { isOwner: boolean };
 }) {
   const [activeTab, setActiveTab] = useState("members");
