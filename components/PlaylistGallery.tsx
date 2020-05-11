@@ -39,7 +39,7 @@ export const PlaylistGallery = ({
   return (
     <Container>
       {playlists.map((playlist) => {
-        const isActive = activeUri === playlist.uri;
+        const isActive = activeUri === playlist.id;
         return (
           <Playlist key={playlist.id}>
             <CoverArt src={playlist.images[0].url} />
@@ -53,7 +53,7 @@ export const PlaylistGallery = ({
               </Creator>
             </Metadata>
             {isEnrolled && (
-              <Button isActive={isActive} onClick={() => onClick(playlist.uri)}>
+              <Button isActive={isActive} onClick={() => onClick(playlist.id)}>
                 {isActive ? "Selected" : "Select"}
               </Button>
             )}
