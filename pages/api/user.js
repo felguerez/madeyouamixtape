@@ -5,15 +5,15 @@ export default async function user(req, res) {
   let session, user, spotifyUser;
   try {
     session = await getSession(req);
+    if (session) {
+      user = await models.user.getById(session.id);
+      spotifyUser = await models.spotifyUser.getBySpotifyId(user.spotify_id);
+    }
+    res
+      .status(200)
+      .json({ user: user || null, spotifyUser: spotifyUser || null });
   } catch (e) {
     console.log("e:", e);
+    res.status(500).json({ error: e });
   }
-  // TODO: is this db query necessary if we have the user in the session?
-  if (session) {
-    user = await models.user.getById(session.id);
-    spotifyUser = await models.spotifyUser.getBySpotifyId(user.spotify_id);
-  }
-  res
-    .status(200)
-    .json({ user: user || null, spotifyUser: spotifyUser || null });
 }
