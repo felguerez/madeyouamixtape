@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import styled from "@emotion/styled";
-import { ReactChildren } from "react";
 
 export const SwapManager = ({
   children,

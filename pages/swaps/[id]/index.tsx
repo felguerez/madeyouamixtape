@@ -4,7 +4,6 @@ import * as models from "../../../lib/models";
 import styled from "@emotion/styled";
 import { getSession } from "../../../lib/iron";
 import { SwapManager } from "../../../components/SwapManager";
-import { User } from "../../../lib/models/user";
 import { useState } from "react";
 import { Playlists } from "../../../components/Playlists";
 import { SwapMember } from "../../../lib/models/swapMember";
@@ -17,7 +16,7 @@ export default function ({
     members: (SwapMember & { display_name: string })[];
     owner_display_name: string;
   };
-  currentSwapMember: SwapMember;
+  currentSwapMember: SwapMember & { isOwner: boolean };
 }) {
   const [activeTab, setActiveTab] = useState("members");
   const isEnrolled = Boolean(currentSwapMember);
@@ -43,9 +42,19 @@ export default function ({
             onClick={() => setActiveTab("playlists")}
             isActive={activeTab === "playlists"}
           >
-            View your playlists
+            Your Selection
           </Button>
         </Tab>
+        {currentSwapMember.isOwner && (
+          <Tab>
+            <Button
+              onClick={() => setActiveTab("settings")}
+              isActive={activeTab === "settings"}
+            >
+              Settings
+            </Button>
+          </Tab>
+        )}
       </Tabs>
       {!isEnrolled && (
         <EnrollmentStatus>
@@ -79,6 +88,20 @@ export default function ({
           </Members>
         </BodyContent>
       )}
+      {activeTab === "settings" && (
+        <BodyContent>
+          <h2>Settings</h2>
+          <p>Manage your playlist swap's title and description here.</p>
+          <p>
+            When the group is ready, you can shuffle and distribute playlists
+            here, too.
+          </p>
+          <p>
+            Share this link with others to have them join your group:{" "}
+            <a href={`/swaps/${swap.id}/join`}>link</a>
+          </p>
+        </BodyContent>
+      )}
     </div>
   );
 }
@@ -97,6 +120,8 @@ export async function getServerSideProps({ req, res, params }) {
   const currentSwapMember = swapMembers.filter(
     (swapMember) => swapMember.user_id === sessionUser.id
   )[0];
+  const isOwner =
+    currentSwapMember && currentSwapMember.user_id === swap.owner_id;
   const swapMemberUsers = await models.user.getByIds(
     swapMembers.map((member) => member.id)
   );
@@ -106,7 +131,9 @@ export async function getServerSideProps({ req, res, params }) {
       owner: JSON.parse(JSON.stringify(owner)),
       swapMemberUsers: JSON.parse(JSON.stringify(swapMemberUsers)),
       swapMembers: JSON.parse(JSON.stringify(swapMembers)),
-      currentSwapMember: JSON.parse(JSON.stringify(currentSwapMember)),
+      currentSwapMember: JSON.parse(
+        JSON.stringify({ ...currentSwapMember, isOwner })
+      ),
       spotifyId: sessionUser.spotify_id,
     },
   };
