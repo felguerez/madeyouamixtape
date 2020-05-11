@@ -30,7 +30,9 @@ export const Playlists = ({
   }, [spotifyUser]);
   return (
     <BodyContent>
-      <h2>{spotifyUser ? `Your Playlists` : "Loading your account ..."}</h2>
+      <Title>
+        {spotifyUser ? `Your Playlists` : "Loading your account ..."}
+      </Title>
       <div>
         {playlists && playlists.length ? (
           <>
@@ -57,5 +59,9 @@ export const Playlists = ({
 };
 
 const BodyContent = styled.div`
-  padding: 2rem;
+  padding: 0 2rem 2rem 2rem;
+`;
+
+const Title = styled.h2`
+  margin: 1.25rem 0 0 0;
 `;

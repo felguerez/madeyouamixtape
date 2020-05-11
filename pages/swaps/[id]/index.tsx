@@ -8,6 +8,7 @@ import { Playlists } from "../../../components/Playlists";
 import { SwapMember } from "../../../lib/models/swapMember";
 import Members from "../../../components/swaps/Members";
 import Settings from "../../../components/swaps/Settings";
+import Selection from "../../../components/swaps/Selection";
 
 export default function ({
   swap,
@@ -66,7 +67,7 @@ export default function ({
         </EnrollmentStatus>
       )}
       {activeTab === "selection" && (
-        <Playlists isEnrolled={isEnrolled} swapMember={currentSwapMember} />
+        <Selection isEnrolled={isEnrolled} swapMember={currentSwapMember} />
       )}
       {activeTab === "members" && <Members swap={swap} />}
       {activeTab === "settings" && <Settings swap={swap} />}
