@@ -57,7 +57,10 @@ export default function ({
       {activeTab === "members" && (
         <BodyContent>
           <h2>Members</h2>
-          <p>These people are swapping playlists with each other and finding new cool music.</p>
+          <p>
+            These people are swapping playlists with each other and finding new
+            cool music.
+          </p>
           <Members>
             {swapMemberUsers.map((member) => {
               return <li key={member.id}>{member.display_name}</li>;
@@ -70,19 +73,28 @@ export default function ({
   );
 }
 
-export async function getServerSideProps({ req, params }) {
+export async function getServerSideProps({ req, res, params }) {
   const sessionUser = await getSession(req);
+  if (!sessionUser) {
+    res.writeHead(302, {
+      Location: "/",
+    });
+    res.end();
+  }
   const swap = await models.swap.getById(params.id);
   const owner = await models.spotifyUser.getById(swap.owner_id);
   const swapMembers = await models.swapMember.getBySwapId(swap.id);
   const swapMemberUsers = await models.user.getByIds(
     swapMembers.map((member) => member.id)
   );
-  const isEnrolled = Boolean(
-    swapMemberUsers?.filter(
-      (swapMemberUser) => swapMemberUser.id === sessionUser.id
-    )[0]
-  );
+  let isEnrolled = false;
+  if (swapMemberUsers && swapMemberUsers.length) {
+    isEnrolled = Boolean(
+      swapMemberUsers.filter(
+        (swapMemberUser) => swapMemberUser.id === sessionUser.id
+      )[0]
+    );
+  }
   return {
     props: {
       swap: JSON.parse(JSON.stringify(swap)),

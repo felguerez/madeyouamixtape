@@ -32,7 +32,7 @@ export const swap = {
   getSwapsByUserId: async function getByUserId(
     userId
   ): Promise<Swap[] & { swap_member_count: number }> {
-    const query = escape`
+    return await db.query(escape`
       SELECT 
         swap.id, 
         swap.title, 
@@ -50,10 +50,7 @@ export const swap = {
         swap.title, 
         swap.description, 
         owner_display_name
-    `;
-    const results = await db.query(query);
-    console.log("results:", results);
-    return results;
+    `);
   },
 
   create: async function create({
