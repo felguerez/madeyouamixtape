@@ -40,8 +40,8 @@ export default function ({
         </Tab>
         <Tab>
           <Button
-            onClick={() => setActiveTab("playlists")}
-            isActive={activeTab === "playlists"}
+            onClick={() => setActiveTab("selection")}
+            isActive={activeTab === "selection"}
           >
             Your Selection
           </Button>
@@ -65,7 +65,7 @@ export default function ({
           </SwapManager>
         </EnrollmentStatus>
       )}
-      {activeTab === "playlists" && (
+      {activeTab === "selection" && (
         <Playlists isEnrolled={isEnrolled} swapMember={currentSwapMember} />
       )}
       {activeTab === "members" && <Members swap={swap} />}
