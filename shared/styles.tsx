@@ -31,7 +31,7 @@ const globals: SerializedStyles = css`
   button {
     display: inline-block;
     border: none;
-    padding: 1rem 2rem;
+    padding: 1rem;
     margin: 0;
     text-decoration: none;
     font-family: sans-serif;
@@ -44,9 +44,6 @@ const globals: SerializedStyles = css`
     background-color: #2e3c43;
     border-radius: 0.5rem;
     color: #b0bec5;
-    &:last-of-type {
-      margin: 0;
-    }
   }
 
   button:focus {

@@ -65,7 +65,7 @@ export default function ({
           </Members>
         </BodyContent>
       )}
-      {activeTab === "playlists" && <Playlists />}
+      {activeTab === "playlists" && <Playlists isEnrolled={isEnrolled} />}
     </div>
   );
 }

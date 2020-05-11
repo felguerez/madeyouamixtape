@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 
 export const PlaylistGallery = ({
   playlists,
+  isEnrolled,
 }: {
   playlists: {
     id: number;
@@ -9,6 +10,7 @@ export const PlaylistGallery = ({
     name: string;
     owner: { href: string; display_name: string };
   }[];
+  isEnrolled: boolean;
 }) => {
   return (
     <Container>
@@ -25,6 +27,7 @@ export const PlaylistGallery = ({
                 </a>
               </Creator>
             </Metadata>
+            {isEnrolled && <Button>Select</Button>}
           </Playlist>
         );
       })}
@@ -76,4 +79,10 @@ const PlaylistName = styled.strong`
   overflow: hidden;
   white-space: nowrap;
   margin-bottom: 0.5rem;
+`;
+
+const Button = styled.button`
+  padding: 0.25rem;
+  margin-top: 1rem;
+  font-size: 0.875rem;
 `;
