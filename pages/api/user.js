@@ -14,6 +14,7 @@ export default async function user(req, res) {
       .json({ user: user || null, spotifyUser: spotifyUser || null });
   } catch (e) {
     console.log("e:", e);
+    console.log("req:", req);
     res.status(500).json({ error: e });
   }
 }
