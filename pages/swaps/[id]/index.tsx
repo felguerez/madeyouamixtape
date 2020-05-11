@@ -1,5 +1,4 @@
 import { Swap } from "../../../lib/models/swap";
-import { SpotifyUser } from "../../../lib/models/spotifyUser";
 import * as models from "../../../lib/models";
 import styled from "@emotion/styled";
 import { getSession } from "../../../lib/iron";
@@ -8,6 +7,7 @@ import { useState } from "react";
 import { Playlists } from "../../../components/Playlists";
 import { SwapMember } from "../../../lib/models/swapMember";
 import Members from "../../../components/swaps/Members";
+import Settings from "../../../components/swaps/Settings";
 
 export default function ({
   swap,
@@ -69,20 +69,7 @@ export default function ({
         <Playlists isEnrolled={isEnrolled} swapMember={currentSwapMember} />
       )}
       {activeTab === "members" && <Members swap={swap} />}
-      {activeTab === "settings" && (
-        <BodyContent>
-          <h2>Settings</h2>
-          <p>Manage your playlist swap's title and description here.</p>
-          <p>
-            When the group is ready, you can shuffle and distribute playlists
-            here, too.
-          </p>
-          <p>
-            Share this link with others to have them join your group:{" "}
-            <a href={`/swaps/${swap.id}/join`}>link</a>
-          </p>
-        </BodyContent>
-      )}
+      {activeTab === "settings" && <Settings swap={swap} />}
     </div>
   );
 }
@@ -119,10 +106,6 @@ export async function getServerSideProps({ req, res, params }) {
     },
   };
 }
-
-const BodyContent = styled.div`
-  padding: 2rem;
-`;
 
 const Title = styled.h1`
   margin: 0;
