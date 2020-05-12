@@ -38,14 +38,16 @@ export default function () {
             Swap Group Members
           </Button>
         </Tab>
-        <Tab>
-          <Button
-            onClick={() => setActiveTab("selection")}
-            isActive={activeTab === "selection"}
-          >
-            Your Selection
-          </Button>
-        </Tab>
+        {currentSwapMember.isEnrolled && (
+          <Tab>
+            <Button
+              onClick={() => setActiveTab("selection")}
+              isActive={activeTab === "selection"}
+            >
+              Your Selection
+            </Button>
+          </Tab>
+        )}
         {currentSwapMember.isOwner && (
           <Tab>
             <Button
