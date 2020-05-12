@@ -6,11 +6,11 @@ import Settings from "../../../components/swaps/Settings";
 import Selection from "../../../components/swaps/Selection";
 import { useRouter } from "next/router";
 import { useSwap } from "../../../lib/hooks";
+import { ReceivedPlaylist } from "../../../components/swaps/Received";
 
 export default function () {
   const [activeTab, setActiveTab] = useState("members");
   const router = useRouter();
-  console.log('router.query.id:', router.query.id);
   const data = useSwap(router.query.id);
   if (!data || !data.swap) {
     return (
@@ -49,6 +49,16 @@ export default function () {
             </Button>
           </Tab>
         )}
+        {currentSwapMember.received_playlist_id && (
+          <Tab>
+            <Button
+              onClick={() => setActiveTab("received")}
+              isActive={activeTab === "received"}
+            >
+              Your New Playlist
+            </Button>
+          </Tab>
+        )}
         {currentSwapMember.isOwner && (
           <Tab>
             <Button
@@ -78,6 +88,11 @@ export default function () {
         <Selection
           isEnrolled={currentSwapMember.isEnrolled}
           swapMember={currentSwapMember}
+        />
+      )}
+      {activeTab === "received" && (
+        <ReceivedPlaylist
+          receivedPlaylistId={currentSwapMember.received_playlist_id}
         />
       )}
       {activeTab === "settings" && <Settings swap={swap} />}

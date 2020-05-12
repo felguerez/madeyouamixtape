@@ -13,22 +13,23 @@ export default async (req, res) => {
         res.end();
       }
       swap = await models.swap.getById(req.query.id);
-      const playlists = swap.members
-        .filter((member) => member.user_id !== sessionUser.id)
-        .map((member) => member.selected_playlist_id);
+
       swap.members.forEach(async (member, i) => {
+        const playlists = swap.members
+          .filter((swappingMember) => {
+            return swappingMember.user_id != member.id;
+          })
+          .map((member) => member.selected_playlist_id);
         try {
           await models.swapMember.receivePlaylist({
             id: member.id,
-            received_playlist_id: playlists[i % playlists.length],
+            received_playlist_id:
+              playlists[Math.floor(Math.random() * playlists.length)],
           });
         } catch (e) {
           console.log("e:", e);
         }
       });
-      // TODO: finish the swap, shuffle the playlists
-      // TODO: get all swap members by swap ID
-      //
       res.writeHead(302, { Location: `/swaps/${req.query.id}` });
       res.end();
       break;
