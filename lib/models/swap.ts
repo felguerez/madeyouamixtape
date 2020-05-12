@@ -37,6 +37,15 @@ export const swap = {
     };
   },
 
+  all: async function all(): Promise<Swap[]> {
+    return await db.query(escape`
+      SELECT swap.title, swap.description, swap.id, user.display_name AS owner_display_name
+      FROM swap
+      INNER JOIN user ON swap.owner_id = user.id
+      WHERE swap.owner_id = user.id
+    `);
+  },
+
   getSwapsByOwnerId: async function getByOwnerId(
     userId: number
   ): Promise<Swap[]> {

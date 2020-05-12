@@ -21,8 +21,20 @@ const swapsFetcher = (url: string) =>
 
 const swapFetcher = (url: string) => fetch(url).then((r) => r.json());
 
+export function useMySwaps(userId) {
+  const { data, error } = useSWR(`/api/users/${userId}/swaps`, swapsFetcher);
+  const swaps = data?.swaps;
+  const finished = Boolean(data);
+  const hasSwaps = Boolean(swaps);
+
+  useEffect(() => {
+    if (!finished) return;
+  }, [finished, hasSwaps]);
+  return error ? null : swaps;
+}
+
 export function useSwaps() {
-  const { data, error } = useSWR("/api/swaps", swapsFetcher);
+  const { data, error } = useSWR(`/api/swaps`, swapsFetcher);
   const swaps = data?.swaps;
   const finished = Boolean(data);
   const hasSwaps = Boolean(swaps);

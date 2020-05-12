@@ -9,8 +9,8 @@ export const SwapList = ({
   return swaps.length ? (
     <div>
       <p>
-        You're currently participating in {swaps.length} swap{" "}
-        {swaps.length > 1 ? "groups" : "group"}:
+        The following {swaps.length} swap{" "}
+        {swaps.length > 1 ? "groups" : "group"} are happening right now:
       </p>
       {swaps.map(({ id, title, owner_display_name, swap_member_count }) => (
         <SwapCard key={id}>
@@ -33,6 +33,10 @@ const SwapCard = styled.div`
   background: #282828;
   padding: 1rem;
   border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  &:last-of-type {
+    margin-bottom: 0;
+  }
 `;
 
 const Title = styled.h2`

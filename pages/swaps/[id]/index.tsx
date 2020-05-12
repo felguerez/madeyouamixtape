@@ -10,6 +10,7 @@ import Members from "../../../components/swaps/Members";
 import Settings from "../../../components/swaps/Settings";
 import Selection from "../../../components/swaps/Selection";
 import { serialize } from "../../../lib/utils";
+import { swapMember } from "../../../lib/models";
 
 export default function ({
   swap,
@@ -65,7 +66,12 @@ export default function ({
       {!currentSwapMember.isEnrolled && (
         <EnrollmentStatus>
           You aren't participating yet.{" "}
-          <SwapManager id={swap.id} action="join" spotify_id={spotifyId}>
+          <SwapManager
+            id={swap.id}
+            action="join"
+            spotify_id={spotifyId}
+            user_id={currentSwapMember.user_id}
+          >
             Join this swap
           </SwapManager>
         </EnrollmentStatus>

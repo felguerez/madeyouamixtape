@@ -5,12 +5,14 @@ import styled from "@emotion/styled";
 export const SwapManager = ({
   children,
   spotify_id,
+  user_id,
   action,
   id,
 }: {
   children: React.ReactNode;
   spotify_id: string;
   action?: "join" | "create";
+  user_id: number;
   id?: number;
 }) => {
   switch (action) {
@@ -33,7 +35,7 @@ export const SwapManager = ({
       return (
         <form
           method="post"
-          action="/api/swaps"
+          action={`/api/users/${user_id}/swaps`}
           css={css`
             display: inline;
           `}

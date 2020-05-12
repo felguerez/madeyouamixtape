@@ -22,7 +22,7 @@ const Home = () => {
           <a>playlist swaps</a>
         </Link>{" "}
         happening right now or you can{" "}
-        <SwapManager spotify_id={user.spotify_id}>
+        <SwapManager spotify_id={user.spotify_id} user_id={user.id}>
           start a new playlist swap.
         </SwapManager>
       </p>
