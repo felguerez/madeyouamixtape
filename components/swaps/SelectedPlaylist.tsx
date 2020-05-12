@@ -3,11 +3,7 @@ import { useEffect, useState } from "react";
 import { useUser } from "../../lib/hooks";
 import styled from "@emotion/styled";
 
-export const SelectedPlaylist = ({
-  selectedId,
-}: {
-  selectedId: string;
-}) => {
+export const SelectedPlaylist = ({ selectedId }: { selectedId: string }) => {
   const { spotifyUser } = useUser();
   const [playlist, setPlaylist] = useState<any>(null);
   useEffect(() => {
@@ -27,7 +23,11 @@ export const SelectedPlaylist = ({
   return (
     <BodyContent>
       <Title>
-        {spotifyUser ? `Your Selected Playlist` : "Loading your account ..."}
+        {!spotifyUser
+          ? "Loading your account ..."
+          : selectedId
+          ? `Your Selected Playlist`
+          : "Select a playlist to share"}
       </Title>
       {playlist && (
         <Container>
