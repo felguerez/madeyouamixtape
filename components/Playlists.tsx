@@ -69,5 +69,5 @@ const BodyContent = styled.div`
 `;
 
 const Title = styled.h2`
-  margin: 1.25rem 0 0 0;
+  margin: 1.35rem 0 0 0;
 `;

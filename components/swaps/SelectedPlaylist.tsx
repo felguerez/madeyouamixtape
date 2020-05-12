@@ -59,7 +59,7 @@ const BodyContent = styled.div`
 
 const Title = styled.h2`
   padding: 0;
-  margin: 1.3rem 0 0 0;
+  margin: 1.35rem 0 0 0;
 `;
 
 const Container = styled.div`
