@@ -6,6 +6,7 @@ export const SCOPES: string[] = [
   "user-read-currently-playing",
   "user-read-playback-state",
   "playlist-modify-private",
+  "playlist-modify-public",
   "playlist-read-private",
   "playlist-read-collaborative",
 ];

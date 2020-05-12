@@ -2,6 +2,7 @@ import fetch from "isomorphic-fetch";
 import { useEffect, useState } from "react";
 import { useUser } from "../../lib/hooks";
 import styled from "@emotion/styled";
+import { ButtonLink } from "../SwapManager";
 
 export const ReceivedPlaylist = ({
   receivedPlaylistId,
@@ -24,6 +25,17 @@ export const ReceivedPlaylist = ({
       fetchData().catch((err) => {});
     }
   }, [receivedPlaylistId]);
+
+  const onFollow = async () => {
+    const request = await fetch(
+      `/api/spotify/playlists/${receivedPlaylistId}/follow`
+    ).catch((err) => {
+      console.log("err:", err);
+    });
+    if (request.ok) {
+      alert("nice");
+    }
+  };
   return (
     <BodyContent>
       <Title>
@@ -47,6 +59,7 @@ export const ReceivedPlaylist = ({
                   {playlist.owner.display_name}
                 </a>
               </Creator>
+              <ButtonLink onClick={onFollow}>Follow this playlist</ButtonLink>
             </Metadata>
           </PlaylistCard>
         </Container>
