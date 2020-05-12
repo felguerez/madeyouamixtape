@@ -3,15 +3,15 @@ import { getSession } from "../../../../lib/iron";
 
 export default async (req, res) => {
   const sessionUser = await getSession(req);
-  if (!sessionUser) {
-    res.writeHead(302, {
-      Location: "/",
-    });
-    res.end();
-  }
   let swap;
   switch (req.method) {
-    case "PUT":
+    case "POST":
+      if (!sessionUser) {
+        res.writeHead(302, {
+          Location: "/",
+        });
+        res.end();
+      }
       swap = await models.swap.getById(req.query.id);
       const playlists = swap.members
         .filter((member) => member.user_id !== sessionUser.id)
