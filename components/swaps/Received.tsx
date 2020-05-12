@@ -51,7 +51,7 @@ export const ReceivedPlaylist = ({
             <CoverArt src={playlist.images[0].url} />
             <Metadata>
               <PlaylistName>{playlist.name}</PlaylistName>
-              <p>{playlist.tracks.items.length} tracks</p>
+              <TrackLength>{playlist.tracks.items.length} tracks</TrackLength>
               <Description
                 dangerouslySetInnerHTML={{ __html: playlist.description }}
               />
@@ -123,4 +123,8 @@ const CoverArt = styled.img`
   border-radius: 8px;
   align-self: center;
   margin-right: 1rem;
+`;
+
+const TrackLength = styled.p`
+  margin-bottom: 0.5rem;
 `;
