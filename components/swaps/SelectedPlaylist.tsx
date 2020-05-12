@@ -35,7 +35,7 @@ export const SelectedPlaylist = ({ selectedId }: { selectedId: string }) => {
             <CoverArt src={playlist.images[0].url} />
             <Metadata>
               <PlaylistName>{playlist.name}</PlaylistName>
-              <p>{playlist.tracks.length} tracks</p>
+              <p>{playlist.tracks.items.length} tracks</p>
               <Description
                 dangerouslySetInnerHTML={{ __html: playlist.description }}
               />
@@ -73,7 +73,7 @@ const PlaylistCard = styled.div`
   display: flex;
 `;
 
-const PlaylistName = styled.h4`
+const PlaylistName = styled.h3`
   padding: 0;
   margin: 0 0 1rem 0;
 `;

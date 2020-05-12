@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useUser } from "../../lib/hooks";
 import styled from "@emotion/styled";
 import { ButtonLink } from "../SwapManager";
+import { css } from "@emotion/core";
 
 export const ReceivedPlaylist = ({
   receivedPlaylistId,
@@ -36,6 +37,7 @@ export const ReceivedPlaylist = ({
       alert("nice");
     }
   };
+  console.log('playlist:', playlist);
   return (
     <BodyContent>
       <Title>
@@ -49,7 +51,7 @@ export const ReceivedPlaylist = ({
             <CoverArt src={playlist.images[0].url} />
             <Metadata>
               <PlaylistName>{playlist.name}</PlaylistName>
-              <p>{playlist.tracks.length} tracks</p>
+              <p>{playlist.tracks.items.length} tracks</p>
               <Description
                 dangerouslySetInnerHTML={{ __html: playlist.description }}
               />
@@ -59,7 +61,14 @@ export const ReceivedPlaylist = ({
                   {playlist.owner.display_name}
                 </a>
               </Creator>
-              <ButtonLink onClick={onFollow}>Follow this playlist</ButtonLink>
+              <ButtonLink
+                css={css`
+                  margin-top: 0.5rem;
+                `}
+                onClick={onFollow}
+              >
+                Follow this playlist
+              </ButtonLink>
             </Metadata>
           </PlaylistCard>
         </Container>
@@ -88,13 +97,13 @@ const PlaylistCard = styled.div`
   display: flex;
 `;
 
-const PlaylistName = styled.h4`
+const PlaylistName = styled.h3`
   padding: 0;
   margin: 0 0 1rem 0;
 `;
 
 const Description = styled.p`
-  margin: 0;
+  margin: 0 0 0.5rem 0;
 `;
 
 const Creator = styled.span`

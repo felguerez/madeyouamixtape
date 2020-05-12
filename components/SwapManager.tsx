@@ -55,6 +55,7 @@ export const ButtonLink = styled.button`
   border: none;
   padding: 0;
   margin: 0;
+  text-align: left;
   color: rgba(94, 215, 255, 1);
   &:visited {
     color: rgba(94, 215, 255, 1);
