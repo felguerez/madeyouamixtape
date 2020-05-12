@@ -6,7 +6,7 @@ export default async function swapMembers(req, res) {
   switch (req.method) {
     case "POST":
       const body = JSON.parse(req.body);
-      await models.swapMember.update({
+      await models.swapMember.selectPlaylist({
         id: req.query.id,
         selected_playlist_id: body.selected_playlist_id,
       });

@@ -40,7 +40,20 @@ export const swapMember = {
     return await this.getById(swap_id);
   },
 
-  update: async function update({
+  receivePlaylist: async function receivePlaylist({
+    id,
+    received_playlist_id,
+  }): Promise<SwapMember> {
+    const query = escape`
+    UPDATE swap_member
+    SET received_playlist_id = ${received_playlist_id}
+    WHERE id=${id}
+`;
+    await db.query(query);
+    return await this.getById(id);
+  },
+
+  selectPlaylist: async function selectPlaylist({
     id,
     selected_playlist_id,
   }): Promise<SwapMember> {

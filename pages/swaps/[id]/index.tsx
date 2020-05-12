@@ -10,15 +10,16 @@ import { useSwap } from "../../../lib/hooks";
 export default function () {
   const [activeTab, setActiveTab] = useState("members");
   const router = useRouter();
+  console.log('router.query.id:', router.query.id);
   const data = useSwap(router.query.id);
-  const { swap, currentSwapMember, spotifyId } = data;
-  if (!data || !swap) {
+  if (!data || !data.swap) {
     return (
       <div>
         <Title>Loading ...</Title>
       </div>
     );
   }
+  const { swap, currentSwapMember, spotifyId } = data;
   return (
     <div>
       <Title>
@@ -72,13 +73,13 @@ export default function () {
           </SwapManager>
         </EnrollmentStatus>
       )}
+      {activeTab === "members" && <Members swap={swap} />}
       {activeTab === "selection" && (
         <Selection
           isEnrolled={currentSwapMember.isEnrolled}
           swapMember={currentSwapMember}
         />
       )}
-      {activeTab === "members" && <Members swap={swap} />}
       {activeTab === "settings" && <Settings swap={swap} />}
     </div>
   );

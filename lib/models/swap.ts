@@ -29,7 +29,8 @@ export const swap = {
       SELECT 
         swap_member.id, 
         swap_member.selected_playlist_id, 
-        user.display_name
+        user.display_name,
+        user.id AS user_id
       FROM swap_member
       INNER JOIN user ON swap_member.user_id = user.id
       WHERE swap_member.swap_id = ${id}
