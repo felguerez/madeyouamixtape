@@ -1,5 +1,6 @@
 import * as db from "../db";
 import escape from "sql-template-strings";
+import { SwapMember } from "./swapMember";
 
 export type Swap = {
   title: string;
@@ -10,7 +11,9 @@ export type Swap = {
 };
 
 export const swap = {
-  getById: async function getById(id: number): Promise<Swap & { id: number }> {
+  getById: async function getById(
+    id: number
+  ): Promise<Swap & { id: number; members: SwapMember[] }> {
     const [swap] = await db.query(escape`
       SELECT 
         swap.title, 

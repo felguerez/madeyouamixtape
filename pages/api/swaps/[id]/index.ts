@@ -11,17 +11,12 @@ export default async (req, res) => {
     res.end();
   }
   const swap = await models.swap.getById(req.query.id);
-  const owner = await models.spotifyUser.getById(swap.owner_id);
-  const swapMembers = await models.swapMember.getBySwapId(swap.id);
-  const currentSwapMember = swapMembers.filter(
+  const currentSwapMember = swap.members.filter(
     (swapMember) => swapMember.user_id === sessionUser.id
   )[0];
   const isOwner =
     currentSwapMember !== undefined &&
     currentSwapMember.user_id === swap.owner_id;
-  const swapMemberUsers = await models.user.getByIds(
-    swapMembers.map((member) => member.id)
-  );
   const isEnrolled = Boolean(currentSwapMember);
   res.status(200).json({
     swap,
