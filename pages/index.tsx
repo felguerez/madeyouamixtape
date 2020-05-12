@@ -1,12 +1,44 @@
 import { useUser } from "../lib/hooks";
-import { SwapManager } from "../components/SwapManager";
+import { ButtonLink, SwapManager } from "../components/SwapManager";
 import { Welcome } from "../components/home/Welcome";
 import Link from "next/link";
+import Form from "../components/home/form";
+import { useState } from "react";
+import Router from "next/router";
 
 const Home = () => {
   const identity = useUser();
+  const [isOpen, setIsOpen] = useState(false);
+  const [error, setError] = useState("");
   if (!identity.user) return <Welcome />;
   const { user, spotifyUser } = identity;
+  async function handleSubmit(e) {
+    event.preventDefault();
+
+    if (error) setError("");
+
+    const body = {
+      spotify_id: e.currentTarget.spotify_id.value,
+      title: e.currentTarget.title.value,
+      description: e.currentTarget.description.value,
+    };
+
+    try {
+      const res = await fetch(`/api/users/${user.id}/swaps`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      if (res.status === 200) {
+        Router.push("/");
+      } else {
+        throw new Error(await res.text());
+      }
+    } catch (error) {
+      console.error("An unexpected error happened occurred:", error);
+      setError(error.message);
+    }
+  }
   return (
     <>
       <h1>Made You A Mixtape</h1>
@@ -22,10 +54,25 @@ const Home = () => {
           <a>playlist swaps</a>
         </Link>{" "}
         happening right now or you can{" "}
-        <SwapManager spotify_id={user.spotify_id} user_id={user.id}>
+        <ButtonLink onClick={() => setIsOpen((isOpen) => !isOpen)}>
           start a new playlist swap.
-        </SwapManager>
+        </ButtonLink>
       </p>
+      {isOpen && (
+        <>
+          <div className="login">
+            <Form errorMessage={error} onSubmit={handleSubmit} />
+          </div>
+          <style jsx>{`
+            .login {
+              max-width: 21rem;
+              padding: 1rem;
+              border: 1px solid #ccc;
+              border-radius: 4px;
+            }
+          `}</style>
+        </>
+      )}
     </>
   );
 };

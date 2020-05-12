@@ -50,7 +50,7 @@ export const SwapManager = ({
   }
 };
 
-const ButtonLink = styled.button`
+export const ButtonLink = styled.button`
   background: none;
   border: none;
   padding: 0;
