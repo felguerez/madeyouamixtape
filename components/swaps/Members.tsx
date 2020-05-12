@@ -12,10 +12,12 @@ const Members = ({ swap }) => {
         {swap.members.map((member) => {
           return (
             <li key={member.id}>
-              <MemberName>{member.display_name}</MemberName>
-              {member.selected_playlist_id && (
-                <ReadyToShareStatus>Ready to share</ReadyToShareStatus>
-              )}
+              <MemberName>
+                {member.display_name}
+                {member.selected_playlist_id && (
+                  <ReadyToShareStatus>Ready to share</ReadyToShareStatus>
+                )}
+              </MemberName>
             </li>
           );
         })}
@@ -33,6 +35,8 @@ const Container = styled.ul`
 
 const ReadyToShareStatus = styled.span`
   color: rgba(172, 234, 110);
+  font-weight: normal;
+  margin-left: 0.5rem;
 `;
 
 const MemberName = styled.h4`

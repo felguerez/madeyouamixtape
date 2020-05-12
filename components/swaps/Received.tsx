@@ -56,7 +56,7 @@ export const ReceivedPlaylist = ({
 };
 
 const BodyContent = styled.div`
-  padding: 0 2rem 2rem 2rem;
+  padding: 2rem;
 `;
 
 const Title = styled.h2`
