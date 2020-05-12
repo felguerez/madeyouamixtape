@@ -1,5 +1,6 @@
 import { Swap } from "../lib/models/swap";
 import styled from "@emotion/styled";
+import Link from "next/link";
 
 export const SwapList = ({
   swaps,
@@ -15,7 +16,9 @@ export const SwapList = ({
       {swaps.map(({ id, title, owner_display_name, swap_member_count }) => (
         <SwapCard key={id}>
           <Title>
-            <a href={`/swaps/${id}`}>{title}</a>
+            <Link href={`/swaps/${id}`}>
+              <a>{title}</a>
+            </Link>
           </Title>
           <OwnerLabel>by {owner_display_name}</OwnerLabel>
           {swap_member_count > 1 && <p>{swap_member_count} members</p>}
