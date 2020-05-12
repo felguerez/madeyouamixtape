@@ -1,30 +1,24 @@
-import { Swap } from "../../../lib/models/swap";
-import * as models from "../../../lib/models";
 import styled from "@emotion/styled";
-import { getSession } from "../../../lib/iron";
 import { SwapManager } from "../../../components/SwapManager";
 import { useState } from "react";
-import { Playlists } from "../../../components/Playlists";
-import { SwapMember } from "../../../lib/models/swapMember";
 import Members from "../../../components/swaps/Members";
 import Settings from "../../../components/swaps/Settings";
 import Selection from "../../../components/swaps/Selection";
-import { serialize } from "../../../lib/utils";
-import { swapMember } from "../../../lib/models";
+import { useRouter } from "next/router";
+import { useSwap } from "../../../lib/hooks";
 
-export default function ({
-  swap,
-  currentSwapMember,
-  spotifyId,
-}: {
-  swap: Swap & {
-    members: (SwapMember & { display_name: string })[];
-    owner_display_name: string;
-  };
-  spotifyId: string;
-  currentSwapMember: SwapMember & { isOwner: boolean; isEnrolled: boolean };
-}) {
+export default function () {
   const [activeTab, setActiveTab] = useState("members");
+  const router = useRouter();
+  const data = useSwap(router.query.id);
+  const { swap, currentSwapMember, spotifyId } = data;
+  if (!data || !swap) {
+    return (
+      <div>
+        <Title>Loading ...</Title>
+      </div>
+    );
+  }
   return (
     <div>
       <Title>
@@ -88,43 +82,6 @@ export default function ({
   );
 }
 
-export async function getServerSideProps({ req, res, params }) {
-  const sessionUser = await getSession(req);
-  if (!sessionUser) {
-    res.writeHead(302, {
-      Location: "/",
-    });
-    res.end();
-  }
-  const swap = await models.swap.getById(params.id);
-  const owner = await models.spotifyUser.getById(swap.owner_id);
-  const swapMembers = await models.swapMember.getBySwapId(swap.id);
-  const currentSwapMember = swapMembers.filter(
-    (swapMember) => swapMember.user_id === sessionUser.id
-  )[0];
-  const isOwner =
-    currentSwapMember !== undefined &&
-    currentSwapMember.user_id === swap.owner_id;
-  const swapMemberUsers = await models.user.getByIds(
-    swapMembers.map((member) => member.id)
-  );
-  const isEnrolled = Boolean(currentSwapMember);
-  return {
-    props: {
-      swap: serialize(swap),
-      owner: serialize(owner),
-      swapMemberUsers: serialize(swapMemberUsers),
-      swapMembers: serialize(swapMembers),
-      currentSwapMember: serialize({
-        ...currentSwapMember,
-        isOwner,
-        isEnrolled,
-      }),
-      spotifyId: sessionUser.spotify_id,
-    },
-  };
-}
-
 const Title = styled.h1`
   display: flex;
   justify-content: space-between;
@@ -152,7 +109,6 @@ const Owner = styled.p`
 
 const ParticipationBadge = styled.p`
   color: #009688;
-  //font-style: italic;
   background-color: #2e3c43;
   display: inline-block;
   border-radius: 0.5rem;

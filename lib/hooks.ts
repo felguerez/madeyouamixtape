@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import Router from "next/router";
 import useSWR from "swr";
+import { Swap } from "./models/swap";
+import { SwapMember } from "./models/swapMember";
 
 const userFetcher = (url: string) =>
   fetch(url)
@@ -46,18 +48,23 @@ export function useSwaps() {
 }
 
 export function useSwap(id) {
-  if (!id) return;
   const { data, error } = useSWR(`/api/swaps/${id}`, swapFetcher);
-  const swap = data?.swap;
-  const owner = data?.owner;
+  const swap: Swap & {
+    members: (SwapMember & { display_name: string })[];
+    owner_display_name: string;
+  } = data?.swap;
+  const currentSwapMember: SwapMember & {
+    isOwner: boolean;
+    isEnrolled: boolean;
+  } = data?.currentSwapMember;
+  const spotifyId: string = data?.spotifyId;
   const finished = Boolean(data);
-  const hasSwap = Boolean(swap);
 
   useEffect(() => {
     if (!finished) return;
-  }, [finished, hasSwap]);
+  }, [finished]);
 
-  return error ? null : { swap, owner };
+  return error ? null : { swap, currentSwapMember, spotifyId };
 }
 
 export function useUser({
