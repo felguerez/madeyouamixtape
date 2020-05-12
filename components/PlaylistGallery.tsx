@@ -45,7 +45,9 @@ export const PlaylistGallery = ({
         const isActive = selectedId === playlist.id;
         return (
           <Playlist key={playlist.id}>
-            <CoverArt src={playlist.images[0].url} />
+            {playlist.images.length && (
+              <CoverArt src={playlist.images[0].url} />
+            )}
             <Metadata>
               <PlaylistName>{playlist.name}</PlaylistName>
               <Creator>

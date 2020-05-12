@@ -37,7 +37,7 @@ export const ReceivedPlaylist = ({
       alert("nice");
     }
   };
-  console.log('playlist:', playlist);
+  console.log("playlist:", playlist);
   return (
     <BodyContent>
       <Title>
@@ -48,7 +48,9 @@ export const ReceivedPlaylist = ({
       {playlist && (
         <Container>
           <PlaylistCard>
-            <CoverArt src={playlist.images[0].url} />
+            {playlist.images.length && (
+              <CoverArt src={playlist.images[0].url} />
+            )}
             <Metadata>
               <PlaylistName>{playlist.name}</PlaylistName>
               <TrackLength>{playlist.tracks.items.length} tracks</TrackLength>

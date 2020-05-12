@@ -32,7 +32,9 @@ export const SelectedPlaylist = ({ selectedId }: { selectedId: string }) => {
       {playlist && (
         <Container>
           <PlaylistCard>
-            <CoverArt src={playlist.images[0].url} />
+            {playlist.images.length && (
+              <CoverArt src={playlist.images[0].url} />
+            )}
             <Metadata>
               <PlaylistName>{playlist.name}</PlaylistName>
               <p>{playlist.tracks.items.length} tracks</p>
