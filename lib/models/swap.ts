@@ -27,14 +27,16 @@ export const swap = {
     `);
     const members = await db.query(escape`
       SELECT 
-        swap_member.id, 
+        swap_member.id,
         swap_member.selected_playlist_id,
-        swap_member.received_playlist_id, 
+        swap_member.received_playlist_id,
+        swap_member.swap_id, 
         user.display_name,
         user.id AS user_id
       FROM swap_member
       INNER JOIN user ON swap_member.user_id = user.id
       WHERE swap_member.swap_id = ${id}
+      AND user.id = swap_member.user_id
     `);
     return {
       ...swap,
@@ -99,5 +101,23 @@ export const swap = {
     await db.query(query);
     const swaps = await this.getSwapsByOwnerId(owner_id);
     return swaps[0];
+  },
+  updateMetadata: async function updateMetadata({
+    title,
+    description,
+    id,
+  }: {
+    title: string;
+    description: string;
+    id: number;
+  }) {
+    const query = escape`
+      UPDATE swap
+      SET 
+        title = ${title},
+        description = ${description}
+       WHERE swap.id = ${id}
+    `;
+    await db.query(query);
   },
 };

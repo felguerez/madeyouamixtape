@@ -15,19 +15,19 @@ const Settings = ({ swap }: { swap: Swap }) => {
     if (error) setError("");
 
     const body = {
-      spotify_id: e.currentTarget.spotify_id.value,
       title: e.currentTarget.title.value,
       description: e.currentTarget.description.value,
     };
 
     try {
-      const res = await fetch(`/api/users/${swap.owner_id}/swaps`, {
-        method: "POST",
+      const res = await fetch(`/api/swaps/${swap.id}`, {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
       if (res.status === 200) {
-        Router.push("/");
+        setIsFormOpen((isFormOpen) => !isFormOpen);
+        setNotification("updated swap information");
       } else {
         throw new Error(await res.text());
       }
@@ -39,6 +39,11 @@ const Settings = ({ swap }: { swap: Swap }) => {
   return (
     <BodyContent>
       <h2>Settings</h2>
+      {notification && (
+        <Notification onClick={() => setNotification("")}>
+          {notification}
+        </Notification>
+      )}
       <p>
         Manage your playlist swap's title and description{" "}
         <ButtonLink onClick={() => setIsFormOpen((isFormOpen) => !isFormOpen)}>
@@ -46,7 +51,13 @@ const Settings = ({ swap }: { swap: Swap }) => {
         </ButtonLink>
         .
       </p>
-      {isFormOpen && <Form onSubmit={handleSubmit} errorMessage={error} />}
+      {isFormOpen && (
+        <Form
+          onSubmit={handleSubmit}
+          errorMessage={error}
+          initialValues={{ title: swap.title, description: swap.description }}
+        />
+      )}
       <h3>Complete the swap & shuffle playlists</h3>
       <p>
         When the group is ready, you can shuffle and distribute playlists here,
@@ -65,11 +76,6 @@ const Settings = ({ swap }: { swap: Swap }) => {
       >
         Complete & Shuffle
       </button>
-      {notification && (
-        <Notification onClick={() => setNotification("")}>
-          {notification}
-        </Notification>
-      )}
       <p>
         Share this link with others to have them join your group:{" "}
         <a href={`/swaps/${swap.id}/join`}>link</a>
@@ -81,7 +87,7 @@ const Settings = ({ swap }: { swap: Swap }) => {
 export default Settings;
 
 const BodyContent = styled.div`
-  padding: 2rem;
+  padding: 2rem 0;
 `;
 
 const Notification = styled.p`

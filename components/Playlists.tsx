@@ -65,9 +65,9 @@ export const Playlists = ({
 };
 
 const BodyContent = styled.div`
-  padding: 0 2rem 2rem 2rem;
+  padding: 0;
 `;
 
 const Title = styled.h2`
-  margin: 1.35rem 0 0 0;
+  margin: 1.3rem 0 0 0;
 `;

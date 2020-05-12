@@ -11,5 +11,5 @@ const Join = () => {
 export default Join;
 
 const BodyContent = styled.div`
-  padding: 2rem;
+  padding: 2rem 0;
 `;

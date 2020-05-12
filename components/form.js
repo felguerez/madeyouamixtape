@@ -64,7 +64,7 @@ const Form = ({ isLogin, errorMessage, onSubmit }) => (
       .submit > button {
         padding: 0.5rem 1rem;
         cursor: pointer;
-        background: #fff;
+        background: #2E3C43;
         border: 1px solid #ccc;
         border-radius: 4px;
       }

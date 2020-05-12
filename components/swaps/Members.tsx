@@ -44,5 +44,5 @@ const MemberName = styled.h4`
 `;
 
 const BodyContent = styled.div`
-  padding: 2rem;
+  padding: 2rem 0;
 `;

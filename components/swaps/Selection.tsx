@@ -54,7 +54,7 @@ const Selection = ({
 const Tabs = styled.ul`
   list-style: none;
   display: flex;
-  padding-left: 2rem;
+  padding-left: 0;
   margin: 0;
 `;
 

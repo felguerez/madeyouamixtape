@@ -5,6 +5,16 @@ export default async (req, res) => {
   const sessionUser = await getSession(req);
   let swap;
   switch (req.method) {
+    case "PUT":
+      const { title, description } = req.body;
+      await models.swap.updateMetadata({
+        title,
+        description,
+        id: req.query.id,
+      });
+      res.status(200).json({});
+      break;
+    // shuffle playlists
     case "POST":
       if (!sessionUser) {
         res.writeHead(302, {
