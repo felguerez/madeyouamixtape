@@ -31,6 +31,7 @@ const Home = () => {
       });
       if (res.status === 200) {
         Router.push("/");
+        setIsOpen(false);
       } else {
         throw new Error(await res.text());
       }
@@ -61,7 +62,11 @@ const Home = () => {
       {isOpen && (
         <>
           <div className="login">
-            <Form errorMessage={error} onSubmit={handleSubmit} />
+            <Form
+              errorMessage={error}
+              onSubmit={handleSubmit}
+              spotifyId={spotifyUser.spotify_id}
+            />
           </div>
           <style jsx>{`
             .login {

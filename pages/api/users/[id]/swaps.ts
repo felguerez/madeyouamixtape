@@ -5,7 +5,11 @@ export default async function swaps(req, res) {
   const session = await getSession(req);
   switch (req.method) {
     case "POST":
-      const swap = await models.swap.create({ owner_id: session.id });
+      const swap = await models.swap.create({
+        owner_id: session.id,
+        description: req.body.description,
+        title: req.body.title,
+      });
       let swapMember = await models.swapMember.create({
         swap_id: swap.id,
         user_id: session.id,
@@ -21,4 +25,3 @@ export default async function swaps(req, res) {
       console.log("ERROR unhandled method ", req.method);
   }
 }
-

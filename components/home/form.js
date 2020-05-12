@@ -1,4 +1,4 @@
-const Form = ({ errorMessage, onSubmit }) => (
+const Form = ({ errorMessage, onSubmit, spotifyId }) => (
   <form onSubmit={onSubmit}>
     <label>
       <span>Title</span>
@@ -17,6 +17,7 @@ const Form = ({ errorMessage, onSubmit }) => (
         required
         placeholder="What's the vibe?"
       />
+      <input type="hidden" name="spotify_id" value={spotifyId} />
     </label>
 
     <div className="submit">
