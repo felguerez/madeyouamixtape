@@ -25,7 +25,7 @@ export const PlaylistGallery = ({
     const response = await fetch(`/api/swap_members/${swapMember.id}/update`, {
       method: "post",
       body: JSON.stringify({
-        selected_playlist_uri: uri,
+        selected_playlist_id: uri,
         swap_id: swapMember.swap_id,
       }),
     });

@@ -4,7 +4,8 @@ import escape from "sql-template-strings";
 export type SwapMember = {
   swap_id: number;
   user_id: number;
-  selected_playlist_uri: string;
+  selected_playlist_id: string;
+  received_playlist_id: string;
   id: number;
 };
 
@@ -41,11 +42,11 @@ export const swapMember = {
 
   update: async function update({
     id,
-    selected_playlist_uri,
+    selected_playlist_id,
   }): Promise<SwapMember> {
     const query = escape`
     UPDATE swap_member
-    SET selected_playlist_uri = ${selected_playlist_uri}
+    SET selected_playlist_id = ${selected_playlist_id}
     WHERE id=${id}
 `;
     await db.query(query);

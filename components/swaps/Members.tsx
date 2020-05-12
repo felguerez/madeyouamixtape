@@ -13,7 +13,7 @@ const Members = ({ swap }) => {
           return (
             <li key={member.id}>
               <MemberName>{member.display_name}</MemberName>
-              {member.selected_playlist_uri && (
+              {member.selected_playlist_id && (
                 <ReadyToShareStatus>Ready to share</ReadyToShareStatus>
               )}
             </li>

@@ -14,8 +14,8 @@ const Selection = ({
   const [activeTab, setActiveTab] = useState("selected");
   const [selectedId, setSelectedId] = useState("");
   useEffect(() => {
-    if (swapMember.selected_playlist_uri) {
-      setSelectedId(swapMember.selected_playlist_uri);
+    if (swapMember.selected_playlist_id) {
+      setSelectedId(swapMember.selected_playlist_id);
     }
   }, [swapMember]);
   return (

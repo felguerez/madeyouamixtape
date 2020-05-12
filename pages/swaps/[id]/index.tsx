@@ -9,6 +9,7 @@ import { SwapMember } from "../../../lib/models/swapMember";
 import Members from "../../../components/swaps/Members";
 import Settings from "../../../components/swaps/Settings";
 import Selection from "../../../components/swaps/Selection";
+import { serialize } from "../../../lib/utils";
 
 export default function ({
   swap,
@@ -20,15 +21,16 @@ export default function ({
     owner_display_name: string;
   };
   spotifyId: string;
-  currentSwapMember: SwapMember & { isOwner: boolean };
+  currentSwapMember: SwapMember & { isOwner: boolean; isEnrolled: boolean };
 }) {
   const [activeTab, setActiveTab] = useState("members");
-  const isEnrolled = Boolean(currentSwapMember);
   return (
     <div>
       <Title>
         <span>{swap.title}</span>
-        {isEnrolled && <ParticipationBadge>Participating</ParticipationBadge>}
+        {currentSwapMember.isEnrolled && (
+          <ParticipationBadge>Participating</ParticipationBadge>
+        )}
       </Title>
       <Owner>By {swap.owner_display_name}</Owner>
       <Description>{swap.description}</Description>
@@ -60,7 +62,7 @@ export default function ({
           </Tab>
         )}
       </Tabs>
-      {!isEnrolled && (
+      {!currentSwapMember.isEnrolled && (
         <EnrollmentStatus>
           You aren't participating yet.{" "}
           <SwapManager id={swap.id} action="join" spotify_id={spotifyId}>
@@ -69,7 +71,10 @@ export default function ({
         </EnrollmentStatus>
       )}
       {activeTab === "selection" && (
-        <Selection isEnrolled={isEnrolled} swapMember={currentSwapMember} />
+        <Selection
+          isEnrolled={currentSwapMember.isEnrolled}
+          swapMember={currentSwapMember}
+        />
       )}
       {activeTab === "members" && <Members swap={swap} />}
       {activeTab === "settings" && <Settings swap={swap} />}
@@ -92,19 +97,23 @@ export async function getServerSideProps({ req, res, params }) {
     (swapMember) => swapMember.user_id === sessionUser.id
   )[0];
   const isOwner =
-    currentSwapMember && currentSwapMember.user_id === swap.owner_id;
+    currentSwapMember !== undefined &&
+    currentSwapMember.user_id === swap.owner_id;
   const swapMemberUsers = await models.user.getByIds(
     swapMembers.map((member) => member.id)
   );
+  const isEnrolled = Boolean(currentSwapMember);
   return {
     props: {
-      swap: JSON.parse(JSON.stringify(swap)),
-      owner: JSON.parse(JSON.stringify(owner)),
-      swapMemberUsers: JSON.parse(JSON.stringify(swapMemberUsers)),
-      swapMembers: JSON.parse(JSON.stringify(swapMembers)),
-      currentSwapMember: JSON.parse(
-        JSON.stringify({ ...currentSwapMember, isOwner,  })
-      ),
+      swap: serialize(swap),
+      owner: serialize(owner),
+      swapMemberUsers: serialize(swapMemberUsers),
+      swapMembers: serialize(swapMembers),
+      currentSwapMember: serialize({
+        ...currentSwapMember,
+        isOwner,
+        isEnrolled,
+      }),
       spotifyId: sessionUser.spotify_id,
     },
   };
@@ -137,7 +146,7 @@ const Owner = styled.p`
 
 const ParticipationBadge = styled.p`
   color: #009688;
-  font-style: italic;
+  //font-style: italic;
   background-color: #2e3c43;
   display: inline-block;
   border-radius: 0.5rem;
