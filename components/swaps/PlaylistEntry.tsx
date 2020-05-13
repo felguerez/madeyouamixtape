@@ -1,17 +1,22 @@
 import { Playlists } from "../Playlists";
 import { SwapMember } from "../../lib/models/swapMember";
-import { useEffect, useState } from "react";
+import { Dispatch, useEffect, useState } from "react";
 import { SelectedPlaylist } from "./SelectedPlaylist";
 import styled from "@emotion/styled";
 
-const Selection = ({
+const PlaylistEntry = ({
   isEnrolled,
   swapMember,
+  dispatch,
+  playlistViewer,
+  playlists,
 }: {
   isEnrolled: boolean;
   swapMember: SwapMember;
+  dispatch: Dispatch<any>;
+  playlistViewer: "selected" | "selector";
+  playlists: any;
 }) => {
-  const [activeTab, setActiveTab] = useState("selected");
   const [selectedId, setSelectedId] = useState("");
   useEffect(() => {
     if (swapMember.selected_playlist_id) {
@@ -23,26 +28,40 @@ const Selection = ({
       <Tabs>
         <Tab>
           <Button
-            onClick={() => setActiveTab("selected")}
-            isActive={activeTab === "selected"}
+            onClick={() =>
+              dispatch({
+                type: "SET_PLAYLIST_VIEWER",
+                playlistViewer: "selected",
+              })
+            }
+            isActive={playlistViewer === "selected"}
           >
             Selected playlist
           </Button>
         </Tab>
         <Tab>
           <Button
-            onClick={() => setActiveTab("playlists")}
-            isActive={activeTab === "playlists"}
+            onClick={() =>
+              dispatch({
+                type: "SET_PLAYLIST_VIEWER",
+                playlistViewer: "selector",
+              })
+            }
+            isActive={playlistViewer === "selector"}
           >
             Choose a playlist
           </Button>
         </Tab>
       </Tabs>
-      {activeTab === "selected" && <SelectedPlaylist selectedId={selectedId} />}
-      {activeTab === "playlists" && (
+      {playlistViewer === "selected" && (
+        <SelectedPlaylist selectedId={selectedId} />
+      )}
+      {playlistViewer === "selector" && (
         <Playlists
+          dispatch={dispatch}
           isEnrolled={isEnrolled}
           swapMember={swapMember}
+          playlists={playlists}
           selectedId={selectedId}
           setSelectedId={setSelectedId}
         />
@@ -73,4 +92,4 @@ const Button = styled.button<{ isActive: boolean }>`
   color: ${({ isActive }) => (isActive ? "#ffffff" : "#B0BEC5")};
 `;
 
-export default Selection;
+export default PlaylistEntry;

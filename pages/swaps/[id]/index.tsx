@@ -1,25 +1,41 @@
 import styled from "@emotion/styled";
 import { SwapManager } from "../../../components/SwapManager";
-import { useState } from "react";
+import { useState, useReducer } from "react";
 import Members from "../../../components/swaps/Members";
 import Settings from "../../../components/swaps/Settings";
-import Selection from "../../../components/swaps/Selection";
+import PlaylistEntry from "../../../components/swaps/PlaylistEntry";
 import { useRouter } from "next/router";
 import { useSwap } from "../../../lib/hooks";
 import { ReceivedPlaylist } from "../../../components/swaps/Received";
 
 export default function () {
-  const [activeTab, setActiveTab] = useState("members");
   const router = useRouter();
   const data = useSwap(router.query.id);
-  if (!data || !data.swap) {
+  if (!data) {
     return (
       <div>
         <Title>Loading ...</Title>
       </div>
     );
   }
-  const { swap, currentSwapMember, spotifyId } = data;
+  const [
+    {
+      swap,
+      currentSwapMember,
+      spotifyId,
+      activeTab,
+      playlistViewer,
+      playlists,
+    },
+    dispatch,
+  ] = data;
+  if (!swap) {
+    return (
+      <div>
+        <Title>Loading ...</Title>
+      </div>
+    );
+  }
   return (
     <div>
       <Title>
@@ -34,7 +50,9 @@ export default function () {
         <Tab>
           <Button
             isActive={activeTab === "members"}
-            onClick={() => setActiveTab("members")}
+            onClick={() =>
+              dispatch({ type: "SET_ACTIVE_TAB", activeTab: "members" })
+            }
           >
             Swap Group Members
           </Button>
@@ -42,8 +60,10 @@ export default function () {
         {currentSwapMember.isEnrolled && (
           <Tab>
             <Button
-              onClick={() => setActiveTab("selection")}
-              isActive={activeTab === "selection"}
+              onClick={() =>
+                dispatch({ type: "SET_ACTIVE_TAB", activeTab: "entry" })
+              }
+              isActive={activeTab === "entry"}
             >
               Your Selection
             </Button>
@@ -52,7 +72,9 @@ export default function () {
         {currentSwapMember.received_playlist_id && (
           <Tab>
             <Button
-              onClick={() => setActiveTab("received")}
+              onClick={() =>
+                dispatch({ type: "SET_ACTIVE_TAB", activeTab: "received" })
+              }
               isActive={activeTab === "received"}
             >
               Your New Playlist
@@ -62,7 +84,9 @@ export default function () {
         {currentSwapMember.isOwner && (
           <Tab>
             <Button
-              onClick={() => setActiveTab("settings")}
+              onClick={() =>
+                dispatch({ type: "SET_ACTIVE_TAB", activeTab: "settings" })
+              }
               isActive={activeTab === "settings"}
             >
               Settings
@@ -84,10 +108,13 @@ export default function () {
         </EnrollmentStatus>
       )}
       {activeTab === "members" && <Members swap={swap} />}
-      {activeTab === "selection" && (
-        <Selection
+      {activeTab === "entry" && (
+        <PlaylistEntry
           isEnrolled={currentSwapMember.isEnrolled}
           swapMember={currentSwapMember}
+          dispatch={dispatch}
+          playlistViewer={playlistViewer}
+          playlists={playlists}
         />
       )}
       {activeTab === "received" && (

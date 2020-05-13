@@ -1,5 +1,5 @@
 import fetch from "isomorphic-fetch";
-import { useEffect, useState } from "react";
+import { Dispatch, useEffect, useState } from "react";
 import { PlaylistGallery } from "./PlaylistGallery";
 import { useUser } from "../lib/hooks";
 import styled from "@emotion/styled";
@@ -10,14 +10,17 @@ export const Playlists = ({
   swapMember,
   selectedId,
   setSelectedId,
+  playlists,
+  dispatch,
 }: {
   isEnrolled: boolean;
   swapMember: SwapMember;
   selectedId: string;
   setSelectedId: any;
+  playlists: any;
+  dispatch: Dispatch<any>;
 }) => {
   const { spotifyUser } = useUser();
-  const [playlists, setPlaylists] = useState<any>([]);
   useEffect(() => {
     async function fetchData() {
       const request = await fetch(
@@ -25,8 +28,8 @@ export const Playlists = ({
       ).catch((err) => {
         console.log("err:", err);
       });
-      const { items } = await request.json();
-      setPlaylists(items);
+      const playlists = await request.json();
+      dispatch({ type: "SET_PLAYLISTS", playlists });
     }
     if (spotifyUser) {
       fetchData().catch((err) => {});
@@ -38,7 +41,7 @@ export const Playlists = ({
         {spotifyUser ? `Your Playlists` : "Loading your account ..."}
       </Title>
       <div>
-        {playlists && playlists.length ? (
+        {playlists && playlists.items.length ? (
           <>
             <p>
               Select a playlist to send to one of your swap group mates. You'll
@@ -49,7 +52,7 @@ export const Playlists = ({
               until the swap group owner shuffles the mixes.
             </p>
             <PlaylistGallery
-              playlists={playlists}
+              playlists={playlists.items}
               isEnrolled={isEnrolled}
               swapMember={swapMember}
               setSelectedId={setSelectedId}

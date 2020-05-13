@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useReducer } from "react";
 import Router from "next/router";
 import useSWR from "swr";
 import { Swap } from "./models/swap";
 import { SwapMember } from "./models/swapMember";
+import { initialState, reducer } from "../reducers/swap-reducer";
 
 const userFetcher = (url: string) =>
   fetch(url)
@@ -49,6 +50,7 @@ export function useSwaps() {
 
 export function useSwap(id) {
   const { data, error } = useSWR(`/api/swaps/${id}`, swapFetcher);
+  const [state, dispatch] = useReducer(reducer, initialState);
   const swap: Swap & {
     members: (SwapMember & { display_name: string })[];
     owner_display_name: string;
@@ -62,9 +64,10 @@ export function useSwap(id) {
 
   useEffect(() => {
     if (!finished) return;
+    dispatch({ type: "SWAP_RECEIVED", swap, currentSwapMember, spotifyId });
   }, [finished]);
 
-  return error ? null : { swap, currentSwapMember, spotifyId };
+  return error ? null : [state, dispatch];
 }
 
 export function useUser({
