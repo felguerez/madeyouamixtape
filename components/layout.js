@@ -25,6 +25,10 @@ const Layout = (props) => (
         type="font/woff2"
         crossOrigin="anonymous"
       />
+      <link
+        href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet"
+      />
       <title>Made You A Mixtape</title>
     </Head>
 

@@ -1,7 +1,7 @@
 import { useUser } from "../lib/hooks";
 import Form from "../components/profile/form";
-import { Notification } from "../components/swaps/Settings";
 import { useState } from "react";
+import { Notification } from "../components/Notification";
 
 const Profile = () => {
   const identity = useUser();
@@ -37,9 +37,10 @@ const Profile = () => {
     <div>
       <h1>{identity.user ? "Your profile" : "Loading..."}</h1>
       {notification && (
-        <Notification onClick={() => setNotification("")}>
-          {notification}
-        </Notification>
+        <Notification
+          notification={notification}
+          setNotification={setNotification}
+        />
       )}
       <p>Update your info here.</p>
       {identity.user && (

@@ -2,8 +2,8 @@ import styled from "@emotion/styled";
 import { Swap } from "../../lib/models/swap";
 import Form from "../settings/form";
 import { useState } from "react";
-import Router from "next/router";
 import { ButtonLink } from "../SwapManager";
+import { Notification } from "../Notification";
 
 const Settings = ({ swap }: { swap: Swap }) => {
   const [notification, setNotification] = useState("");
@@ -40,9 +40,10 @@ const Settings = ({ swap }: { swap: Swap }) => {
     <BodyContent>
       <h2>Settings</h2>
       {notification && (
-        <Notification onClick={() => setNotification("")}>
-          {notification}
-        </Notification>
+        <Notification
+          notification={notification}
+          setNotification={setNotification}
+        />
       )}
       <p>
         Manage your playlist swap's title and description{" "}
@@ -88,11 +89,4 @@ export default Settings;
 
 const BodyContent = styled.div`
   padding: 2rem 0;
-`;
-
-export const Notification = styled.p`
-  border-radius: 0.5rem;
-  padding: 1rem;
-  color: rgba(172, 234, 110);
-  background-color: #282828;
 `;

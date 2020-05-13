@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 import { ButtonLink } from "../SwapManager";
 import { css } from "@emotion/core";
 import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
-import { Notification } from "./Settings";
+import { Notification } from "../Notification";
 
 export const ReceivedPlaylist = () => {
   const { spotifyUser } = useUser();
@@ -48,9 +48,10 @@ export const ReceivedPlaylist = () => {
           : `You've received a new playlist!`}
       </Title>
       {notification && (
-        <Notification onClick={() => setNotification("")}>
-          {notification}
-        </Notification>
+        <Notification
+          notification={notification}
+          setNotification={setNotification}
+        />
       )}
       {receivedPlaylist && (
         <Container>

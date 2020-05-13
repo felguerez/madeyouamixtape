@@ -4,6 +4,7 @@ import { getSession } from "../../../../../lib/iron";
 
 export default async (req, res) => {
   const { accessToken } = await getSession(req);
+  console.log('accessToken:', accessToken);
   try {
     const playlists = await fetch(
       `${SPOTIFY_API_BASE}users/${req.query.id}/playlists`,
