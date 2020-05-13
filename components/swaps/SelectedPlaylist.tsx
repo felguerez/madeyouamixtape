@@ -1,50 +1,58 @@
 import fetch from "isomorphic-fetch";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useUser } from "../../lib/hooks";
 import styled from "@emotion/styled";
+import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
 
-export const SelectedPlaylist = ({ selectedId }: { selectedId: string }) => {
+export const SelectedPlaylist = () => {
   const { spotifyUser } = useUser();
-  const [playlist, setPlaylist] = useState<any>(null);
+  const dispatch = useSwapDispatch();
+  const {
+    selectedPlaylist,
+    selectedPlaylistId,
+  } = useSwapState();
   useEffect(() => {
     async function fetchData() {
-      const request = await fetch(`/api/spotify/playlists/${selectedId}`).catch(
-        (err) => {
-          console.log("err:", err);
-        }
-      );
+      const request = await fetch(
+        `/api/spotify/playlists/${selectedPlaylistId}`
+      ).catch((err) => {
+        console.log("err:", err);
+      });
       const playlist = await request.json();
-      setPlaylist(playlist);
+      dispatch({ type: "SET_SELECTED_PLAYLIST", playlist });
     }
-    if (selectedId) {
+    if (selectedPlaylistId) {
       fetchData().catch((err) => {});
     }
-  }, [selectedId]);
+  }, [selectedPlaylistId]);
+  console.log('selectedPlaylist:', selectedPlaylist);
   return (
     <BodyContent>
       <Title>
         {!spotifyUser
           ? "Loading your account ..."
-          : selectedId
+          : selectedPlaylist
           ? `Your Selected Playlist`
           : "Select a playlist to share"}
       </Title>
-      {playlist && (
+      {selectedPlaylist && (
         <Container>
           <PlaylistCard>
-            {playlist.images.length && (
-              <CoverArt src={playlist.images[0].url} />
+            {selectedPlaylist.images.length && (
+              <CoverArt src={selectedPlaylist.images[0].url} />
             )}
             <Metadata>
-              <PlaylistName>{playlist.name}</PlaylistName>
-              <p>{playlist.tracks.items.length} tracks</p>
+              <PlaylistName>{selectedPlaylist.name}</PlaylistName>
+              <p>{selectedPlaylist.tracks.items.length} tracks</p>
               <Description
-                dangerouslySetInnerHTML={{ __html: playlist.description }}
+                dangerouslySetInnerHTML={{
+                  __html: selectedPlaylist.description,
+                }}
               />
               <Creator>
                 by{" "}
-                <a href={playlist.owner.href} target="_blank">
-                  {playlist.owner.display_name}
+                <a href={selectedPlaylist.owner.href} target="_blank">
+                  {selectedPlaylist.owner.display_name}
                 </a>
               </Creator>
             </Metadata>

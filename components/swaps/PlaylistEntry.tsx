@@ -1,28 +1,11 @@
 import { Playlists } from "../Playlists";
-import { SwapMember } from "../../lib/models/swapMember";
-import { Dispatch, useEffect, useState } from "react";
 import { SelectedPlaylist } from "./SelectedPlaylist";
 import styled from "@emotion/styled";
+import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
 
-const PlaylistEntry = ({
-  isEnrolled,
-  swapMember,
-  dispatch,
-  playlistViewer,
-  playlists,
-}: {
-  isEnrolled: boolean;
-  swapMember: SwapMember;
-  dispatch: Dispatch<any>;
-  playlistViewer: "selected" | "selector";
-  playlists: any;
-}) => {
-  const [selectedId, setSelectedId] = useState("");
-  useEffect(() => {
-    if (swapMember.selected_playlist_id) {
-      setSelectedId(swapMember.selected_playlist_id);
-    }
-  }, [swapMember]);
+const PlaylistEntry = () => {
+  const { playlistViewer } = useSwapState();
+  const dispatch = useSwapDispatch();
   return (
     <div>
       <Tabs>
@@ -31,10 +14,10 @@ const PlaylistEntry = ({
             onClick={() =>
               dispatch({
                 type: "SET_PLAYLIST_VIEWER",
-                playlistViewer: "selected",
+                playlistViewer: "selection",
               })
             }
-            isActive={playlistViewer === "selected"}
+            isActive={playlistViewer === "selection"}
           >
             Selected playlist
           </Button>
@@ -53,19 +36,8 @@ const PlaylistEntry = ({
           </Button>
         </Tab>
       </Tabs>
-      {playlistViewer === "selected" && (
-        <SelectedPlaylist selectedId={selectedId} />
-      )}
-      {playlistViewer === "selector" && (
-        <Playlists
-          dispatch={dispatch}
-          isEnrolled={isEnrolled}
-          swapMember={swapMember}
-          playlists={playlists}
-          selectedId={selectedId}
-          setSelectedId={setSelectedId}
-        />
-      )}
+      {playlistViewer === "selection" && <SelectedPlaylist />}
+      {playlistViewer === "selector" && <Playlists />}
     </div>
   );
 };

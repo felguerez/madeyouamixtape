@@ -1,13 +1,10 @@
 import styled from "@emotion/styled";
-import { SwapMember } from "../lib/models/swapMember";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useSwapDispatch, useSwapState } from "../contexts/swap-context";
 
 export const PlaylistGallery = ({
   playlists,
-  isEnrolled,
-  swapMember,
-  selectedId,
-  setSelectedId,
+  selectedPlaylistId,
 }: {
   playlists: {
     images: { url: string }[];
@@ -16,33 +13,40 @@ export const PlaylistGallery = ({
     uri: string;
     id: string;
   }[];
-  swapMember: SwapMember;
-  isEnrolled: boolean;
-  selectedId: string;
-  setSelectedId: any;
+  selectedPlaylistId: string;
 }) => {
-  const onClick = async (uri) => {
-    const response = await fetch(`/api/swap_members/${swapMember.id}/update`, {
-      method: "post",
-      body: JSON.stringify({
-        selected_playlist_id: uri,
-        swap_id: swapMember.swap_id,
-      }),
-    });
-    if (response.ok) {
-      setSelectedId(uri);
+  const { currentSwapMember } = useSwapState();
+  const dispatch = useSwapDispatch();
+  const onClick = async (id) => {
+    const currentSelectedId = selectedPlaylistId;
+    dispatch({ type: "SET_SELECTED_PLAYLIST_ID", selectedPlaylistId: id });
+    const response = await fetch(
+      `/api/swap_members/${currentSwapMember.id}/update`,
+      {
+        method: "post",
+        body: JSON.stringify({
+          selected_playlist_id: id,
+          swap_id: currentSwapMember.swap_id,
+        }),
+      }
+    );
+    if (!response.ok) {
+      dispatch({
+        type: "SET_SELECTED_PLAYLIST_ID",
+        selectedPlaylistId: currentSelectedId,
+      });
     }
   };
 
   useEffect(() => {
-    if (selectedId) {
-      setSelectedId(selectedId);
+    if (selectedPlaylistId) {
+      dispatch({ type: "SET_SELECTED_PLAYLIST_ID", selectedPlaylistId });
     }
-  }, [selectedId]);
+  }, [selectedPlaylistId]);
   return (
     <Container>
       {playlists.map((playlist) => {
-        const isActive = selectedId === playlist.id;
+        const isActive = selectedPlaylistId === playlist.id;
         return (
           <Playlist key={playlist.id}>
             {playlist.images.length && (
@@ -57,7 +61,7 @@ export const PlaylistGallery = ({
                 </a>
               </Creator>
             </Metadata>
-            {isEnrolled && (
+            {currentSwapMember.isEnrolled && (
               <Button isActive={isActive} onClick={() => onClick(playlist.id)}>
                 {isActive ? "Selected" : "Select"}
               </Button>

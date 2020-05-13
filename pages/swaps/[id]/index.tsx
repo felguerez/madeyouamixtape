@@ -1,41 +1,34 @@
 import styled from "@emotion/styled";
 import { SwapManager } from "../../../components/SwapManager";
-import { useState, useReducer } from "react";
+import { useEffect } from "react";
 import Members from "../../../components/swaps/Members";
 import Settings from "../../../components/swaps/Settings";
 import PlaylistEntry from "../../../components/swaps/PlaylistEntry";
 import { useRouter } from "next/router";
 import { useSwap } from "../../../lib/hooks";
 import { ReceivedPlaylist } from "../../../components/swaps/Received";
+import { useSwapDispatch, useSwapState } from "../../../contexts/swap-context";
 
 export default function () {
   const router = useRouter();
   const data = useSwap(router.query.id);
-  if (!data) {
+  const dispatch = useSwapDispatch();
+  const swapState = useSwapState();
+  console.log("swapState:", swapState);
+  const { swap, currentSwapMember, spotifyId, activeTab } = swapState;
+  useEffect(() => {
+    if (data && data.swap && !swap) {
+      dispatch({ type: "SWAP_RECEIVED", ...data });
+    }
+  }, [data.swap, swap]);
+  if (!data || !swap) {
     return (
       <div>
         <Title>Loading ...</Title>
       </div>
     );
   }
-  const [
-    {
-      swap,
-      currentSwapMember,
-      spotifyId,
-      activeTab,
-      playlistViewer,
-      playlists,
-    },
-    dispatch,
-  ] = data;
-  if (!swap) {
-    return (
-      <div>
-        <Title>Loading ...</Title>
-      </div>
-    );
-  }
+  console.log("activeTab:", activeTab);
   return (
     <div>
       <Title>
@@ -65,7 +58,7 @@ export default function () {
               }
               isActive={activeTab === "entry"}
             >
-              Your Selection
+              Your Playlist Entry
             </Button>
           </Tab>
         )}
@@ -108,15 +101,7 @@ export default function () {
         </EnrollmentStatus>
       )}
       {activeTab === "members" && <Members swap={swap} />}
-      {activeTab === "entry" && (
-        <PlaylistEntry
-          isEnrolled={currentSwapMember.isEnrolled}
-          swapMember={currentSwapMember}
-          dispatch={dispatch}
-          playlistViewer={playlistViewer}
-          playlists={playlists}
-        />
-      )}
+      {activeTab === "entry" && <PlaylistEntry />}
       {activeTab === "received" && (
         <ReceivedPlaylist
           receivedPlaylistId={currentSwapMember.received_playlist_id}

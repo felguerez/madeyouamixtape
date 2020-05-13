@@ -1,26 +1,14 @@
 import fetch from "isomorphic-fetch";
-import { Dispatch, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { PlaylistGallery } from "./PlaylistGallery";
 import { useUser } from "../lib/hooks";
 import styled from "@emotion/styled";
-import { SwapMember } from "../lib/models/swapMember";
+import { useSwapDispatch, useSwapState } from "../contexts/swap-context";
 
-export const Playlists = ({
-  isEnrolled,
-  swapMember,
-  selectedId,
-  setSelectedId,
-  playlists,
-  dispatch,
-}: {
-  isEnrolled: boolean;
-  swapMember: SwapMember;
-  selectedId: string;
-  setSelectedId: any;
-  playlists: any;
-  dispatch: Dispatch<any>;
-}) => {
+export const Playlists = () => {
   const { spotifyUser } = useUser();
+  const { selectedPlaylistId, playlists } = useSwapState();
+  const dispatch = useSwapDispatch();
   useEffect(() => {
     async function fetchData() {
       const request = await fetch(
@@ -53,10 +41,7 @@ export const Playlists = ({
             </p>
             <PlaylistGallery
               playlists={playlists.items}
-              isEnrolled={isEnrolled}
-              swapMember={swapMember}
-              setSelectedId={setSelectedId}
-              selectedId={selectedId}
+              selectedPlaylistId={selectedPlaylistId}
             />
           </>
         ) : (

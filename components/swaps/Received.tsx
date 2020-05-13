@@ -4,32 +4,33 @@ import { useUser } from "../../lib/hooks";
 import styled from "@emotion/styled";
 import { ButtonLink } from "../SwapManager";
 import { css } from "@emotion/core";
+import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
 
-export const ReceivedPlaylist = ({
-  receivedPlaylistId,
-}: {
-  receivedPlaylistId: string;
-}) => {
+export const ReceivedPlaylist = () => {
   const { spotifyUser } = useUser();
-  const [playlist, setPlaylist] = useState<any>(null);
+  const dispatch = useSwapDispatch();
+  const {
+    receivedPlaylist,
+    currentSwapMember: { received_playlist_id },
+  } = useSwapState();
   useEffect(() => {
     async function fetchData() {
       const request = await fetch(
-        `/api/spotify/playlists/${receivedPlaylistId}`
+        `/api/spotify/playlists/${received_playlist_id}`
       ).catch((err) => {
         console.log("err:", err);
       });
       const playlist = await request.json();
-      setPlaylist(playlist);
+      dispatch({ type: "SET_RECEIVED_PLAYLIST", playlist });
     }
-    if (receivedPlaylistId) {
+    if (received_playlist_id) {
       fetchData().catch((err) => {});
     }
-  }, [receivedPlaylistId]);
+  }, [received_playlist_id]);
 
   const onFollow = async () => {
     const request = await fetch(
-      `/api/spotify/playlists/${receivedPlaylistId}/follow`
+      `/api/spotify/playlists/${received_playlist_id}/follow`
     ).catch((err) => {
       console.log("err:", err);
     });
@@ -37,7 +38,6 @@ export const ReceivedPlaylist = ({
       alert("nice");
     }
   };
-  console.log("playlist:", playlist);
   return (
     <BodyContent>
       <Title>
@@ -45,22 +45,26 @@ export const ReceivedPlaylist = ({
           ? "Loading your account ..."
           : `You've received a new playlist!`}
       </Title>
-      {playlist && (
+      {receivedPlaylist && (
         <Container>
           <PlaylistCard>
-            {playlist.images.length && (
-              <CoverArt src={playlist.images[0].url} />
+            {receivedPlaylist.images.length && (
+              <CoverArt src={receivedPlaylist.images[0].url} />
             )}
             <Metadata>
-              <PlaylistName>{playlist.name}</PlaylistName>
-              <TrackLength>{playlist.tracks.items.length} tracks</TrackLength>
+              <PlaylistName>{receivedPlaylist.name}</PlaylistName>
+              <TrackLength>
+                {receivedPlaylist.tracks.items.length} tracks
+              </TrackLength>
               <Description
-                dangerouslySetInnerHTML={{ __html: playlist.description }}
+                dangerouslySetInnerHTML={{
+                  __html: receivedPlaylist.description,
+                }}
               />
               <Creator>
                 by{" "}
-                <a href={playlist.owner.href} target="_blank">
-                  {playlist.owner.display_name}
+                <a href={receivedPlaylist.owner.href} target="_blank">
+                  {receivedPlaylist.owner.display_name}
                 </a>
               </Creator>
               <ButtonLink
