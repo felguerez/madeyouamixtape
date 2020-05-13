@@ -1,35 +1,23 @@
 import { useState } from "react";
 
 const Form = ({ errorMessage, onSubmit, initialValues }) => {
-  const [title, setTitle] = useState(initialValues.title);
-  const [description, setDescription] = useState(initialValues.description);
+  const [displayName, setDisplayName] = useState(initialValues.display_name);
   return (
     <form onSubmit={onSubmit}>
       <label>
-        <span>Title</span>
+        <span>Display name</span>
         <input
           type="text"
-          name="title"
+          name="display_name"
           required
-          placeholder="Give your playlist exchange a name"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </label>
-      <label>
-        <span>Description</span>
-        <input
-          type="text"
-          name="description"
-          required
-          placeholder="What's the vibe?"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          value={displayName}
+          onChange={(e) => setDisplayName(e.target.value)}
+          placeholder="What should we call you?"
         />
       </label>
 
       <div className="submit">
-        <button type="submit">Update swap group</button>
+        <button type="submit">Update your info</button>
       </div>
 
       {errorMessage && <p className="error">{errorMessage}</p>}
@@ -61,7 +49,7 @@ const Form = ({ errorMessage, onSubmit, initialValues }) => {
         .submit > button {
           padding: 0.5rem 1rem;
           cursor: pointer;
-          background: #2E3C43;
+          background: #2e3c43;
           border-radius: 4px;
         }
         .submit > button:hover {
@@ -74,7 +62,7 @@ const Form = ({ errorMessage, onSubmit, initialValues }) => {
         form {
           max-width: 21rem;
           padding: 1rem;
-          border: 1px solid #2E3C43;
+          border: 1px solid #2e3c43;
           border-radius: 4px;
         }
       `}</style>

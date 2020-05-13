@@ -43,7 +43,7 @@ const Home = () => {
   return (
     <>
       <h1>Made You A Mixtape</h1>
-      <p>Hello, {spotifyUser.display_name}!</p>
+      <p>Hello, {user.display_name}!</p>
       <p>
         Welcome to Made You A Mixtape. Join a group and select a playlist you
         wanna share. You'll receive someone else's playlist, selected randomly,

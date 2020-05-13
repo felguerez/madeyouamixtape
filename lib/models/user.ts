@@ -1,6 +1,7 @@
 import * as db from "../db";
 import escape from "sql-template-strings";
 import { SpotifyUser } from "./spotifyUser";
+import { SwapMember } from "./swapMember";
 
 export type User = {
   display_name: string;
@@ -51,6 +52,7 @@ export const user = {
     await db.query(query);
     return await this.getBySpotifyId(spotify_id);
   },
+
   findOrCreate: async function findOrCreate({
     display_name,
     spotify_id,
@@ -61,5 +63,14 @@ export const user = {
       display_name,
       spotify_id,
     });
+  },
+
+  update: async function update({ display_name, id }) {
+    const query = escape`
+    UPDATE user
+    SET display_name = ${display_name}
+    WHERE id=${id}`;
+    await db.query(query);
+    return this.getById(id);
   },
 };

@@ -17,6 +17,11 @@ const Header = () => {
           {identity.user ? (
             <>
               <li>
+                <Link href="/profile">
+                  <a>Profile</a>
+                </Link>
+              </li>
+              <li>
                 <Link href="/swaps">
                   <a>Swaps</a>
                 </Link>

@@ -90,7 +90,7 @@ const BodyContent = styled.div`
   padding: 2rem 0;
 `;
 
-const Notification = styled.p`
+export const Notification = styled.p`
   border-radius: 0.5rem;
   padding: 1rem;
   color: rgba(172, 234, 110);

@@ -5,9 +5,11 @@ import styled from "@emotion/styled";
 import { ButtonLink } from "../SwapManager";
 import { css } from "@emotion/core";
 import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
+import { Notification } from "./Settings";
 
 export const ReceivedPlaylist = () => {
   const { spotifyUser } = useUser();
+  const [notification, setNotification] = useState("");
   const dispatch = useSwapDispatch();
   const {
     receivedPlaylist,
@@ -35,7 +37,7 @@ export const ReceivedPlaylist = () => {
       console.log("err:", err);
     });
     if (request.ok) {
-      alert("nice");
+      setNotification("You're subscribed! Check your Library in Spotify");
     }
   };
   return (
@@ -45,6 +47,11 @@ export const ReceivedPlaylist = () => {
           ? "Loading your account ..."
           : `You've received a new playlist!`}
       </Title>
+      {notification && (
+        <Notification onClick={() => setNotification("")}>
+          {notification}
+        </Notification>
+      )}
       {receivedPlaylist && (
         <Container>
           <PlaylistCard>
