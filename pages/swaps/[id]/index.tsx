@@ -14,7 +14,6 @@ export default function () {
   const data = useSwap(router.query.id);
   const dispatch = useSwapDispatch();
   const swapState = useSwapState();
-  console.log("swapState:", swapState);
   const { swap, currentSwapMember, spotifyId, activeTab } = swapState;
   useEffect(() => {
     if (data && data.swap && !swap) {
@@ -28,7 +27,6 @@ export default function () {
       </div>
     );
   }
-  console.log("activeTab:", activeTab);
   return (
     <div>
       <Title>
@@ -102,11 +100,7 @@ export default function () {
       )}
       {activeTab === "members" && <Members swap={swap} />}
       {activeTab === "entry" && <PlaylistEntry />}
-      {activeTab === "received" && (
-        <ReceivedPlaylist
-          receivedPlaylistId={currentSwapMember.received_playlist_id}
-        />
-      )}
+      {activeTab === "received" && <ReceivedPlaylist />}
       {activeTab === "settings" && <Settings swap={swap} />}
     </div>
   );

@@ -53,8 +53,7 @@ const Form = ({ errorMessage, onSubmit, spotifyId }) => (
       .submit > button {
         padding: 0.5rem 1rem;
         cursor: pointer;
-        background: #fff;
-        border: 1px solid #ccc;
+        background: #2e3c43;
         border-radius: 4px;
       }
       .submit > button:hover {

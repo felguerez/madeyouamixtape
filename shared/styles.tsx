@@ -28,6 +28,13 @@ const globals: SerializedStyles = css`
       color: rgba(172, 234, 110);
     }
   }
+  input {
+    font-size: 12px;
+    &:focus {
+      outline: 0;
+      box-shadow: 0 0 1px 3px rgba(255, 183, 72, 1);
+    }
+  }
   button {
     display: inline-block;
     border: none;

@@ -25,7 +25,6 @@ export const SelectedPlaylist = () => {
       fetchData().catch((err) => {});
     }
   }, [selectedPlaylistId]);
-  console.log('selectedPlaylist:', selectedPlaylist);
   return (
     <BodyContent>
       <Title>

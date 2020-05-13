@@ -72,7 +72,7 @@ const Home = () => {
             .login {
               max-width: 21rem;
               padding: 1rem;
-              border: 1px solid #ccc;
+              border: 1px solid #2e3c43;
               border-radius: 4px;
             }
           `}</style>
