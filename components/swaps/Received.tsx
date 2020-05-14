@@ -6,13 +6,14 @@ import { ButtonLink } from "../SwapManager";
 import { css } from "@emotion/core";
 import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
 import { Notification } from "../Notification";
-import {GRAY, SEPIA} from "../../shared/styles";
+import { GRAY } from "../../shared/styles";
 
 export const ReceivedPlaylist = () => {
   const { spotifyUser } = useUser();
   const [notification, setNotification] = useState("");
   const dispatch = useSwapDispatch();
   const {
+    swap,
     receivedPlaylist,
     currentSwapMember: { received_playlist_id },
   } = useSwapState();
@@ -41,8 +42,11 @@ export const ReceivedPlaylist = () => {
       setNotification("You're subscribed! Check your Library in Spotify");
     }
   };
+  const sender = swap.members.filter(
+    (member) => member.selected_playlist_id === received_playlist_id
+  )[0];
   return (
-    <BodyContent>
+    <div>
       <Title>
         {!spotifyUser
           ? "Loading your account ..."
@@ -54,6 +58,7 @@ export const ReceivedPlaylist = () => {
           setNotification={setNotification}
         />
       )}
+      <p>{sender ? sender.display_name : "anon"} sent you a playlist:</p>
       {receivedPlaylist && (
         <Container>
           <PlaylistCard>
@@ -88,17 +93,12 @@ export const ReceivedPlaylist = () => {
           </PlaylistCard>
         </Container>
       )}
-    </BodyContent>
+    </div>
   );
 };
 
-const BodyContent = styled.div`
-  padding: 2rem 0;
-`;
-
 const Title = styled.h2`
   padding: 0;
-  margin: 1.3rem 0 0 0;
 `;
 
 const Container = styled.div`

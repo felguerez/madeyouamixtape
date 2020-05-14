@@ -1,7 +1,11 @@
 import Link from "next/link";
 import styled from "@emotion/styled";
 import { useUser } from "../lib/hooks";
-import {DARK_GRAY, DARK_GREEN, LIGHT_BLUE, SEPIA, WHITE} from "../shared/styles";
+import {
+  DARK_GRAY,
+  LIGHT_BLUE,
+  WHITE,
+} from "../shared/styles";
 
 const Header = () => {
   const identity = useUser();

@@ -1,15 +1,11 @@
 import styled from "@emotion/styled";
-import {DARK_BLUE, LIGHT_GREEN} from "../../shared/styles";
+import { LIGHT_GREEN } from "../../shared/styles";
 
 const Members = ({ swap }) => {
   return (
-    <BodyContent>
+    <Container>
       <h2>Members</h2>
-      <p>
-        These people are swapping playlists with each other and finding new cool
-        music.
-      </p>
-      <Container>
+      <List>
         {swap.members.map((member) => {
           return (
             <li key={member.id}>
@@ -22,14 +18,17 @@ const Members = ({ swap }) => {
             </li>
           );
         })}
-      </Container>
-    </BodyContent>
+      </List>
+    </Container>
   );
 };
 
 export default Members;
 
-const Container = styled.ul`
+const Container = styled.div`
+  max-width: 240px;
+`;
+const List = styled.ul`
   list-style: none;
   padding-left: 0;
 `;

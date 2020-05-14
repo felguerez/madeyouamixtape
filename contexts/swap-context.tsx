@@ -10,7 +10,7 @@ export const initialState = {
   swap: undefined,
   currentSwapMember: undefined,
   spotifyId: undefined,
-  activeTab: "members",
+  activeTab: "entry",
   playlistViewer: "selection",
   playlists: {
     items: [],
@@ -23,7 +23,7 @@ export const initialState = {
 export type Action =
   | {
       type: typeof SET_PLAYLIST_VIEWER;
-      playlistViewer: "selection" | "selector" | "received";
+      playlistViewer: "selection" | "selector" | "received" | "members";
     }
   | {
       type: typeof SET_ACTIVE_TAB;

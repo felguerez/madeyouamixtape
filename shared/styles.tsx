@@ -87,7 +87,8 @@ const globals: SerializedStyles = css`
   input {
     padding: 8px;
     margin: 0.3rem 0 1rem;
-    border: 1px solid ${GRAY};
+    box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
+    border: 1px solid ${DARK_GRAY};
     border-radius: 4px;
   }
   .submit {

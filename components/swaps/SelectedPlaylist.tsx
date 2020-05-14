@@ -3,15 +3,12 @@ import { useEffect } from "react";
 import { useUser } from "../../lib/hooks";
 import styled from "@emotion/styled";
 import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
-import {DARK_GRAY, GRAY, SEPIA} from "../../shared/styles";
+import { DARK_GRAY, GRAY, SEPIA } from "../../shared/styles";
+import { ButtonLink } from "../SwapManager";
 
 export const SelectedPlaylist = () => {
-  const { spotifyUser } = useUser();
   const dispatch = useSwapDispatch();
-  const {
-    selectedPlaylist,
-    selectedPlaylistId,
-  } = useSwapState();
+  const { selectedPlaylist, selectedPlaylistId } = useSwapState();
   useEffect(() => {
     async function fetchData() {
       const request = await fetch(
@@ -28,15 +25,22 @@ export const SelectedPlaylist = () => {
   }, [selectedPlaylistId]);
   return (
     <BodyContent>
-      <Title>
-        {!spotifyUser
-          ? "Loading your account ..."
-          : selectedPlaylist
-          ? `Your Selected Playlist`
-          : "Select a playlist to share"}
-      </Title>
       {selectedPlaylist && (
         <Container>
+          <h2>Selection</h2>
+          <p>
+            Don't like this one?{" "}
+            <ButtonLink
+              onClick={() =>
+                dispatch({
+                  type: "SET_PLAYLIST_VIEWER",
+                  playlistViewer: "selector",
+                })
+              }
+            >
+              Choose a new playlist to share
+            </ButtonLink>
+          </p>
           <PlaylistCard>
             {selectedPlaylist.images.length && (
               <CoverArt src={selectedPlaylist.images[0].url} />
@@ -67,11 +71,6 @@ const BodyContent = styled.div`
   padding: 0;
 `;
 
-const Title = styled.h2`
-  padding: 0;
-  margin: 1.3rem 0 0 0;
-`;
-
 const Container = styled.div`
   margin-top: 1rem;
 `;
@@ -81,7 +80,7 @@ const PlaylistCard = styled.div`
   border-radius: 8px;
   padding: 1rem;
   display: flex;
-  box-shadow: 0 2px 2px -2px rgba(0,0,0,.2);
+  box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
 `;
 
 const PlaylistName = styled.h3`

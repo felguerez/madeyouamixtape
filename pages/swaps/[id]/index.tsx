@@ -13,7 +13,8 @@ import {
   DARK_GREEN,
   LIGHT_BLUE,
   LIGHT_GREEN,
-  SEPIA, WHITE,
+  SEPIA,
+  WHITE,
 } from "../../../shared/styles";
 
 export default function () {
@@ -21,7 +22,7 @@ export default function () {
   const data = useSwap(router.query.id);
   const dispatch = useSwapDispatch();
   const swapState = useSwapState();
-  const { swap, currentSwapMember, spotifyId, activeTab } = swapState;
+  const { swap, activeTab } = swapState;
   useEffect(() => {
     if (data && data.swap && !swap) {
       dispatch({ type: "SWAP_RECEIVED", ...data });
@@ -41,71 +42,7 @@ export default function () {
       </Title>
       <Owner>By {swap.owner_display_name}</Owner>
       <Description>{swap.description}</Description>
-      <Tabs>
-        <Tab>
-          <Button
-            isActive={activeTab === "members"}
-            onClick={() =>
-              dispatch({ type: "SET_ACTIVE_TAB", activeTab: "members" })
-            }
-          >
-            Swap Group Members
-          </Button>
-        </Tab>
-        {currentSwapMember.isEnrolled && (
-          <Tab>
-            <Button
-              onClick={() =>
-                dispatch({ type: "SET_ACTIVE_TAB", activeTab: "entry" })
-              }
-              isActive={activeTab === "entry"}
-            >
-              Your Playlist Entry
-            </Button>
-          </Tab>
-        )}
-        {currentSwapMember.received_playlist_id && (
-          <Tab>
-            <Button
-              onClick={() =>
-                dispatch({ type: "SET_ACTIVE_TAB", activeTab: "received" })
-              }
-              isActive={activeTab === "received"}
-            >
-              Your New Playlist
-            </Button>
-          </Tab>
-        )}
-        {currentSwapMember.isOwner && (
-          <Tab>
-            <Button
-              onClick={() =>
-                dispatch({ type: "SET_ACTIVE_TAB", activeTab: "settings" })
-              }
-              isActive={activeTab === "settings"}
-            >
-              Settings
-            </Button>
-          </Tab>
-        )}
-      </Tabs>
-      {!currentSwapMember.isEnrolled && (
-        <EnrollmentStatus>
-          You aren't participating yet.{" "}
-          <SwapManager
-            id={swap.id}
-            action="join"
-            spotify_id={spotifyId}
-            user_id={currentSwapMember.user_id}
-          >
-            Join this swap
-          </SwapManager>
-        </EnrollmentStatus>
-      )}
-      {activeTab === "members" && <Members swap={swap} />}
-      {activeTab === "entry" && <PlaylistEntry />}
-      {activeTab === "received" && <ReceivedPlaylist />}
-      {activeTab === "settings" && <Settings swap={swap} />}
+      <PlaylistEntry />
     </div>
   );
 }

@@ -24,31 +24,26 @@ export const Playlists = () => {
     }
   }, [spotifyUser]);
   return (
-    <BodyContent>
-      <Title>
-        {spotifyUser ? `Your Playlists` : "Loading your account ..."}
-      </Title>
-      <div>
-        {playlists && playlists.items.length ? (
-          <>
-            <p>
-              Select a playlist to send to one of your swap group mates. You'll
-              get someone else's playlist in return when they're shuffled.
-            </p>
-            <p>
-              You can change your mind and choose a different playlist to share
-              until the swap group owner shuffles the mixes.
-            </p>
-            <PlaylistGallery
-              playlists={playlists.items}
-              selectedPlaylistId={selectedPlaylistId}
-            />
-          </>
-        ) : (
-          <p>Loading your playlists...</p>
-        )}
-      </div>
-    </BodyContent>
+    <div>
+      {playlists && playlists.items.length ? (
+        <>
+          <p>
+            Select a playlist to send to one of your swap group mates. You'll
+            get someone else's playlist in return when they're shuffled.
+          </p>
+          <p>
+            You can change your mind and choose a different playlist to share
+            until the swap group owner shuffles the mixes.
+          </p>
+          <PlaylistGallery
+            playlists={playlists.items}
+            selectedPlaylistId={selectedPlaylistId}
+          />
+        </>
+      ) : (
+        <p>Loading your playlists...</p>
+      )}
+    </div>
   );
 };
 

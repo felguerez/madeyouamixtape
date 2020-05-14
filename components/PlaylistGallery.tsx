@@ -28,6 +28,7 @@ export const PlaylistGallery = ({
   const onClick = async (id) => {
     const currentSelectedId = selectedPlaylistId;
     dispatch({ type: "SET_SELECTED_PLAYLIST_ID", selectedPlaylistId: id });
+    dispatch({ type: "SET_PLAYLIST_VIEWER", playlistViewer: "selection" });
     const response = await fetch(
       `/api/swap_members/${currentSwapMember.id}/update`,
       {
