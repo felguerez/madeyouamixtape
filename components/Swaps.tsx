@@ -61,12 +61,20 @@ const Swaps = ({ user }: { user: User }) => {
             spotifyId={user.spotify_id}
           />
         )}
-        <p>
-          The following {swaps.length} swap{" "}
-          {swaps.length > 1 ? "groups" : "group"} are happening right now:
-        </p>
+        {swaps && (
+          <p>
+            The following {swaps.length} swap{" "}
+            {swaps.length > 1 ? "groups" : "group"} are happening right now:
+          </p>
+        )}
       </CopyContainer>
-      {swaps ? <SwapList swaps={swaps} /> : <p>Loading...</p>}
+      {swaps ? (
+        <SwapList swaps={swaps} />
+      ) : (
+        <CopyContainer>
+          <p>Loading...</p>
+        </CopyContainer>
+      )}
     </>
   );
 };

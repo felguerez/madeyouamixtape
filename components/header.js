@@ -9,7 +9,6 @@ import {
 
 const Header = () => {
   const identity = useUser();
-  console.log('identity:', identity);
   return (
     <header>
       <nav>

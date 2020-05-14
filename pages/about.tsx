@@ -50,7 +50,7 @@ const About = () => {
       </p>
       <p>
         You can see all of the{" "}
-        <Link href="/swaps">
+        <Link href="/">
           <a>playlist swaps</a>
         </Link>{" "}
         happening right now or you can{" "}

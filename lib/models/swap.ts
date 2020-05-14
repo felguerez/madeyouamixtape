@@ -41,7 +41,6 @@ export const swap = {
         swap.id,
         owner_display_name
     `);
-    console.log('swap:', swap);
     const members = await db.query(escape`
       SELECT 
         swap_member.id,
