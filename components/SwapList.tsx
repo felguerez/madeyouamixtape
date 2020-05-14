@@ -1,7 +1,7 @@
 import { Swap } from "../lib/models/swap";
 import styled from "@emotion/styled";
 import Link from "next/link";
-import {DARK_BLUE, DARK_GRAY, SEPIA} from "../shared/styles";
+import { DARK_GRAY, GRAY } from "../shared/styles";
 
 export const SwapList = ({
   swaps,
@@ -14,17 +14,19 @@ export const SwapList = ({
         The following {swaps.length} swap{" "}
         {swaps.length > 1 ? "groups" : "group"} are happening right now:
       </p>
-      {swaps.map(({ id, title, owner_display_name, swap_member_count }) => (
-        <SwapCard key={id}>
-          <Title>
-            <Link href={`/swaps/${id}`}>
-              <a>{title}</a>
-            </Link>
-          </Title>
-          <OwnerLabel>by {owner_display_name}</OwnerLabel>
-          {swap_member_count > 1 && <p>{swap_member_count} members</p>}
-        </SwapCard>
-      ))}
+      <SwapCards>
+        {swaps.map(({ id, title, owner_display_name, swap_member_count }) => (
+          <SwapCard key={id}>
+            <Title>
+              <Link href={`/swaps/${id}`}>
+                <a>{title}</a>
+              </Link>
+            </Title>
+            <OwnerLabel>by {owner_display_name}</OwnerLabel>
+            {swap_member_count > 1 && <p>{swap_member_count} members</p>}
+          </SwapCard>
+        ))}
+      </SwapCards>
     </div>
   ) : (
     <div>
@@ -32,6 +34,14 @@ export const SwapList = ({
     </div>
   );
 };
+
+const SwapCards = styled.div`
+  background-color: ${GRAY};
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
+  border: 1px solid ${DARK_GRAY};
+`;
 
 const SwapCard = styled.div`
   background: ${DARK_GRAY};

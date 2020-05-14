@@ -13,18 +13,35 @@ export type Swap = {
 export const swap = {
   getById: async function getById(
     id: number
-  ): Promise<Swap & { id: number; members: SwapMember[] }> {
+  ): Promise<
+    Swap & {
+      id: number;
+      members: SwapMember[];
+      owner_display_name: string;
+      swap_member_count: number;
+    }
+  > {
     const [swap] = await db.query(escape`
       SELECT 
+        swap.id, 
         swap.title, 
         swap.description,
         swap.owner_id, 
-        swap.id, 
-        user.display_name AS owner_display_name
+        user.display_name AS owner_display_name,
+        COUNT(swap_member.id) AS swap_member_count
       FROM swap
       INNER JOIN user ON swap.owner_id = user.id
+      INNER JOIN swap_member ON swap_member.swap_id = ${id}
       WHERE swap.id = ${id}
+      GROUP BY 
+        swap.id, 
+        swap.title, 
+        swap.description, 
+        swap.owner_id,
+        swap.id,
+        owner_display_name
     `);
+    console.log('swap:', swap);
     const members = await db.query(escape`
       SELECT 
         swap_member.id,
@@ -45,12 +62,27 @@ export const swap = {
   },
 
   all: async function all(): Promise<Swap[]> {
+    try {
+
     return await db.query(escape`
-      SELECT swap.title, swap.description, swap.id, user.display_name AS owner_display_name
+      SELECT 
+        swap.id, 
+        swap.title, 
+        swap.description, 
+        user.display_name AS owner_display_name,
+        COUNT(swap_member.id) AS swap_member_count
       FROM swap
       INNER JOIN user ON swap.owner_id = user.id
+      INNER JOIN swap_member ON swap_member.swap_id = swap.id
       WHERE swap.owner_id = user.id
+      GROUP BY swap.id, 
+        swap.title, 
+        swap.description, 
+        owner_display_name
     `);
+    } catch(e) {
+      console.log('e:', e);
+    }
   },
 
   getSwapsByOwnerId: async function getByOwnerId(

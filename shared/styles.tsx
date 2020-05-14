@@ -12,7 +12,7 @@ export const GRAY = "#f9f9f9";
 export const DARK_GRAY = "#ebebeb";
 export const lightLinearGradient = css`
   background-image: linear-gradient(
-    to top,
+    to bottom,
     rgba(0, 0, 0, 0),
     rgba(0, 0, 0, 0.1)
   );

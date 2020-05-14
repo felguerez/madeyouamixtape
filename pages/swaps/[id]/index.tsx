@@ -1,40 +1,14 @@
 import styled from "@emotion/styled";
-import { SwapManager } from "../../../components/SwapManager";
-import { useEffect } from "react";
-import Members from "../../../components/swaps/Members";
-import Settings from "../../../components/swaps/Settings";
 import PlaylistEntry from "../../../components/swaps/PlaylistEntry";
-import { useRouter } from "next/router";
-import { useSwap } from "../../../lib/hooks";
-import { ReceivedPlaylist } from "../../../components/swaps/Received";
-import { useSwapDispatch, useSwapState } from "../../../contexts/swap-context";
-import {
-  DARK_BLUE,
-  DARK_GREEN,
-  LIGHT_BLUE,
-  LIGHT_GREEN,
-  SEPIA,
-  WHITE,
-} from "../../../shared/styles";
+import { getSession } from "../../../lib/iron";
+import * as models from "../../../lib/models";
+import { Swap } from "../../../lib/models/swap";
 
-export default function () {
-  const router = useRouter();
-  const data = useSwap(router.query.id);
-  const dispatch = useSwapDispatch();
-  const swapState = useSwapState();
-  const { swap, activeTab } = swapState;
-  useEffect(() => {
-    if (data && data.swap && !swap) {
-      dispatch({ type: "SWAP_RECEIVED", ...data });
-    }
-  }, [data.swap, swap]);
-  if (!data || !swap) {
-    return (
-      <div>
-        <Title>Loading ...</Title>
-      </div>
-    );
-  }
+export default function ({
+  swap,
+}: {
+  swap: Swap & { owner_display_name: string };
+}) {
   return (
     <div>
       <Title>
@@ -47,6 +21,21 @@ export default function () {
   );
 }
 
+export async function getServerSideProps({ req, params, res }) {
+  const session = await getSession(req);
+  if (!session) {
+    res.writeHead(302, {
+      Location: "/",
+    });
+  }
+  const swap = await models.swap.getById(params.id);
+  return {
+    props: {
+      swap: JSON.parse(JSON.stringify(swap)),
+    },
+  };
+}
+
 const Title = styled.h1`
   display: flex;
   justify-content: space-between;
@@ -57,13 +46,6 @@ const Description = styled.p`
   margin: 0;
 `;
 
-const EnrollmentStatus = styled.p`
-  color: #009688;
-  font-style: italic;
-  display: inline-block;
-  margin-bottom: 0;
-`;
-
 const Owner = styled.p`
   color: #009688;
   font-style: italic;
@@ -71,35 +53,4 @@ const Owner = styled.p`
   padding: 0;
   font-size: 1rem;
   margin: 0 0 1rem 0;
-`;
-
-const ParticipationBadge = styled.p`
-  color: #009688;
-  background-color: ${LIGHT_GREEN};
-  display: inline-block;
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-  font-size: 1rem;
-  margin: 0;
-`;
-
-const Tabs = styled.ul`
-  display: flex;
-  list-style: none;
-  padding: 0;
-  border-bottom: 1px solid ${WHITE};
-`;
-
-const Tab = styled.li`
-  margin: 0 1rem 0 0;
-  border-radius: 0.5rem 0.5rem 0 0;
-  &:last-of-type {
-    margin: 0;
-  }
-`;
-
-const Button = styled.button<{ isActive: boolean }>`
-  color: ${WHITE};
-  background-color: ${({ isActive }) => (isActive ? DARK_BLUE : LIGHT_BLUE)};
-  border-radius: 0.5rem 0.5rem 0 0;
 `;

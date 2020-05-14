@@ -8,6 +8,7 @@ import Router from "next/router";
 
 const Swaps = ({ user }: { user: User }) => {
   const swaps = useSwaps();
+  console.log('swaps:', swaps);
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState("");
   async function handleSubmit(e) {
