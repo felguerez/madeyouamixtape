@@ -75,7 +75,7 @@ const Settings = ({ swap }: { swap: Swap }) => {
           }
         }}
       >
-        Complete & Shuffle
+        Shuffle 'em
       </button>
       <p>
         Share this link with others to have them join your group:{" "}

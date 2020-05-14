@@ -1,6 +1,6 @@
 import { useUser } from "../lib/hooks";
 import { Welcome } from "../components/home/Welcome";
-import Swaps from "../components/swaps";
+import Swaps from "../components/Swaps";
 
 const Home = () => {
   const identity = useUser();

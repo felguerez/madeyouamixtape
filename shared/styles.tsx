@@ -12,7 +12,7 @@ export const GRAY = "#f9f9f9";
 export const DARK_GRAY = "#ebebeb";
 export const lightLinearGradient = css`
   background-image: linear-gradient(
-    to bottom,
+    to top,
     rgba(0, 0, 0, 0),
     rgba(0, 0, 0, 0.1)
   );
@@ -21,11 +21,7 @@ export const lightLinearGradient = css`
 const globals: SerializedStyles = css`
   html {
     font-family: Sans-Serif, Helvetica, serif;
-    background-image: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0),
-      rgba(0, 0, 0, 0.1)
-    );
+    ${lightLinearGradient};
     background-repeat: no-repeat;
     background-attachment: fixed;
   }
@@ -68,7 +64,8 @@ const globals: SerializedStyles = css`
     -webkit-appearance: none;
     -moz-appearance: none;
     border-radius: 0.5rem;
-    color: ${WHITE};
+    color: ${GRAY};
+    background-color: ${DARK_BLUE};
   }
 
   button:focus {
