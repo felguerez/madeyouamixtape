@@ -1,6 +1,7 @@
 import Link from "next/link";
 import styled from "@emotion/styled";
 import { useUser } from "../lib/hooks";
+import {DARK_GRAY, DARK_GREEN, LIGHT_BLUE, SEPIA, WHITE} from "../shared/styles";
 
 const Header = () => {
   const identity = useUser();
@@ -22,8 +23,8 @@ const Header = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/swaps">
-                  <a>Swaps</a>
+                <Link href="/about">
+                  <a>About</a>
                 </Link>
               </li>
               <li>
@@ -45,6 +46,15 @@ const Header = () => {
           margin: 0 auto;
           padding: 0.2rem 0;
         }
+        a {
+          color: ${WHITE};
+        }
+        a:visited {
+          color: ${WHITE};
+        }
+        a:hover {
+          color: ${DARK_GRAY};
+        }
         ul {
           display: flex;
           list-style: none;
@@ -62,7 +72,8 @@ const Header = () => {
         }
         header {
           color: #fff;
-          background: #282828;
+          background: ${LIGHT_BLUE};
+          box-shadow: 0 8px 6px -6px #999;
         }
       `}</style>
     </header>

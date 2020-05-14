@@ -1,6 +1,12 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import styled from "@emotion/styled";
+import {
+  DARK_BLUE,
+  DARK_GREEN,
+  LIGHT_BLUE,
+  LIGHT_GREEN,
+} from "../shared/styles";
 
 export const SwapManager = ({
   children,
@@ -56,12 +62,12 @@ export const ButtonLink = styled.button`
   padding: 0;
   margin: 0;
   text-align: left;
-  color: rgba(94, 215, 255, 1);
+  color: ${DARK_GREEN};
   &:visited {
-    color: rgba(94, 215, 255, 1);
+    color: ${DARK_GREEN};
   }
   &:hover {
-    color: rgba(172, 234, 110);
+    color: ${LIGHT_GREEN};
   }
   cursor: pointer;
   font-weight: bold;

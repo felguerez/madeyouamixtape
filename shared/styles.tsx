@@ -2,37 +2,56 @@ import { css, SerializedStyles, Global } from "@emotion/core";
 import { ReactElement } from "react";
 import styled from "@emotion/styled";
 
+export const DARK_BLUE = "#05668D";
+export const LIGHT_BLUE = "#028090";
+export const DARK_GREEN = "#00a896";
+export const LIGHT_GREEN = "#02c39a";
+export const SEPIA = "#f0f3bd";
+export const WHITE = "#ffffff";
+export const GRAY = "#f9f9f9";
+export const DARK_GRAY = "#ebebeb";
+export const lightLinearGradient = css`
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0.1)
+  );
+`;
+
 const globals: SerializedStyles = css`
   html {
     font-family: Sans-Serif, Helvetica, serif;
+    background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 0.1)
+    );
+    background-repeat: no-repeat;
+    background-attachment: fixed;
   }
   body {
     margin: 0;
     padding: 0;
     min-height: 100%;
-    background: rgba(19, 28, 31, 1);
-    color: rgba(255, 183, 72, 1);
+    color: ${DARK_BLUE};
     font-family: "Circular Spotify Text";
-  }
-  p {
-    color: #b0bec5;
   }
   a {
     font-weight: bold;
     text-decoration: none;
-    color: rgba(94, 215, 255, 1);
+    color: ${DARK_GREEN};
     &:visited {
-      color: rgba(94, 215, 255, 1);
+      color: ${DARK_GREEN};
     }
     &:hover {
-      color: rgba(172, 234, 110);
+      color: ${LIGHT_GREEN};
     }
   }
   input {
     font-size: 12px;
     &:focus {
       outline: 0;
-      box-shadow: 0 0 1px 3px rgba(255, 183, 72, 1);
+      box-shadow: 0 0 0 3px ${DARK_BLUE};
     }
   }
   button {
@@ -48,9 +67,8 @@ const globals: SerializedStyles = css`
     transition: background 250ms ease-in-out, transform 150ms ease;
     -webkit-appearance: none;
     -moz-appearance: none;
-    background-color: #2e3c43;
     border-radius: 0.5rem;
-    color: #b0bec5;
+    color: ${WHITE};
   }
 
   button:focus {
@@ -72,7 +90,7 @@ const globals: SerializedStyles = css`
   input {
     padding: 8px;
     margin: 0.3rem 0 1rem;
-    border: 1px solid #ccc;
+    border: 1px solid ${GRAY};
     border-radius: 4px;
   }
   .submit {
@@ -86,7 +104,7 @@ const globals: SerializedStyles = css`
   .submit > button {
     padding: 0.5rem 1rem;
     cursor: pointer;
-    background: #2e3c43;
+    background: ${DARK_BLUE};
     border-radius: 4px;
   }
   .submit > button:hover {
@@ -99,7 +117,7 @@ const globals: SerializedStyles = css`
   form {
     max-width: 21rem;
     padding: 1rem;
-    border: 1px solid #2e3c43;
+    border: 1px solid ${DARK_BLUE};
     border-radius: 4px;
   }
 `;

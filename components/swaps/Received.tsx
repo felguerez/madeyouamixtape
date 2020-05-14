@@ -6,6 +6,7 @@ import { ButtonLink } from "../SwapManager";
 import { css } from "@emotion/core";
 import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
 import { Notification } from "../Notification";
+import {GRAY, SEPIA} from "../../shared/styles";
 
 export const ReceivedPlaylist = () => {
   const { spotifyUser } = useUser();
@@ -105,7 +106,7 @@ const Container = styled.div`
 `;
 
 const PlaylistCard = styled.div`
-  background: #282828;
+  background: ${GRAY};
   border-radius: 8px;
   padding: 1rem;
   display: flex;

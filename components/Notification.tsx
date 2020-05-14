@@ -1,10 +1,11 @@
 import styled from "@emotion/styled";
+import { DARK_BLUE, DARK_GRAY, SEPIA } from "../shared/styles";
 
 export const NotificationContainer = styled.p`
   border-radius: 0.5rem;
   padding: 1rem;
-  color: rgba(172, 234, 110);
-  background-color: #282828;
+  color: ${DARK_GRAY};
+  background-color: ${DARK_BLUE};
   display: flex;
   span {
     margin-left: 0.5rem;

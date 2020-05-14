@@ -8,6 +8,13 @@ import { useRouter } from "next/router";
 import { useSwap } from "../../../lib/hooks";
 import { ReceivedPlaylist } from "../../../components/swaps/Received";
 import { useSwapDispatch, useSwapState } from "../../../contexts/swap-context";
+import {
+  DARK_BLUE,
+  DARK_GREEN,
+  LIGHT_BLUE,
+  LIGHT_GREEN,
+  SEPIA, WHITE,
+} from "../../../shared/styles";
 
 export default function () {
   const router = useRouter();
@@ -31,9 +38,6 @@ export default function () {
     <div>
       <Title>
         <span>{swap.title}</span>
-        {currentSwapMember.isEnrolled && (
-          <ParticipationBadge>Participating</ParticipationBadge>
-        )}
       </Title>
       <Owner>By {swap.owner_display_name}</Owner>
       <Description>{swap.description}</Description>
@@ -110,6 +114,7 @@ const Title = styled.h1`
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+  margin-bottom: 0.5rem;
 `;
 const Description = styled.p`
   margin: 0;
@@ -133,7 +138,7 @@ const Owner = styled.p`
 
 const ParticipationBadge = styled.p`
   color: #009688;
-  background-color: #2e3c43;
+  background-color: ${LIGHT_GREEN};
   display: inline-block;
   border-radius: 0.5rem;
   padding: 0.5rem;
@@ -145,13 +150,11 @@ const Tabs = styled.ul`
   display: flex;
   list-style: none;
   padding: 0;
-  border-bottom: 1px dotted #2e3c43;
+  border-bottom: 1px solid ${WHITE};
 `;
 
 const Tab = styled.li`
   margin: 0 1rem 0 0;
-  background-color: #2e3c43;
-  color: #b0bec5;
   border-radius: 0.5rem 0.5rem 0 0;
   &:last-of-type {
     margin: 0;
@@ -159,6 +162,7 @@ const Tab = styled.li`
 `;
 
 const Button = styled.button<{ isActive: boolean }>`
-  background-color: ${({ isActive }) => (isActive ? "#546E7A" : "#2e3c43")};
+  color: ${WHITE};
+  background-color: ${({ isActive }) => (isActive ? DARK_BLUE : LIGHT_BLUE)};
   border-radius: 0.5rem 0.5rem 0 0;
 `;

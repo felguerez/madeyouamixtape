@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useUser } from "../../lib/hooks";
 import styled from "@emotion/styled";
 import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
+import {DARK_GRAY, GRAY, SEPIA} from "../../shared/styles";
 
 export const SelectedPlaylist = () => {
   const { spotifyUser } = useUser();
@@ -76,10 +77,11 @@ const Container = styled.div`
 `;
 
 const PlaylistCard = styled.div`
-  background: #282828;
+  background: ${DARK_GRAY};
   border-radius: 8px;
   padding: 1rem;
   display: flex;
+  box-shadow: 0 2px 2px -2px rgba(0,0,0,.2);
 `;
 
 const PlaylistName = styled.h3`

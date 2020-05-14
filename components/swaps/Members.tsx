@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import {DARK_BLUE, LIGHT_GREEN} from "../../shared/styles";
 
 const Members = ({ swap }) => {
   return (
@@ -34,7 +35,7 @@ const Container = styled.ul`
 `;
 
 const ReadyToShareStatus = styled.span`
-  color: rgba(172, 234, 110);
+  color: ${LIGHT_GREEN};
   font-weight: normal;
   margin-left: 0.5rem;
 `;

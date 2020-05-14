@@ -2,6 +2,7 @@ import { Playlists } from "../Playlists";
 import { SelectedPlaylist } from "./SelectedPlaylist";
 import styled from "@emotion/styled";
 import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
+import {DARK_BLUE, DARK_GRAY, GRAY, LIGHT_BLUE, SEPIA, WHITE} from "../../shared/styles";
 
 const PlaylistEntry = () => {
   const { playlistViewer } = useSwapState();
@@ -58,10 +59,12 @@ const Tab = styled.li`
 `;
 
 const Button = styled.button<{ isActive: boolean }>`
-  padding: 0;
-  background-color: rgba(19, 28, 31, 1);
+  padding: 1rem;
+  color: ${DARK_BLUE};
   font-weight: bold;
-  color: ${({ isActive }) => (isActive ? "#ffffff" : "#B0BEC5")};
+  background-color: ${({ isActive }) => (isActive ? DARK_GRAY : "unset")};
+  box-shadow: ${({ isActive }) =>
+    isActive ? "0 2px 2px -2px rgba(0,0,0,.2)" : null};
 `;
 
 export default PlaylistEntry;

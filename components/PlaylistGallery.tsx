@@ -1,6 +1,14 @@
 import styled from "@emotion/styled";
 import { useEffect } from "react";
 import { useSwapDispatch, useSwapState } from "../contexts/swap-context";
+import {
+  DARK_GRAY,
+  DARK_GREEN,
+  GRAY,
+  LIGHT_GREEN,
+  SEPIA,
+  WHITE,
+} from "../shared/styles";
 
 export const PlaylistGallery = ({
   playlists,
@@ -83,7 +91,9 @@ const Container = styled.ul`
 
 const Playlist = styled.li`
   grid-column: span 1;
-  background: #282828;
+  background: ${DARK_GRAY};
+  box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
+  border: 1px solid ${GRAY};
   font-size: 14px;
   font-weight: bold;
   border-radius: 8px;
@@ -125,9 +135,11 @@ const Button = styled.button<{ isActive: boolean }>`
   font-size: 0.875rem;
   width: 100%;
   &:hover {
-    background-color: ${({ isActive }) => (isActive ? "#97C4D7" : "#546e7a")};
+    background-color: ${({ isActive }) =>
+      isActive ? DARK_GREEN : LIGHT_GREEN};
   }
-  background-color: ${({ isActive }) => (isActive ? "#97C4D7" : "#2e3c43")};
-  border: ${({ isActive }) => (isActive ? "1px solid #B0BEC5" : null)};
-  color: ${({ isActive }) => (isActive ? "#1E272C" : "#B0BEC5")};
+  background-color: ${({ isActive }) => (isActive ? DARK_GREEN : LIGHT_GREEN)};
+  border: ${({ isActive }) =>
+    isActive ? `1px solid ${SEPIA}` : `1px solid ${LIGHT_GREEN}`};
+  color: ${({ isActive }) => (isActive ? GRAY : WHITE)};
 `;
