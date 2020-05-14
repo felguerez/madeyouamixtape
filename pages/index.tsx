@@ -60,23 +60,11 @@ const Home = () => {
         </ButtonLink>
       </p>
       {isOpen && (
-        <>
-          <div className="login">
-            <Form
-              errorMessage={error}
-              onSubmit={handleSubmit}
-              spotifyId={spotifyUser.spotify_id}
-            />
-          </div>
-          <style jsx>{`
-            .login {
-              max-width: 21rem;
-              padding: 1rem;
-              border: 1px solid #2e3c43;
-              border-radius: 4px;
-            }
-          `}</style>
-        </>
+        <Form
+          errorMessage={error}
+          onSubmit={handleSubmit}
+          spotifyId={spotifyUser.spotify_id}
+        />
       )}
     </>
   );
