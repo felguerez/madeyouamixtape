@@ -10,10 +10,6 @@ export const SwapList = ({
 }) => {
   return swaps.length ? (
     <div>
-      <p>
-        The following {swaps.length} swap{" "}
-        {swaps.length > 1 ? "groups" : "group"} are happening right now:
-      </p>
       <SwapCards>
         {swaps.map(({ id, title, owner_display_name, swap_member_count }) => (
           <SwapCard key={id}>

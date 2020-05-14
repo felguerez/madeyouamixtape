@@ -2,6 +2,7 @@ import { useUser } from "../lib/hooks";
 import Form from "../components/profile/form";
 import { useState } from "react";
 import { Notification } from "../components/Notification";
+import {CopyContainer} from "../shared/styles";
 
 const Profile = () => {
   const identity = useUser();
@@ -34,7 +35,7 @@ const Profile = () => {
     }
   }
   return (
-    <div>
+    <CopyContainer>
       <h1>{identity.user ? "Your profile" : "Loading..."}</h1>
       {notification && (
         <Notification
@@ -50,7 +51,7 @@ const Profile = () => {
           initialValues={{ display_name: identity.user.display_name }}
         />
       )}
-    </div>
+    </CopyContainer>
   );
 };
 

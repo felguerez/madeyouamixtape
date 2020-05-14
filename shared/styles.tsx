@@ -1,5 +1,5 @@
-import { css, SerializedStyles, Global } from "@emotion/core";
-import { ReactElement } from "react";
+import {css, Global, SerializedStyles} from "@emotion/core";
+import {ReactElement} from "react";
 import styled from "@emotion/styled";
 
 export const DARK_BLUE = "#05668D";
@@ -131,4 +131,7 @@ export const Card = styled.div`
   border-radius: 8px;
   padding: 16px;
   margin: 16px;
+`;
+export const CopyContainer = styled.div`
+  padding: 0 2rem;
 `;

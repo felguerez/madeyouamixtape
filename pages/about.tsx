@@ -4,6 +4,7 @@ import Form from "../components/home/form";
 import { useUser } from "../lib/hooks";
 import { useState } from "react";
 import Router from "next/router";
+import { CopyContainer } from "../shared/styles";
 
 const About = () => {
   const identity = useUser();
@@ -39,7 +40,7 @@ const About = () => {
     }
   }
   return (
-    <>
+    <CopyContainer>
       <h1>Made You A Mixtape</h1>
       <p>Hello{user.display_name && `, ${user.display_name}`}!</p>
       <p>
@@ -64,7 +65,7 @@ const About = () => {
           spotifyId={user.spotify_id}
         />
       )}
-    </>
+    </CopyContainer>
   );
 };
 

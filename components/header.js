@@ -9,7 +9,7 @@ import {
 
 const Header = () => {
   const identity = useUser();
-
+  console.log('identity:', identity);
   return (
     <header>
       <nav>
@@ -19,7 +19,7 @@ const Header = () => {
               <a>Home</a>
             </Link>
           </HomeNavItem>
-          {identity.user ? (
+          {identity && identity.user ? (
             <>
               <li>
                 <Link href="/profile">
