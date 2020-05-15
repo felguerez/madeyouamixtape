@@ -40,7 +40,7 @@ const About = () => {
     }
   }
   return (
-    <CopyContainer>
+    <>
       <h1>Made You A Mixtape</h1>
       <p>Hello{user.display_name && `, ${user.display_name}`}!</p>
       <p>
@@ -65,7 +65,7 @@ const About = () => {
           spotifyId={user.spotify_id}
         />
       )}
-    </CopyContainer>
+    </>
   );
 };
 

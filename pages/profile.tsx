@@ -35,7 +35,7 @@ const Profile = () => {
     }
   }
   return (
-    <CopyContainer>
+    <>
       <h1>{identity.user ? "Your profile" : "Loading..."}</h1>
       {notification && (
         <Notification
@@ -51,7 +51,7 @@ const Profile = () => {
           initialValues={{ display_name: identity.user.display_name }}
         />
       )}
-    </CopyContainer>
+    </>
   );
 };
 
