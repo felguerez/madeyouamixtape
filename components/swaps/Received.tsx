@@ -6,7 +6,8 @@ import { ButtonLink } from "../SwapManager";
 import { css } from "@emotion/core";
 import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
 import { Notification } from "../Notification";
-import {DARK_GRAY, GRAY} from "../../shared/styles";
+import { DARK_GRAY, GRAY } from "../../shared/styles";
+import PlaylistTracks from "../../pages/swaps/[id]/PlaylistTracks";
 
 export const ReceivedPlaylist = ({
   swap,
@@ -90,6 +91,7 @@ export const ReceivedPlaylist = ({
               </ButtonLink>
             </Metadata>
           </PlaylistCard>
+          <PlaylistTracks playlist={receivedPlaylist} />
         </Container>
       )}
     </div>
