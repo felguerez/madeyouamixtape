@@ -6,9 +6,17 @@ import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
 import { DARK_GRAY, GRAY, SEPIA } from "../../shared/styles";
 import { ButtonLink } from "../SwapManager";
 
-export const SelectedPlaylist = () => {
+export const SelectedPlaylist = ({
+  currentSwapMember: { selected_playlist_id },
+}) => {
   const dispatch = useSwapDispatch();
   const { selectedPlaylist, selectedPlaylistId } = useSwapState();
+  useEffect(() => {
+    dispatch({
+      type: "SET_SELECTED_PLAYLIST_ID",
+      selectedPlaylistId: selected_playlist_id,
+    });
+  }, [selected_playlist_id]);
   useEffect(() => {
     async function fetchData() {
       const request = await fetch(
@@ -22,7 +30,8 @@ export const SelectedPlaylist = () => {
     if (selectedPlaylistId) {
       fetchData().catch((err) => {});
     }
-  }, [selectedPlaylistId]);
+  }, [selectedPlaylistId, selected_playlist_id]);
+
   return (
     <BodyContent>
       {selectedPlaylist && (

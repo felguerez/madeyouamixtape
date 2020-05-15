@@ -11,7 +11,7 @@ export const initialState = {
   currentSwapMember: undefined,
   spotifyId: undefined,
   activeTab: "entry",
-  playlistViewer: "selection",
+  playlistViewer: "members",
   playlists: {
     items: [],
   },

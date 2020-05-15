@@ -2,12 +2,12 @@ import { Playlists } from "../Playlists";
 import { SelectedPlaylist } from "./SelectedPlaylist";
 import styled from "@emotion/styled";
 import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
-import { DARK_BLUE, DARK_GRAY, GRAY } from "../../shared/styles";
+import { DARK_BLUE, GRAY } from "../../shared/styles";
 import Members from "./Members";
 import { ReceivedPlaylist } from "./Received";
 
-const PlaylistEntry = () => {
-  const { playlistViewer, swap, currentSwapMember } = useSwapState();
+const PlaylistEntry = ({ swap, currentSwapMember }) => {
+  const { playlistViewer } = useSwapState();
   const dispatch = useSwapDispatch();
   return (
     <div>
@@ -55,10 +55,23 @@ const PlaylistEntry = () => {
         )}
       </Tabs>
       {playlistViewer === "members" && <Members swap={swap} />}
-      {playlistViewer === "selection" && <SelectedPlaylist />}
-      {playlistViewer === "received" &&
-        currentSwapMember.received_playlist_id && <ReceivedPlaylist />}
-      {playlistViewer === "selector" && <Playlists />}
+      {currentSwapMember && (
+        <>
+          {playlistViewer === "selection" && (
+            <SelectedPlaylist currentSwapMember={currentSwapMember} />
+          )}
+          {playlistViewer === "received" &&
+            currentSwapMember.received_playlist_id && (
+              <ReceivedPlaylist
+                swap={swap}
+                currentSwapMember={currentSwapMember}
+              />
+            )}
+          {playlistViewer === "selector" && (
+            <Playlists currentSwapMember={currentSwapMember} />
+          )}
+        </>
+      )}
     </div>
   );
 };

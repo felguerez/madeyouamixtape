@@ -1,28 +1,32 @@
 import fetch from "isomorphic-fetch";
 import { useEffect } from "react";
 import { PlaylistGallery } from "./PlaylistGallery";
-import { useUser } from "../lib/hooks";
 import styled from "@emotion/styled";
 import { useSwapDispatch, useSwapState } from "../contexts/swap-context";
+import { SwapMember } from "../lib/models/swapMember";
 
-export const Playlists = () => {
-  const { spotifyUser } = useUser();
+export const Playlists = ({
+  currentSwapMember,
+  currentSwapMember: { spotifyId },
+}: {
+  currentSwapMember: SwapMember & { isEnrolled: boolean; spotifyId: string };
+}) => {
   const { selectedPlaylistId, playlists } = useSwapState();
   const dispatch = useSwapDispatch();
   useEffect(() => {
     async function fetchData() {
       const request = await fetch(
-        `/api/spotify/users/${spotifyUser.spotify_id}/playlists`
+        `/api/spotify/users/${spotifyId}/playlists`
       ).catch((err) => {
         console.log("err:", err);
       });
       const playlists = await request.json();
       dispatch({ type: "SET_PLAYLISTS", playlists });
     }
-    if (spotifyUser) {
+    if (spotifyId) {
       fetchData().catch((err) => {});
     }
-  }, [spotifyUser]);
+  }, [spotifyId]);
   return (
     <div>
       {playlists && playlists.items.length ? (
@@ -36,6 +40,7 @@ export const Playlists = () => {
             until the swap group owner shuffles the mixes.
           </p>
           <PlaylistGallery
+            currentSwapMember={currentSwapMember}
             playlists={playlists.items}
             selectedPlaylistId={selectedPlaylistId}
           />

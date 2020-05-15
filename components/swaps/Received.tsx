@@ -8,15 +8,14 @@ import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
 import { Notification } from "../Notification";
 import { GRAY } from "../../shared/styles";
 
-export const ReceivedPlaylist = () => {
+export const ReceivedPlaylist = ({
+  swap,
+  currentSwapMember: { received_playlist_id },
+}) => {
   const { spotifyUser } = useUser();
   const [notification, setNotification] = useState("");
   const dispatch = useSwapDispatch();
-  const {
-    swap,
-    receivedPlaylist,
-    currentSwapMember: { received_playlist_id },
-  } = useSwapState();
+  const { receivedPlaylist } = useSwapState();
   useEffect(() => {
     async function fetchData() {
       const request = await fetch(

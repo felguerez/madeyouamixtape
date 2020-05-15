@@ -9,8 +9,11 @@ import {
   SEPIA,
   WHITE,
 } from "../shared/styles";
+import { SwapMember } from "../lib/models/swapMember";
 
 export const PlaylistGallery = ({
+  currentSwapMember,
+  currentSwapMember: { selected_playlist_id },
   playlists,
   selectedPlaylistId,
 }: {
@@ -22,8 +25,8 @@ export const PlaylistGallery = ({
     id: string;
   }[];
   selectedPlaylistId: string;
+  currentSwapMember: SwapMember & { isEnrolled: boolean; spotifyId: string };
 }) => {
-  const { currentSwapMember } = useSwapState();
   const dispatch = useSwapDispatch();
   const onClick = async (id) => {
     const currentSelectedId = selectedPlaylistId;
@@ -48,10 +51,13 @@ export const PlaylistGallery = ({
   };
 
   useEffect(() => {
-    if (selectedPlaylistId) {
-      dispatch({ type: "SET_SELECTED_PLAYLIST_ID", selectedPlaylistId });
+    if (selected_playlist_id) {
+      dispatch({
+        type: "SET_SELECTED_PLAYLIST_ID",
+        selectedPlaylistId: selected_playlist_id,
+      });
     }
-  }, [selectedPlaylistId]);
+  }, [selected_playlist_id]);
   return (
     <Container>
       {playlists.map((playlist) => {
