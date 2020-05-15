@@ -9,9 +9,12 @@ export default async function swaps(req, res) {
       const swap = await models.swap.getById(req.query.id);
       const { members } = swap;
       if (members.find((member) => (member.user_id = session.id))) {
-        res.status(409).json({ message: "You're already enrolled" });
+        res.writeHead(302, {
+          Location: `/swaps/${req.query.id}`,
+        });
+        res.end();
       }
-      let swapMember = await models.swapMember.create({
+      await models.swapMember.create({
         swap_id: req.query.id,
         user_id: session.id,
       });
