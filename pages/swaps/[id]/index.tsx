@@ -5,6 +5,7 @@ import * as models from "../../../lib/models";
 import { Swap } from "../../../lib/models/swap";
 import { SwapMember } from "../../../lib/models/swapMember";
 import { SwapProvider } from "../../../contexts/swap-context";
+import { CopyContainer } from "../../../shared/styles";
 
 export default function ({
   swap,
@@ -55,10 +56,10 @@ const Title = styled.h1`
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0;
 `;
 const Description = styled.p`
-  margin: 0;
+  margin: 0 0 2rem 0;
 `;
 
 const Owner = styled.p`

@@ -1,9 +1,8 @@
 import fetch from "isomorphic-fetch";
 import { useEffect } from "react";
-import { useUser } from "../../lib/hooks";
 import styled from "@emotion/styled";
 import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
-import { DARK_GRAY, GRAY, SEPIA } from "../../shared/styles";
+import { DARK_GRAY } from "../../shared/styles";
 import { ButtonLink } from "../SwapManager";
 
 export const SelectedPlaylist = ({
@@ -58,19 +57,23 @@ export const SelectedPlaylist = ({
               <CoverArt src={selectedPlaylist.images[0].url} />
             )}
             <Metadata>
-              <PlaylistName>{selectedPlaylist.name}</PlaylistName>
-              <p>{selectedPlaylist.tracks.items.length} tracks</p>
-              <Description
-                dangerouslySetInnerHTML={{
-                  __html: selectedPlaylist.description,
-                }}
-              />
+              <Copy>
+                <PlaylistName>{selectedPlaylist.name}</PlaylistName>
+                <Description
+                  dangerouslySetInnerHTML={{
+                    __html: selectedPlaylist.description,
+                  }}
+                />
+              </Copy>
               <Creator>
-                by{" "}
+                By{" "}
                 <a href={selectedPlaylist.owner.href} target="_blank">
                   {selectedPlaylist.owner.display_name}
                 </a>
               </Creator>
+              <TracksCount>
+                {selectedPlaylist.tracks.items.length} tracks
+              </TracksCount>
             </Metadata>
           </PlaylistCard>
         </Container>
@@ -101,22 +104,26 @@ const PlaylistCard = styled.div`
 
 const PlaylistName = styled.h3`
   padding: 0;
-  margin: 0 0 1rem 0;
+  margin: 0;
+`;
+
+const Copy = styled.div`
+  margin: 0 0 auto 0;
 `;
 
 const Description = styled.p`
   margin: 0;
 `;
 
-const Creator = styled.span`
-  color: rgb(179, 179, 179);
-  font-size: 12px;
+const Creator = styled.p`
   display: inline-block;
+  margin-bottom: 0;
 `;
 
 const Metadata = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
 `;
 
 const CoverArt = styled.img`
@@ -125,4 +132,10 @@ const CoverArt = styled.img`
   border-radius: 8px;
   align-self: center;
   margin-right: 1rem;
+`;
+
+const TracksCount = styled.p`
+  margin: 0;
+  color: rgb(179, 179, 179);
+  font-size: 12px;
 `;
