@@ -131,11 +131,7 @@ export const SelectedPlaylist = ({
           </Metadata>
         </ContentCard>
       </Container>
-      {isOpen && (
-        <div>
-          <PlaylistTracks playlist={selectedPlaylist} />
-        </div>
-      )}
+      <PlaylistTracks playlist={selectedPlaylist} />
     </BodyContent>
   );
 };

@@ -146,7 +146,6 @@ const Button = styled.button<{ isActive: boolean }>`
       isActive ? DARK_GREEN : LIGHT_GREEN};
   }
   background-color: ${({ isActive }) => (isActive ? DARK_GREEN : DARK_BLUE)};
-  border: ${({ isActive }) =>
-    isActive ? `1px solid ${LIGHT_GREEN}` : `1px solid ${SEPIA}`};
+  border: ${({ isActive }) => isActive ? `1px solid ${LIGHT_GREEN}` : `1px solid ${SEPIA}`};
   color: ${({ isActive }) => (isActive ? GRAY : WHITE)};
 `;

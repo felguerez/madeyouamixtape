@@ -1,16 +1,18 @@
-import * as constants from "../../../lib/constants";
-import { getSession } from "../../../lib/iron";
-import { Card, CopyContainer } from "../../../shared/styles";
+import { DARK_GRAY, GRAY } from "../../../shared/styles";
 import styled from "@emotion/styled";
-import { css } from "@emotion/core";
-import { msToTime } from "../../../lib/utils";
 import ms from "ms";
 
 const PlaylistTracks = ({ playlist }) => {
   if (!playlist) {
     return <h2>Loading...</h2>;
   }
-
+  const audioRef = React.createRef<HTMLAudioElement>();
+  const playAudio = (e) => {
+    console.log("e:", e);
+    if (audioRef && audioRef.current) {
+      audioRef.current.play();
+    }
+  };
   return (
     <TrackList>
       {playlist.tracks &&
@@ -18,9 +20,13 @@ const PlaylistTracks = ({ playlist }) => {
           console.log("item.track:", item.track);
           return (
             <Track key={item.id}>
-              {item.track.album.images && (
-                <CoverArt src={item.track.album.images[0]?.url} alt="" />
-              )}
+              <PlayButtonContainer background={item.track.album.images[0]?.url}>
+                {item.track.album.images && (
+                  <PlayButton onClick={playAudio}>
+                    <i className="material-icons">play_circle_outline</i>
+                  </PlayButton>
+                )}
+              </PlayButtonContainer>
               <TrackMetadata>
                 <p>
                   <strong>
@@ -39,17 +45,47 @@ const PlaylistTracks = ({ playlist }) => {
                 </Details>
               </TrackMetadata>
               {item.track.preview_url && (
-                <audio>
+                <audio ref={audioRef}>
                   <source src={item.track.preview_url} type="audio/mpeg" />
                 </audio>
               )}
             </Track>
           );
         })}
+      <style jsx global>{`
+        .material-icons {
+          font-size: 32px;
+        }
+      `}</style>
     </TrackList>
   );
 };
 
+const PlayButtonContainer = styled.div<{ background: string }>`
+  position: relative;
+  height: 64px;
+  width: 64px;
+  background-image: ${({ background }) =>
+    `linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)), url(${background})`};
+  background-size: cover;
+  cursor: pointer;
+  &:hover {
+    background-image: ${({ background }) =>
+      `linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, .25)), url(${background})`};
+  }
+`;
+
+const PlayButton = styled.div`
+  position: absolute;
+  height: 64px;
+  width: 64px;
+  top: 25%;
+  left: 25%;
+  color: ${GRAY};
+  &:active {
+    color: ${DARK_GRAY};
+  }
+`;
 const TrackList = styled.div`
   padding: 1rem;
   list-style: none;
@@ -76,11 +112,6 @@ const Details = styled.p`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-`;
-
-const CoverArt = styled.img`
-  height: 64px;
-  width: 64px;
 `;
 
 const Track = styled.li`
