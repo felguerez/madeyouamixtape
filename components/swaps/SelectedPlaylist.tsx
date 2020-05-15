@@ -1,5 +1,5 @@
 import fetch from "isomorphic-fetch";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
 import { ContentCard } from "../../shared/styles";
@@ -7,6 +7,7 @@ import { ButtonLink } from "../SwapManager";
 import { useRouter } from "next/router";
 import * as constants from "../../lib/constants";
 import Link from "next/link";
+import PlaylistTracks from "../../pages/swaps/[id]/PlaylistTracks";
 
 export const SelectedPlaylist = ({
   currentSwapMember: { selected_playlist_id },
@@ -14,6 +15,8 @@ export const SelectedPlaylist = ({
   const dispatch = useSwapDispatch();
   const router = useRouter();
   const { selectedPlaylist, selectedPlaylistId } = useSwapState();
+  const [isOpen, setIsOpen] = useState(false);
+  console.log("selectedPlaylist:", selectedPlaylist);
   useEffect(() => {
     if (!selectedPlaylistId) {
       dispatch({
@@ -79,12 +82,9 @@ export const SelectedPlaylist = ({
           <Metadata>
             <Copy>
               <PlaylistName>
-                <Link
-                  as={`/swaps/${router.query.id}/selected_playlist?selectedPlaylistId=${selectedPlaylistId}`}
-                  href="/swaps/[id]/selected_playlist"
-                >
-                  <a>{selectedPlaylist.name}</a>
-                </Link>
+                <ButtonLink onClick={() => setIsOpen((isOpen) => !isOpen)}>
+                  {selectedPlaylist.name}
+                </ButtonLink>
               </PlaylistName>
               <Description
                 dangerouslySetInnerHTML={{
@@ -131,6 +131,11 @@ export const SelectedPlaylist = ({
           </Metadata>
         </ContentCard>
       </Container>
+      {isOpen && (
+        <div>
+          <PlaylistTracks playlist={selectedPlaylist} />
+        </div>
+      )}
     </BodyContent>
   );
 };

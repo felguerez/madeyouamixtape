@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { useEffect } from "react";
 import { useSwapDispatch, useSwapState } from "../contexts/swap-context";
 import {
+  DARK_BLUE,
   DARK_GRAY,
   DARK_GREEN,
   GRAY,
@@ -144,8 +145,8 @@ const Button = styled.button<{ isActive: boolean }>`
     background-color: ${({ isActive }) =>
       isActive ? DARK_GREEN : LIGHT_GREEN};
   }
-  background-color: ${({ isActive }) => (isActive ? DARK_GREEN : LIGHT_GREEN)};
+  background-color: ${({ isActive }) => (isActive ? DARK_GREEN : DARK_BLUE)};
   border: ${({ isActive }) =>
-    isActive ? `1px solid ${SEPIA}` : `1px solid ${LIGHT_GREEN}`};
+    isActive ? `1px solid ${LIGHT_GREEN}` : `1px solid ${SEPIA}`};
   color: ${({ isActive }) => (isActive ? GRAY : WHITE)};
 `;

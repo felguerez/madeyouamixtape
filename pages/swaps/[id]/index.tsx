@@ -5,7 +5,6 @@ import * as models from "../../../lib/models";
 import { Swap } from "../../../lib/models/swap";
 import { SwapMember } from "../../../lib/models/swapMember";
 import { SwapProvider } from "../../../contexts/swap-context";
-import { CopyContainer } from "../../../shared/styles";
 
 export default function ({
   swap,
