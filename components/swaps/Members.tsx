@@ -1,34 +1,34 @@
 import styled from "@emotion/styled";
-import { LIGHT_GREEN } from "../../shared/styles";
+import { ContentCard, LIGHT_GREEN } from "../../shared/styles";
 
 const Members = ({ swap }) => {
   return (
-    <Container>
+    <>
       <h2>Members</h2>
-      <List>
-        {swap.members.map((member) => {
-          return (
-            <li key={member.id}>
-              <MemberName>
-                {member.display_name}
-                {member.selected_playlist_id && (
-                  <ReadyToShareStatus>Ready to share</ReadyToShareStatus>
-                )}
-              </MemberName>
-            </li>
-          );
-        })}
-      </List>
-    </Container>
+      <ContentCard>
+        <List>
+          {swap.members.map((member) => {
+            return (
+              <li key={member.id}>
+                <MemberName>
+                  {member.display_name}
+                  {member.selected_playlist_id && (
+                    <ReadyToShareStatus>Ready to share</ReadyToShareStatus>
+                  )}
+                </MemberName>
+              </li>
+            );
+          })}
+        </List>
+      </ContentCard>
+    </>
   );
 };
 
 export default Members;
 
-const Container = styled.div`
-  max-width: 240px;
-`;
 const List = styled.ul`
+  max-width: 240px;
   list-style: none;
   padding-left: 0;
 `;

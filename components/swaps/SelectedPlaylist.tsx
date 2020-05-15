@@ -2,7 +2,7 @@ import fetch from "isomorphic-fetch";
 import { useEffect } from "react";
 import styled from "@emotion/styled";
 import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
-import { DARK_GRAY } from "../../shared/styles";
+import { ContentCard } from "../../shared/styles";
 import { ButtonLink } from "../SwapManager";
 
 export const SelectedPlaylist = ({
@@ -33,7 +33,7 @@ export const SelectedPlaylist = ({
       fetchData().catch((err) => {});
     }
   }, [selectedPlaylistId]);
-
+  console.log("selectedPlaylist:", selectedPlaylist);
   return (
     <BodyContent>
       {selectedPlaylist ? (
@@ -52,8 +52,8 @@ export const SelectedPlaylist = ({
               Choose a new playlist to share
             </ButtonLink>
           </p>
-          <PlaylistCard>
-            {selectedPlaylist.images.length && (
+          <ContentCard>
+            {selectedPlaylist.images?.length && (
               <CoverArt src={selectedPlaylist.images[0].url} />
             )}
             <Metadata>
@@ -75,7 +75,7 @@ export const SelectedPlaylist = ({
                 {selectedPlaylist.tracks.items.length} tracks
               </TracksCount>
             </Metadata>
-          </PlaylistCard>
+          </ContentCard>
         </Container>
       ) : (
         <Container>
@@ -92,14 +92,6 @@ const BodyContent = styled.div`
 
 const Container = styled.div`
   margin-top: 1rem;
-`;
-
-const PlaylistCard = styled.div`
-  background: ${DARK_GRAY};
-  border-radius: 8px;
-  padding: 1rem;
-  display: flex;
-  box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
 `;
 
 const PlaylistName = styled.h3`

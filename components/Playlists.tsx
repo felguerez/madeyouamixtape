@@ -4,6 +4,7 @@ import { PlaylistGallery } from "./PlaylistGallery";
 import styled from "@emotion/styled";
 import { useSwapDispatch, useSwapState } from "../contexts/swap-context";
 import { SwapMember } from "../lib/models/swapMember";
+import { CopyContainer } from "../shared/styles";
 
 export const Playlists = ({
   currentSwapMember,
@@ -31,6 +32,7 @@ export const Playlists = ({
     <div>
       {playlists && playlists.items.length ? (
         <>
+          <h2>Choose a playlist to share</h2>
           <p>
             Select a playlist to send to one of your swap group mates. You'll
             get someone else's playlist in return when they're shuffled.
