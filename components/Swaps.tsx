@@ -69,9 +69,7 @@ const Swaps = ({ user }: { user: User }) => {
       {swaps ? (
         <SwapList swaps={swaps} />
       ) : (
-        <CopyContainer>
           <p>Loading...</p>
-        </CopyContainer>
       )}
     </>
   );

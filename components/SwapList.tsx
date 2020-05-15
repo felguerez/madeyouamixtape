@@ -27,7 +27,7 @@ export const SwapList = ({
           }) => (
             <SwapCard key={id}>
               <Title>
-                <Link href={`/swaps/${id}`}>
+                <Link as={`/swaps/${id}`} href="/swaps/[id]">
                   <a>{title}</a>
                 </Link>
               </Title>
