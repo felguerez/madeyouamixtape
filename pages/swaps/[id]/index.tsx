@@ -5,6 +5,7 @@ import * as models from "../../../lib/models";
 import { Swap } from "../../../lib/models/swap";
 import { SwapMember } from "../../../lib/models/swapMember";
 import { SwapProvider } from "../../../contexts/swap-context";
+import { serialize } from "../../../lib/utils";
 
 export default function ({
   swap,
@@ -39,14 +40,12 @@ export async function getServerSideProps({ req, params, res }) {
   const isEnrolled = Boolean(currentSwapMember);
   return {
     props: {
-      swap: JSON.parse(JSON.stringify(swap)),
-      currentSwapMember: JSON.parse(
-        JSON.stringify({
-          ...currentSwapMember,
-          isEnrolled,
-          spotifyId: user.spotify_id,
-        })
-      ),
+      swap: serialize(swap),
+      currentSwapMember: serialize({
+        ...currentSwapMember,
+        isEnrolled,
+        spotifyId: user.spotify_id,
+      }),
     },
   };
 }
