@@ -1,7 +1,6 @@
 import * as React from "react";
 import NextApp from "next/app";
 import { CacheProvider } from "@emotion/core";
-import { SwapProvider } from "../contexts/swap-context";
 
 // Use only { cache } from 'emotion'. Don't use { css }.
 import { cache } from "emotion";
@@ -16,9 +15,7 @@ export default class App extends NextApp {
       <CacheProvider value={cache}>
         {globalStyles}
         <Layout>
-          <SwapProvider>
-            <Component {...pageProps} />
-          </SwapProvider>
+          <Component {...pageProps} />
         </Layout>
       </CacheProvider>
     );

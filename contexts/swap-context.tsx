@@ -90,6 +90,7 @@ export const reducer = (state, action) => {
       return {
         ...state,
         selectedPlaylistId: action.selectedPlaylistId,
+        selectedPlaylist: undefined,
       };
     case "SET_SELECTED_PLAYLIST":
       return {

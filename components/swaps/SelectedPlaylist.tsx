@@ -12,11 +12,14 @@ export const SelectedPlaylist = ({
   const dispatch = useSwapDispatch();
   const { selectedPlaylist, selectedPlaylistId } = useSwapState();
   useEffect(() => {
-    dispatch({
-      type: "SET_SELECTED_PLAYLIST_ID",
-      selectedPlaylistId: selected_playlist_id,
-    });
+    if (!selectedPlaylistId) {
+      dispatch({
+        type: "SET_SELECTED_PLAYLIST_ID",
+        selectedPlaylistId: selected_playlist_id,
+      });
+    }
   }, [selected_playlist_id]);
+
   useEffect(() => {
     async function fetchData() {
       const request = await fetch(
@@ -30,11 +33,11 @@ export const SelectedPlaylist = ({
     if (selectedPlaylistId) {
       fetchData().catch((err) => {});
     }
-  }, [selectedPlaylistId, selected_playlist_id]);
+  }, [selectedPlaylistId]);
 
   return (
     <BodyContent>
-      {selectedPlaylist && (
+      {selectedPlaylist ? (
         <Container>
           <h2>Selection</h2>
           <p>
@@ -70,6 +73,10 @@ export const SelectedPlaylist = ({
               </Creator>
             </Metadata>
           </PlaylistCard>
+        </Container>
+      ) : (
+        <Container>
+          <h2>Loading...</h2>
         </Container>
       )}
     </BodyContent>
