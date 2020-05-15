@@ -78,20 +78,13 @@ export const SelectedPlaylist = ({
           )}
           <Metadata>
             <Copy>
-              <PlaylistName
-                onClick={async () => {
-                  try {
-                    const playlist = await fetch(
-                      `/api/swaps/${router.query.id}/selected_playlist?selectedPlaylistId=${selectedPlaylist.id}`
-                    );
-                    const json = playlist.json();
-                    console.log("json():", json());
-                  } catch (e) {
-                    console.log("e:", e);
-                  }
-                }}
-              >
-                {selectedPlaylist.name}
+              <PlaylistName>
+                <Link
+                  as={`/swaps/${router.query.id}/selected_playlist?selectedPlaylistId=${selectedPlaylistId}`}
+                  href="/swaps/[id]/selected_playlist"
+                >
+                  <a>{selectedPlaylist.name}</a>
+                </Link>
               </PlaylistName>
               <Description
                 dangerouslySetInnerHTML={{
