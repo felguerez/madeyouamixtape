@@ -41,33 +41,31 @@ const Swaps = ({ user }: { user: User }) => {
   }
   return (
     <>
-      <CopyContainer>
-        <h1>Made You A Mixtape</h1>
+      <h1>Made You A Mixtape</h1>
+      <p>
+        Hey welcome back. Check out a group below and join to share playlists.
+        Share some music with people you know or random strangers.
+      </p>
+      <p>
+        If you want to start a new swap group feel free.{" "}
+        <ButtonLink onClick={() => setIsOpen((isOpen) => !isOpen)}>
+          Click here
+        </ButtonLink>{" "}
+        and give your swap group a name and a short description.
+      </p>
+      {isOpen && (
+        <Form
+          errorMessage={error}
+          onSubmit={handleSubmit}
+          spotifyId={user.spotify_id}
+        />
+      )}
+      {swaps && (
         <p>
-          Hey welcome back. Check out a group below and join to share playlists.
-          Share some music with people you know or random strangers.
+          The following {swaps.length} swap{" "}
+          {swaps.length > 1 ? "groups" : "group"} are happening right now:
         </p>
-        <p>
-          If you want to start a new swap group feel free.{" "}
-          <ButtonLink onClick={() => setIsOpen((isOpen) => !isOpen)}>
-            Click here
-          </ButtonLink>{" "}
-          and give your swap group a name and a short description.
-        </p>
-        {isOpen && (
-          <Form
-            errorMessage={error}
-            onSubmit={handleSubmit}
-            spotifyId={user.spotify_id}
-          />
-        )}
-        {swaps && (
-          <p>
-            The following {swaps.length} swap{" "}
-            {swaps.length > 1 ? "groups" : "group"} are happening right now:
-          </p>
-        )}
-      </CopyContainer>
+      )}
       {swaps ? (
         <SwapList swaps={swaps} />
       ) : (
