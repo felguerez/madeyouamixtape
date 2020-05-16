@@ -6,14 +6,14 @@ import { ButtonLink } from "../SwapManager";
 import { css } from "@emotion/core";
 import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
 import { Notification } from "../Notification";
-import { DARK_GRAY, GRAY } from "../../shared/styles";
+import { DARK_GRAY } from "../../shared/styles";
 import PlaylistTracks from "../../pages/swaps/[id]/PlaylistTracks";
 
 export const ReceivedPlaylist = ({
   swap,
   currentSwapMember: { received_playlist_id },
 }) => {
-  const { user } = useUser();
+  const user = useUser();
   const [notification, setNotification] = useState("");
   const dispatch = useSwapDispatch();
   const { receivedPlaylist } = useSwapState();
@@ -28,7 +28,9 @@ export const ReceivedPlaylist = ({
       dispatch({ type: "SET_RECEIVED_PLAYLIST", playlist });
     }
     if (received_playlist_id) {
-      fetchData().catch((err) => {});
+      fetchData().catch((err) => {
+        console.log("err:", err);
+      });
     }
   }, [received_playlist_id]);
 
@@ -48,9 +50,7 @@ export const ReceivedPlaylist = ({
   return (
     <div>
       <Title>
-        {!user
-          ? "Loading your account ..."
-          : `You've received a new playlist!`}
+        {!user ? "Loading your account ..." : `You've received a new playlist!`}
       </Title>
       {notification && (
         <Notification
