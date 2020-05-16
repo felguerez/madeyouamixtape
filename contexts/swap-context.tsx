@@ -5,6 +5,7 @@ const SET_PLAYLISTS = "SET_PLAYLISTS";
 const SET_SELECTED_PLAYLIST_ID = "SET_SELECTED_PLAYLIST_ID";
 const SET_SELECTED_PLAYLIST = "SET_SELECTED_PLAYLIST";
 const SET_RECEIVED_PLAYLIST = "SET_RECEIVED_PLAYLIST";
+const SET_PLAYING_NODE = "SET_PLAYING_NODE";
 
 export const initialState = {
   swap: undefined,
@@ -18,6 +19,7 @@ export const initialState = {
   selectedPlaylistId: "",
   selectedPlaylist: undefined,
   receivedPlaylist: undefined,
+  node: undefined,
 };
 
 export type Action =
@@ -60,6 +62,10 @@ export type Action =
         description: string;
         owner: object;
       };
+    }
+  | {
+      type: typeof SET_PLAYING_NODE;
+      node: HTMLAudioElement;
     };
 
 import React, { Dispatch } from "react";
@@ -101,6 +107,11 @@ export const reducer = (state, action) => {
       return {
         ...state,
         receivedPlaylist: action.playlist,
+      };
+    case "SET_PLAYING_NODE":
+      return {
+        ...state,
+        node: action.node,
       };
     default:
       return state;

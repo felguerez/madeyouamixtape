@@ -7,6 +7,7 @@ import { ButtonLink } from "../SwapManager";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import PlaylistTracks from "../../pages/swaps/[id]/PlaylistTracks";
+import Vibes from "../Vibes";
 
 export const SelectedPlaylist = ({
   currentSwapMember: { selected_playlist_id },
@@ -103,6 +104,7 @@ export const SelectedPlaylist = ({
         </ContentCard>
       </Container>
       <PlaylistTracks playlist={selectedPlaylist} />
+      <Vibes playlist={selectedPlaylist} />
     </BodyContent>
   );
 };

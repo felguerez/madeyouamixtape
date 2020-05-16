@@ -2,18 +2,24 @@ import React, { useState } from "react";
 import ms from "ms";
 import styled from "@emotion/styled";
 import { GRAY, OFF_WHITE } from "../../shared/styles";
+import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
 
 export const PlaylistTrack = ({ item }: { item: any }) => {
   const audioRef = React.createRef<HTMLAudioElement>();
   const [isPlaying, setIsPlaying] = useState(false);
+  const dispatch = useSwapDispatch();
+  const { node } = useSwapState();
   const playAudio = (_e) => {
     setIsPlaying((isPlaying) => !isPlaying);
     if (audioRef && audioRef.current) {
       if (isPlaying) {
+        node.pause();
+        node.currentTime = 0;
         audioRef.current.pause();
         audioRef.current.currentTime = 0;
         return;
       }
+      dispatch({ type: "SET_PLAYING_NODE", node: audioRef.current });
       audioRef.current.play();
     }
   };
