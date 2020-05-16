@@ -1,11 +1,10 @@
 import * as db from "../db";
 import escape from "sql-template-strings";
-import { SpotifyUser } from "./spotifyUser";
-import { SwapMember } from "./swapMember";
 
 export type User = {
   display_name: string;
   spotify_id: string;
+  image_url: string;
   id: number;
 };
 
@@ -42,12 +41,13 @@ export const user = {
   create: async function create({
     display_name,
     spotify_id,
+    image_url,
   }: User): Promise<User> {
     const query = escape`
         INSERT INTO user
-          (display_name, spotify_id)
+          (display_name, spotify_id, image_url)
         VALUES
-          (${display_name}, ${spotify_id})
+          (${display_name}, ${spotify_id}, ${image_url})
       `;
     await db.query(query);
     return await this.getBySpotifyId(spotify_id);
@@ -56,12 +56,18 @@ export const user = {
   findOrCreate: async function findOrCreate({
     display_name,
     spotify_id,
-  }: SpotifyUser): Promise<User> {
+    image_url,
+  }: {
+    display_name: string;
+    spotify_id: string;
+    image_url: string;
+  }): Promise<User> {
     const userBySpotifyId = await this.getBySpotifyId(spotify_id);
     if (userBySpotifyId) return userBySpotifyId;
     return await this.create({
       display_name,
       spotify_id,
+      image_url,
     });
   },
 

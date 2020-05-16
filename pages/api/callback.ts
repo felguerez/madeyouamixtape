@@ -13,9 +13,9 @@ export default nextConnect()
       let session = {};
       const { accessToken, refreshToken, expiresAt, ...profile } = req.user; // req.user is set after authentication
       console.log("profile:", profile);
-      const spotifyUser = await models.spotifyUser.findOrCreate(profile);
       const user = await models.user.findOrCreate({
-        ...spotifyUser,
+        display_name: profile.displayName,
+        spotify_id: profile.username,
         image_url: profile.photos[0],
       });
 

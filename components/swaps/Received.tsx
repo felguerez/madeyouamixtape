@@ -13,7 +13,7 @@ export const ReceivedPlaylist = ({
   swap,
   currentSwapMember: { received_playlist_id },
 }) => {
-  const { spotifyUser } = useUser();
+  const { user } = useUser();
   const [notification, setNotification] = useState("");
   const dispatch = useSwapDispatch();
   const { receivedPlaylist } = useSwapState();
@@ -48,7 +48,7 @@ export const ReceivedPlaylist = ({
   return (
     <div>
       <Title>
-        {!spotifyUser
+        {!user
           ? "Loading your account ..."
           : `You've received a new playlist!`}
       </Title>

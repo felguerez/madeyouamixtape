@@ -1,14 +1,10 @@
 import Link from "next/link";
 import styled from "@emotion/styled";
 import { useUser } from "../lib/hooks";
-import {
-  DARK_GRAY,
-  LIGHT_BLUE,
-  WHITE,
-} from "../shared/styles";
+import { DARK_GRAY, LIGHT_BLUE, WHITE } from "../shared/styles";
 
 const Header = () => {
-  const identity = useUser();
+  const user = useUser();
   return (
     <header>
       <nav>
@@ -18,7 +14,7 @@ const Header = () => {
               <a>Home</a>
             </Link>
           </HomeNavItem>
-          {identity && identity.user ? (
+          {user ? (
             <>
               <li>
                 <Link href="/profile">

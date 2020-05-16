@@ -4,11 +4,9 @@ import Form from "../components/home/form";
 import { useUser } from "../lib/hooks";
 import { useState } from "react";
 import Router from "next/router";
-import { CopyContainer } from "../shared/styles";
 
 const About = () => {
-  const identity = useUser();
-  const user = identity.user || {};
+  const user = useUser() || {};
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState("");
   async function handleSubmit(e) {

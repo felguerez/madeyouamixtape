@@ -2,10 +2,9 @@ import { useUser } from "../lib/hooks";
 import Form from "../components/profile/form";
 import { useState } from "react";
 import { Notification } from "../components/Notification";
-import {CopyContainer} from "../shared/styles";
 
 const Profile = () => {
-  const identity = useUser();
+  const user = useUser();
   const [notification, setNotification] = useState("");
   const [error, setError] = useState("");
 
@@ -19,7 +18,7 @@ const Profile = () => {
     };
 
     try {
-      const res = await fetch(`/api/users/${identity.user.id}`, {
+      const res = await fetch(`/api/users/${user.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -36,7 +35,7 @@ const Profile = () => {
   }
   return (
     <>
-      <h1>{identity.user ? "Your profile" : "Loading..."}</h1>
+      <h1>{user ? "Your profile" : "Loading..."}</h1>
       {notification && (
         <Notification
           notification={notification}
@@ -44,11 +43,11 @@ const Profile = () => {
         />
       )}
       <p>Update your info here.</p>
-      {identity.user && (
+      {user && (
         <Form
           onSubmit={handleSubmit}
           errorMessage={error}
-          initialValues={{ display_name: identity.user.display_name }}
+          initialValues={{ display_name: user.display_name }}
         />
       )}
     </>

@@ -62,8 +62,7 @@ export const swap = {
 
   all: async function all(): Promise<Swap[]> {
     try {
-
-    return await db.query(escape`
+      return await db.query(escape`
       SELECT 
         swap.id, 
         swap.title, 
@@ -79,8 +78,8 @@ export const swap = {
         swap.description, 
         owner_display_name
     `);
-    } catch(e) {
-      console.log('e:', e);
+    } catch (e) {
+      console.log("e:", e);
     }
   },
 
@@ -102,15 +101,14 @@ export const swap = {
         swap.id, 
         swap.title, 
         swap.description, 
-        spotify_user.display_name AS owner_display_name,
+        user.display_name AS owner_display_name,
         COUNT(swap_member.id) AS swap_member_count
       FROM swap
       INNER JOIN swap_member ON swap.id=swap_member.swap_id
       INNER JOIN user ON swap.owner_id=${userId}
-      INNER JOIN spotify_user ON user.spotify_id = spotify_user.spotify_id
       WHERE swap.id=swap_member.swap_id
       AND swap_member.user_id = user.id
-      AND user.spotify_id = spotify_user.spotify_id
+      AND user.spotify_id = user.spotify_id
       GROUP BY swap.id, 
         swap.title, 
         swap.description, 

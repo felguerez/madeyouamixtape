@@ -90,5 +90,5 @@ export function useUser({
     }
   }, [redirectTo, redirectIfFound, finished, hasUser]);
 
-  return error ? null : { user, spotifyUser };
+  return error ? null : user;
 }

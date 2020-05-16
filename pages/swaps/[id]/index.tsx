@@ -32,6 +32,7 @@ export async function getServerSideProps({ req, params, res }) {
     res.writeHead(302, {
       Location: "/",
     });
+    res.end();
   }
   const swap = await models.swap.getById(params.id);
   const currentSwapMember = swap.members.filter(
