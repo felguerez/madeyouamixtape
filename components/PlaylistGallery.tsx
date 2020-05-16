@@ -1,14 +1,15 @@
 import styled from "@emotion/styled";
 import { useEffect } from "react";
-import { useSwapDispatch, useSwapState } from "../contexts/swap-context";
+import { useSwapDispatch } from "../contexts/swap-context";
 import {
   DARK_BLUE,
-  DARK_GRAY,
-  DARK_GREEN,
   GRAY,
+  DARK_GREEN,
+  OFF_WHITE,
   LIGHT_GREEN,
   SEPIA,
   WHITE,
+  DARK_GRAY,
 } from "../shared/styles";
 import { SwapMember } from "../lib/models/swapMember";
 
@@ -98,9 +99,9 @@ const Container = styled.ul`
 
 const Playlist = styled.li`
   grid-column: span 1;
-  background: ${DARK_GRAY};
-  box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
-  border: 1px solid ${GRAY};
+  background: ${GRAY};
+  box-shadow: 0 2px 2px -2px ${DARK_GRAY};
+  border: 1px solid ${DARK_GRAY};
   font-size: 14px;
   font-weight: bold;
   border-radius: 8px;
@@ -146,6 +147,7 @@ const Button = styled.button<{ isActive: boolean }>`
       isActive ? DARK_GREEN : LIGHT_GREEN};
   }
   background-color: ${({ isActive }) => (isActive ? DARK_GREEN : DARK_BLUE)};
-  border: ${({ isActive }) => isActive ? `1px solid ${LIGHT_GREEN}` : `1px solid ${SEPIA}`};
-  color: ${({ isActive }) => (isActive ? GRAY : WHITE)};
+  border: ${({ isActive }) =>
+    isActive ? `1px solid ${LIGHT_GREEN}` : `1px solid ${SEPIA}`};
+  color: ${({ isActive }) => (isActive ? OFF_WHITE : WHITE)};
 `;

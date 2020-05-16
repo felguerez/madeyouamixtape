@@ -1,13 +1,7 @@
 import { Swap } from "../lib/models/swap";
 import styled from "@emotion/styled";
 import Link from "next/link";
-import {
-  DARK_BLUE,
-  DARK_GRAY,
-  DARK_GREEN,
-  GRAY,
-  LIGHT_BLUE,
-} from "../shared/styles";
+import { GRAY, DARK_GREEN, OFF_WHITE } from "../shared/styles";
 
 export const SwapList = ({
   swaps,
@@ -47,15 +41,15 @@ export const SwapList = ({
 };
 
 const SwapCards = styled.div`
-  background-color: ${GRAY};
+  background-color: ${OFF_WHITE};
   padding: 1rem;
   border-radius: 0.5rem;
   box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
-  border: 1px solid ${DARK_GRAY};
+  border: 1px solid ${GRAY};
 `;
 
 const SwapCard = styled.div`
-  background: ${DARK_GRAY};
+  background: ${GRAY};
   box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
   padding: 1rem;
   border-radius: 0.5rem;

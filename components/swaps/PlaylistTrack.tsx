@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ms from "ms";
 import styled from "@emotion/styled";
-import { DARK_GRAY, GRAY } from "../../shared/styles";
+import { GRAY, OFF_WHITE } from "../../shared/styles";
 
 export const PlaylistTrack = ({ item }: { item: any }) => {
   const audioRef = React.createRef<HTMLAudioElement>();
@@ -72,9 +72,9 @@ const PlayButton = styled.div`
   width: 64px;
   top: 25%;
   left: 25%;
-  color: ${GRAY};
+  color: ${OFF_WHITE};
   &:active {
-    color: ${DARK_GRAY};
+    color: ${GRAY};
   }
 `;
 

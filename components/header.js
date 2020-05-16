@@ -1,7 +1,7 @@
 import Link from "next/link";
 import styled from "@emotion/styled";
 import { useUser } from "../lib/hooks";
-import { DARK_GRAY, LIGHT_BLUE, WHITE } from "../shared/styles";
+import { GRAY, LIGHT_BLUE, WHITE } from "../shared/styles";
 
 const Header = () => {
   const user = useUser();
@@ -52,7 +52,7 @@ const Header = () => {
           color: ${WHITE};
         }
         a:hover {
-          color: ${DARK_GRAY};
+          color: ${GRAY};
         }
         ul {
           display: flex;

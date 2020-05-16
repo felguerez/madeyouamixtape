@@ -1,11 +1,10 @@
 import fetch from "isomorphic-fetch";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import styled from "@emotion/styled";
 import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
 import { ContentCard } from "../../shared/styles";
 import { ButtonLink } from "../SwapManager";
 import { useRouter } from "next/router";
-import * as constants from "../../lib/constants";
 import Link from "next/link";
 import PlaylistTracks from "../../pages/swaps/[id]/PlaylistTracks";
 
@@ -15,8 +14,6 @@ export const SelectedPlaylist = ({
   const dispatch = useSwapDispatch();
   const router = useRouter();
   const { selectedPlaylist, selectedPlaylistId } = useSwapState();
-  const [isOpen, setIsOpen] = useState(false);
-  console.log("selectedPlaylist:", selectedPlaylist);
   useEffect(() => {
     if (!selectedPlaylistId) {
       dispatch({
@@ -37,7 +34,9 @@ export const SelectedPlaylist = ({
       dispatch({ type: "SET_SELECTED_PLAYLIST", playlist });
     }
     if (selectedPlaylistId) {
-      fetchData().catch((err) => {});
+      fetchData().catch((err) => {
+        console.log("err:", err);
+      });
     }
   }, [selectedPlaylistId]);
   if (!selectedPlaylist)
@@ -81,11 +80,7 @@ export const SelectedPlaylist = ({
           )}
           <Metadata>
             <Copy>
-              <PlaylistName>
-                <ButtonLink onClick={() => setIsOpen((isOpen) => !isOpen)}>
-                  {selectedPlaylist.name}
-                </ButtonLink>
-              </PlaylistName>
+              <PlaylistName>{selectedPlaylist.name}</PlaylistName>
               <Description
                 dangerouslySetInnerHTML={{
                   __html: selectedPlaylist.description,
@@ -94,36 +89,12 @@ export const SelectedPlaylist = ({
             </Copy>
             <Creator>
               By{" "}
-              <a
-                href={selectedPlaylist.owner.href}
-                target="_blank"
-                onClick={async (e) => {
-                  e.preventDefault();
-                  try {
-                    const apiUserProfile = await fetch(
-                      `${constants.SPOTIFY_API_BASE}users/${selectedPlaylist.owner.id}`,
-                      {
-                        headers: {
-                          Authorization: `Basic ${Buffer.from(
-                            process.env.CLIENT_ID +
-                              ":" +
-                              process.env.CLIENT_SECRET
-                          ).toString("base64")}`,
-                          Accept:
-                            "application/json, application/xml, text/play, text/html, *.*",
-                          "Content-Type":
-                            "application/x-www-form-urlencoded; charset=utf-8",
-                        },
-                      }
-                    );
-                    apiUserProfile.json();
-                  } catch (e) {
-                    console.log("e:", e);
-                  }
-                }}
+              <Link
+                as={`/users/${selectedPlaylist.owner.id}`}
+                href="/users/[spotify_id]"
               >
-                {selectedPlaylist.owner.display_name}
-              </a>
+                <a>{selectedPlaylist.owner.display_name}</a>
+              </Link>
             </Creator>
             <TracksCount>
               {selectedPlaylist.tracks.items.length} tracks

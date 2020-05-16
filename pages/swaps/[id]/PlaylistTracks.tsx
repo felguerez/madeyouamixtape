@@ -6,7 +6,7 @@ const PlaylistTracks = ({ playlist }) => (
   <TrackList>
     {playlist.tracks &&
       playlist.tracks.items.map((item) => (
-        <PlaylistTrack item={item} key={item.id} />
+        <PlaylistTrack item={item} key={item.track.id} />
       ))}
     <style jsx global>{`
       .material-icons {

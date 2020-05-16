@@ -8,14 +8,12 @@ export const DARK_GREEN = "#00a896";
 export const LIGHT_GREEN = "#02c39a";
 export const SEPIA = "#f0f3bd";
 export const WHITE = "#ffffff";
-export const GRAY = "#f9f9f9";
-export const DARK_GRAY = "#ebebeb";
+export const OFF_WHITE = "#f9f9f9";
+export const GRAY = "#ebebeb";
+export const DARK_GRAY = "rgba(0, 0, 0, 0.1)";
+export const CHARCOAL = "rgba(0, 0, 0, 0)";
 export const lightLinearGradient = css`
-  background-image: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0),
-    rgba(0, 0, 0, 0.1)
-  );
+  background-image: linear-gradient(to bottom, ${CHARCOAL}, ${DARK_GRAY});
 `;
 
 const globals: SerializedStyles = css`
@@ -30,7 +28,8 @@ const globals: SerializedStyles = css`
     padding: 0;
     min-height: 100%;
     color: ${DARK_BLUE};
-    font-family: "Circular Spotify Text";
+    font-family: "Circular Spotify Text", "Helvetica Neue", Arial, Verdana,
+      "sans-serif";
   }
   a {
     font-weight: bold;
@@ -64,7 +63,7 @@ const globals: SerializedStyles = css`
     -webkit-appearance: none;
     -moz-appearance: none;
     border-radius: 0.5rem;
-    color: ${GRAY};
+    color: ${OFF_WHITE};
     background-color: ${DARK_BLUE};
   }
 
@@ -88,7 +87,7 @@ const globals: SerializedStyles = css`
     padding: 8px;
     margin: 0.3rem 0 1rem;
     box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
-    border: 1px solid ${DARK_GRAY};
+    border: 1px solid ${GRAY};
     border-radius: 4px;
   }
   .submit {
@@ -136,7 +135,7 @@ export const CopyContainer = styled.div`
   padding: 0 2rem;
 `;
 export const ContentCard = styled.div`
-  background: ${DARK_GRAY};
+  background: ${GRAY};
   border-radius: 8px;
   padding: 1rem;
   display: flex;
