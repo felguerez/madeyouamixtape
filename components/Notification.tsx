@@ -7,6 +7,7 @@ export const NotificationContainer = styled.p`
   color: ${GRAY};
   background-color: ${DARK_BLUE};
   display: flex;
+  align-items: center;
   span {
     margin-left: 0.5rem;
   }
@@ -14,7 +15,6 @@ export const NotificationContainer = styled.p`
 export const Notification = ({ notification, setNotification }) => {
   return (
     <NotificationContainer onClick={() => setNotification("")}>
-      <i className="material-icons">check_circle</i>
       <span>{notification}</span>
     </NotificationContainer>
   );
