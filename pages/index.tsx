@@ -4,7 +4,7 @@ import Swaps from "../components/Swaps";
 import { CopyContainer } from "../shared/styles";
 
 const Home = () => {
-  const { user } = useUser();
+  const user = useUser();
   if (user === undefined) {
     return (
       <CopyContainer>

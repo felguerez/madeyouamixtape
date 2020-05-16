@@ -12,6 +12,7 @@ import {
   DARK_GRAY,
 } from "../shared/styles";
 import { SwapMember } from "../lib/models/swapMember";
+import Link from "next/link";
 
 export const PlaylistGallery = ({
   currentSwapMember,
@@ -22,7 +23,7 @@ export const PlaylistGallery = ({
   playlists: {
     images: { url: string }[];
     name: string;
-    owner: { href: string; display_name: string };
+    owner: { href: string; display_name: string; id: string };
     uri: string;
     id: string;
   }[];
@@ -72,9 +73,12 @@ export const PlaylistGallery = ({
               <PlaylistName>{playlist.name}</PlaylistName>
               <Creator>
                 by{" "}
-                <a href={playlist.owner.href} target="_blank">
-                  {playlist.owner.display_name}
-                </a>
+                <Link
+                  href={`/users/[spotify_id]`}
+                  as={`/users/${playlist.owner.id}`}
+                >
+                  <a>{playlist.owner.display_name}</a>
+                </Link>
               </Creator>
             </Metadata>
             {currentSwapMember.isEnrolled && (
