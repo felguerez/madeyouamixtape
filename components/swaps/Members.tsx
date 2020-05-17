@@ -47,4 +47,5 @@ const MemberName = styled.h4`
 
 const Icon = styled.i`
   font-size: 1rem;
+  cursor: default;
 `;
