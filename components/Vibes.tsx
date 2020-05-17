@@ -6,9 +6,7 @@ import { css, jsx } from "@emotion/core";
 
 const Vibes = ({ playlist }) => {
   const ids = playlist.tracks.items.map((item) => item.track.id);
-  const [features, setFeatures] = useState<Record<string, number>[] | null>(
-    null
-  );
+  const [features, setFeatures] = useState<Record<string, number>[]>([]);
   useEffect(() => {
     async function fetchData() {
       try {
@@ -16,16 +14,17 @@ const Vibes = ({ playlist }) => {
           `/api/spotify/playlists/${playlist.id}/features?ids=${ids}`
         );
         const response = await request.json();
-        setFeatures(response.features);
+        const { features } = response;
+        setFeatures(features);
       } catch (e) {
         console.log("e:", e);
       }
     }
-    if (ids.length && !features) {
+    if (ids.length && !features.length) {
       fetchData();
     }
   }, [ids]);
-  if (!ids.length || !features) return null;
+  if (!ids.length || !features.length) return null;
   const averageFeatures = features.reduce(
     (accumulator, feature, i) => {
       Object.keys(accumulator).forEach((key) => {
