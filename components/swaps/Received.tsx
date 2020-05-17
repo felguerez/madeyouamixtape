@@ -10,10 +10,7 @@ import { GRAY } from "../../shared/styles";
 import PlaylistTracks from "../../pages/swaps/[id]/PlaylistTracks";
 import Vibes from "../Vibes";
 
-export const ReceivedPlaylist = ({
-  swap,
-  currentSwapMember: { received_playlist_id },
-}) => {
+export const ReceivedPlaylist = ({ swap, receivedPlaylistId }) => {
   const user = useUser();
   const [notification, setNotification] = useState("");
   const dispatch = useSwapDispatch();
@@ -23,26 +20,28 @@ export const ReceivedPlaylist = ({
     ids: receivedPlaylist?.tracks?.items?.map((item) => item.track.id),
     playlistId: receivedPlaylist?.id,
   });
+
   useEffect(() => {
     async function fetchData() {
       const request = await fetch(
-        `/api/spotify/playlists/${received_playlist_id}`
+        `/api/spotify/playlists/${receivedPlaylistId}`
       ).catch((err) => {
         console.log("err:", err);
       });
       const playlist = await request.json();
       dispatch({ type: "SET_RECEIVED_PLAYLIST", playlist });
     }
-    if (received_playlist_id) {
+
+    if (receivedPlaylistId && !receivedPlaylist) {
       fetchData().catch((err) => {
         console.log("err:", err);
       });
     }
-  }, [received_playlist_id]);
+  }, [receivedPlaylistId]);
 
   const onFollow = async () => {
     const request = await fetch(
-      `/api/spotify/playlists/${received_playlist_id}/follow`
+      `/api/spotify/playlists/${receivedPlaylistId}/follow`
     ).catch((err) => {
       console.log("err:", err);
     });
@@ -51,7 +50,7 @@ export const ReceivedPlaylist = ({
     }
   };
   const sender = swap.members.filter(
-    (member) => member.selected_playlist_id === received_playlist_id
+    (member) => member.selected_playlist_id === receivedPlaylistId
   )[0];
   return (
     <div>

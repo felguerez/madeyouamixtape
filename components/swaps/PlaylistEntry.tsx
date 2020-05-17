@@ -8,7 +8,7 @@ import { ReceivedPlaylist } from "./Received";
 import Settings from "./Settings";
 
 const PlaylistEntry = ({ swap, currentSwapMember }) => {
-  const { activeTab } = useSwapState();
+  const { activeTab, receivedPlaylistId } = useSwapState();
   const dispatch = useSwapDispatch();
   return (
     <div>
@@ -80,7 +80,9 @@ const PlaylistEntry = ({ swap, currentSwapMember }) => {
             currentSwapMember.received_playlist_id && (
               <ReceivedPlaylist
                 swap={swap}
-                currentSwapMember={currentSwapMember}
+                receivedPlaylistId={
+                  receivedPlaylistId || currentSwapMember.received_playlist_id
+                }
               />
             )}
           {activeTab === "selector" && (

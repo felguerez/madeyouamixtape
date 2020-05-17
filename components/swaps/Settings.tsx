@@ -4,11 +4,13 @@ import Form from "../settings/form";
 import { useState } from "react";
 import { ButtonLink } from "../SwapManager";
 import { Notification } from "../Notification";
+import { useSwapDispatch } from "../../contexts/swap-context";
 
 const Settings = ({ swap }: { swap: Swap }) => {
   const [notification, setNotification] = useState("");
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [error, setError] = useState("");
+  const dispatch = useSwapDispatch();
   async function handleSubmit(e) {
     event.preventDefault();
 
@@ -53,6 +55,11 @@ const Settings = ({ swap }: { swap: Swap }) => {
           if (shuffle.ok) {
             setNotification("all clear! check out your new playlist!");
           }
+          const results = await shuffle.json();
+          dispatch({
+            type: "SET_RECEIVED_PLAYLIST_ID",
+            receivedPlaylistId: results.receivedPlaylistId,
+          });
         }}
       >
         Shuffle 'em

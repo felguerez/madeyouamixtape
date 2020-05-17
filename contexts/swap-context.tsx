@@ -1,9 +1,10 @@
-import {Router} from "next/router";
+import { Router } from "next/router";
 
 const SET_ACTIVE_TAB = "SET_ACTIVE_TAB";
 const SWAP_RECEIVED = "SWAP_RECEIVED";
 const SET_PLAYLISTS = "SET_PLAYLISTS";
 const SET_SELECTED_PLAYLIST_ID = "SET_SELECTED_PLAYLIST_ID";
+const SET_RECEIVED_PLAYLIST_ID = "SET_RECEIVED_PLAYLIST_ID";
 const SET_SELECTED_PLAYLIST = "SET_SELECTED_PLAYLIST";
 const SET_RECEIVED_PLAYLIST = "SET_RECEIVED_PLAYLIST";
 const SET_PLAYING_NODE = "SET_PLAYING_NODE";
@@ -17,6 +18,7 @@ export const initialState = {
     items: [],
   },
   selectedPlaylistId: "",
+  receivedPlaylistId: "",
   selectedPlaylist: undefined,
   receivedPlaylist: undefined,
   node: undefined,
@@ -41,6 +43,10 @@ export type Action =
   | {
       type: typeof SET_SELECTED_PLAYLIST_ID;
       selectedPlaylistId: string;
+    }
+  | {
+      type: typeof SET_RECEIVED_PLAYLIST_ID;
+      receivedPlaylistId: string;
     }
   | {
       type: typeof SET_SELECTED_PLAYLIST;
@@ -90,6 +96,16 @@ export const reducer = (state, action) => {
         ...state,
         selectedPlaylistId: action.selectedPlaylistId,
         selectedPlaylist: undefined,
+      };
+    case "SET_RECEIVED_PLAYLIST_ID":
+      return {
+        ...state,
+        currentSwapMember: {
+          ...state.currentSwapMember,
+          received_playlist_id: action.receivedPlaylistId,
+        },
+        receivedPlaylist: undefined,
+        receivedPlaylistId: action.receivedPlaylistId,
       };
     case "SET_SELECTED_PLAYLIST":
       return {
