@@ -31,7 +31,7 @@ export const PlaylistTrack = ({
       <PlayButtonContainer background={item.track.album.images[0]?.url}>
         {item.track.album.images && (
           <PlayButton onClick={playAudio}>
-            <i className="material-icons">
+            <i className="material-icons play-pause">
               {isPlaying ? "pause_circle_outline" : "play_circle_outline"}
             </i>
           </PlayButton>
@@ -57,6 +57,11 @@ export const PlaylistTrack = ({
           <source src={item.track.preview_url} type="audio/mpeg" />
         </audio>
       )}
+      <style jsx global>{`
+        .material-icons.play-pause {
+          font-size: 32px;
+        }
+      `}</style>
     </Track>
   );
 };

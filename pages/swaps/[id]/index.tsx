@@ -6,6 +6,8 @@ import { Swap } from "../../../lib/models/swap";
 import { SwapMember } from "../../../lib/models/swapMember";
 import { SwapProvider } from "../../../contexts/swap-context";
 import { serialize } from "../../../lib/utils";
+import { useRouter } from "next/router";
+import { ButtonLink } from "../../../components/SwapManager";
 
 export default function ({
   swap,
@@ -14,8 +16,14 @@ export default function ({
   swap: Swap & { owner_display_name: string };
   currentSwapMember: SwapMember;
 }) {
+  const router = useRouter();
   return (
     <SwapProvider>
+      <BackButton>
+        <i className="material-icons" onClick={router.back}>
+          arrow_back
+        </i>
+      </BackButton>
       <Title>
         <span>{swap.title}</span>
       </Title>
@@ -55,7 +63,7 @@ const Title = styled.h1`
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin-bottom: 0;
+  margin: 0;
 `;
 const Description = styled.p`
   margin: 0 0 2rem 0;
@@ -68,4 +76,8 @@ const Owner = styled.p`
   padding: 0;
   font-size: 1rem;
   margin: 0 0 1rem 0;
+`;
+
+const BackButton = styled(ButtonLink)`
+  margin-top: -1rem;
 `;

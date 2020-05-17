@@ -57,8 +57,8 @@ export const SelectedPlaylist = ({
           <ButtonLink
             onClick={() =>
               dispatch({
-                type: "SET_PLAYLIST_VIEWER",
-                playlistViewer: "selector",
+                type: "SET_ACTIVE_TAB",
+                activeTab: "selector",
               })
             }
           >

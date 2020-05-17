@@ -2,12 +2,12 @@ import { CurrentUsersPlaylists } from "../CurrentUsersPlaylists";
 import { SelectedPlaylist } from "./SelectedPlaylist";
 import styled from "@emotion/styled";
 import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
-import { DARK_BLUE, GRAY } from "../../shared/styles";
+import { DARK_BLUE, DARK_GRAY, GRAY } from "../../shared/styles";
 import Members from "./Members";
 import { ReceivedPlaylist } from "./Received";
 
 const PlaylistEntry = ({ swap, currentSwapMember }) => {
-  const { playlistViewer } = useSwapState();
+  const { activeTab } = useSwapState();
   const dispatch = useSwapDispatch();
   return (
     <div>
@@ -16,11 +16,11 @@ const PlaylistEntry = ({ swap, currentSwapMember }) => {
           <Button
             onClick={() =>
               dispatch({
-                type: "SET_PLAYLIST_VIEWER",
-                playlistViewer: "members",
+                type: "SET_ACTIVE_TAB",
+                activeTab: "members",
               })
             }
-            isActive={playlistViewer === "members"}
+            isActive={activeTab === "members"}
           >
             Members
           </Button>
@@ -29,11 +29,11 @@ const PlaylistEntry = ({ swap, currentSwapMember }) => {
           <Button
             onClick={() =>
               dispatch({
-                type: "SET_PLAYLIST_VIEWER",
-                playlistViewer: "selection",
+                type: "SET_ACTIVE_TAB",
+                activeTab: "selection",
               })
             }
-            isActive={playlistViewer === "selection"}
+            isActive={activeTab === "selection"}
           >
             Selected playlist
           </Button>
@@ -43,31 +43,31 @@ const PlaylistEntry = ({ swap, currentSwapMember }) => {
             <Button
               onClick={() =>
                 dispatch({
-                  type: "SET_PLAYLIST_VIEWER",
-                  playlistViewer: "received",
+                  type: "SET_ACTIVE_TAB",
+                  activeTab: "received",
                 })
               }
-              isActive={playlistViewer === "received"}
+              isActive={activeTab === "received"}
             >
               Your New Playlist
             </Button>
           </Tab>
         )}
       </Tabs>
-      {playlistViewer === "members" && <Members swap={swap} />}
+      {activeTab === "members" && <Members swap={swap} />}
       {currentSwapMember && (
         <>
-          {playlistViewer === "selection" && (
+          {activeTab === "selection" && (
             <SelectedPlaylist currentSwapMember={currentSwapMember} />
           )}
-          {playlistViewer === "received" &&
+          {activeTab === "received" &&
             currentSwapMember.received_playlist_id && (
               <ReceivedPlaylist
                 swap={swap}
                 currentSwapMember={currentSwapMember}
               />
             )}
-          {playlistViewer === "selector" && (
+          {activeTab === "selector" && (
             <CurrentUsersPlaylists currentSwapMember={currentSwapMember} />
           )}
         </>
@@ -101,7 +101,7 @@ const Button = styled.button<{ isActive: boolean }>`
   border-radius: 0;
   background-color: unset;
   border-bottom: ${({ isActive }) => {
-    return isActive ? `1px solid ${DARK_BLUE}` : `1px solid ${GRAY}`;
+    return isActive ? `1px solid ${DARK_BLUE}` : `1px solid ${DARK_GRAY}`;
   }};
   &:first-of-type {
     padding-left: 0;

@@ -16,11 +16,6 @@ const PlaylistTracks = ({ playlist }) => {
         playlist.tracks.items.map((item, index) => (
           <PlaylistTrack item={item} key={item.track.id} index={index} />
         ))}
-      <style jsx global>{`
-        .material-icons {
-          font-size: 32px;
-        }
-      `}</style>
     </TrackList>
   );
 };

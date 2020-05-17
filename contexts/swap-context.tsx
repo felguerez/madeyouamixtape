@@ -1,4 +1,5 @@
-const SET_PLAYLIST_VIEWER = "SET_PLAYLIST_VIEWER";
+import {Router} from "next/router";
+
 const SET_ACTIVE_TAB = "SET_ACTIVE_TAB";
 const SWAP_RECEIVED = "SWAP_RECEIVED";
 const SET_PLAYLISTS = "SET_PLAYLISTS";
@@ -6,14 +7,12 @@ const SET_SELECTED_PLAYLIST_ID = "SET_SELECTED_PLAYLIST_ID";
 const SET_SELECTED_PLAYLIST = "SET_SELECTED_PLAYLIST";
 const SET_RECEIVED_PLAYLIST = "SET_RECEIVED_PLAYLIST";
 const SET_PLAYING_NODE = "SET_PLAYING_NODE";
-const STOP_PLAYING_NODE = "STOP_PLAYING_NODE";
 
 export const initialState = {
   swap: undefined,
   currentSwapMember: undefined,
   spotifyId: undefined,
-  activeTab: "entry",
-  playlistViewer: "members",
+  activeTab: "members",
   playlists: {
     items: [],
   },
@@ -26,12 +25,8 @@ export const initialState = {
 
 export type Action =
   | {
-      type: typeof SET_PLAYLIST_VIEWER;
-      playlistViewer: "selection" | "selector" | "received" | "members";
-    }
-  | {
       type: typeof SET_ACTIVE_TAB;
-      activeTab: "members" | "entry" | "received" | "settings";
+      activeTab: "selection" | "selector" | "received" | "members";
     }
   | {
       type: typeof SWAP_RECEIVED;
@@ -84,11 +79,6 @@ export const reducer = (state, action) => {
       return {
         ...state,
         activeTab: action.activeTab,
-      };
-    case "SET_PLAYLIST_VIEWER":
-      return {
-        ...state,
-        playlistViewer: action.playlistViewer,
       };
     case "SET_PLAYLISTS":
       return {

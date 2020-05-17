@@ -86,6 +86,8 @@ const globals: SerializedStyles = css`
   input {
     padding: 8px;
     margin: 0.3rem 0 1rem;
+  }
+  input[type='text'] {
     box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
     border: 1px solid ${GRAY};
     border-radius: 4px;
@@ -117,20 +119,13 @@ const globals: SerializedStyles = css`
     border: 1px solid ${DARK_BLUE};
     border-radius: 4px;
   }
+  i {
+    cursor: pointer;
+  }
 `;
 
 export const globalStyles: ReactElement = <Global styles={globals} />;
 
-export const Card = styled.div`
-  width: 400px;
-  min-height: 600px;
-  max-height: 90vh;
-  overflow-y: scroll;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-  padding: 16px;
-  margin: 16px;
-`;
 export const CopyContainer = styled.div`
   padding: 0 2rem;
 `;
