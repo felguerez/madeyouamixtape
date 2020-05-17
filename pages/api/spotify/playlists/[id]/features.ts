@@ -2,6 +2,7 @@ import fetch from "isomorphic-fetch";
 import { SPOTIFY_API_BASE } from "../../../../../lib/constants";
 import { getSession } from "../../../../../lib/iron";
 
+// TODO: move this function to /api/spotify/features
 export default async (req, res) => {
   const { accessToken } = await getSession(req);
   try {

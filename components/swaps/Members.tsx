@@ -13,7 +13,9 @@ const Members = ({ swap }) => {
                 <MemberName>
                   {member.display_name}
                   {member.selected_playlist_id && (
-                    <ReadyToShareStatus>Ready to share</ReadyToShareStatus>
+                    <ReadyToShareStatus>
+                      <Icon className="material-icons">done_outline</Icon>
+                    </ReadyToShareStatus>
                   )}
                 </MemberName>
               </li>
@@ -43,6 +45,6 @@ const MemberName = styled.h4`
   margin: 0;
 `;
 
-const BodyContent = styled.div`
-  padding: 2rem 0;
+const Icon = styled.i`
+  font-size: 1rem;
 `;

@@ -1,6 +1,6 @@
 import fetch from "isomorphic-fetch";
 import { useEffect, useState } from "react";
-import { useUser } from "../../lib/hooks";
+import { useFeatures, useUser } from "../../lib/hooks";
 import styled from "@emotion/styled";
 import { ButtonLink } from "../SwapManager";
 import { css } from "@emotion/core";
@@ -18,6 +18,11 @@ export const ReceivedPlaylist = ({
   const [notification, setNotification] = useState("");
   const dispatch = useSwapDispatch();
   const { receivedPlaylist } = useSwapState();
+  const [isOpen, setIsOpen] = useState(false);
+  const features = useFeatures({
+    ids: receivedPlaylist?.tracks?.items?.map((item) => item.track.id),
+    playlistId: receivedPlaylist?.id,
+  });
   useEffect(() => {
     async function fetchData() {
       const request = await fetch(
@@ -67,32 +72,39 @@ export const ReceivedPlaylist = ({
               <CoverArt src={receivedPlaylist.images[0].url} />
             )}
             <Metadata>
-              <PlaylistName>{receivedPlaylist.name}</PlaylistName>
-              <TrackLength>
-                {receivedPlaylist.tracks.items.length} tracks
-              </TrackLength>
-              <Description
-                dangerouslySetInnerHTML={{
-                  __html: receivedPlaylist.description,
-                }}
-              />
-              <Creator>
-                by{" "}
-                <a href={receivedPlaylist.owner.href} target="_blank">
-                  {receivedPlaylist.owner.display_name}
-                </a>
-              </Creator>
-              <ButtonLink
-                css={css`
-                  margin-top: 0.5rem;
-                `}
-                onClick={onFollow}
-              >
-                Follow this playlist
-              </ButtonLink>
+              <Copy>
+                <PlaylistName>
+                  {receivedPlaylist.name}{" "}
+                  <Favorite onClick={onFollow}>
+                    <i className="material-icons">favorite</i>
+                  </Favorite>
+                </PlaylistName>
+                <Description
+                  dangerouslySetInnerHTML={{
+                    __html: receivedPlaylist.description,
+                  }}
+                />
+                <Toggler onClick={() => setIsOpen((isOpen) => !isOpen)}>
+                  {isOpen ? "Close" : "Check the vibes"}
+                </Toggler>
+              </Copy>
+              {!isOpen ? (
+                <>
+                  <Creator>
+                    by{" "}
+                    <a href={receivedPlaylist.owner.href} target="_blank">
+                      {receivedPlaylist.owner.display_name}
+                    </a>
+                  </Creator>
+                  <TracksCount>
+                    {receivedPlaylist.tracks.items.length} tracks
+                  </TracksCount>
+                </>
+              ) : (
+                <Vibes features={features} />
+              )}
             </Metadata>
           </PlaylistCard>
-          <Vibes playlist={receivedPlaylist} />
           <PlaylistTracks playlist={receivedPlaylist} />
         </Container>
       )}
@@ -118,7 +130,8 @@ const PlaylistCard = styled.div`
 
 const PlaylistName = styled.h3`
   padding: 0;
-  margin: 0 0 1rem 0;
+  margin: 0;
+  display: flex;
 `;
 
 const Description = styled.p`
@@ -144,6 +157,21 @@ const CoverArt = styled.img`
   margin-right: 1rem;
 `;
 
-const TrackLength = styled.p`
-  margin-bottom: 0.5rem;
+const TracksCount = styled.p`
+  margin: 0;
+  color: rgb(179, 179, 179);
+  font-size: 12px;
+`;
+const Toggler = styled(ButtonLink)`
+  margin-bottom: 0;
+  cursor: pointer;
+`;
+
+const Copy = styled.div`
+  margin: 0 0 auto 0;
+`;
+
+const Favorite = styled(ButtonLink)`
+  display: inline;
+  margin-left: 1rem;
 `;

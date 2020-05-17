@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Router from "next/router";
 import useSWR from "swr";
 
@@ -53,4 +53,29 @@ export function useUser({
   }, [redirectTo, redirectIfFound, finished, hasUser]);
 
   return error ? null : user;
+}
+
+export function useFeatures({ ids, playlistId }) {
+  // TODO: remove playlistId from this function
+  // features endpoint doesn't require a playlist id - it's there out of convenience
+  // passing in a playlist id here is unnecessary and confusing
+  const [features, setFeatures] = useState<Record<string, number>[]>([]);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const request = await fetch(
+          `/api/spotify/playlists/${playlistId}/features?ids=${ids}`
+        );
+        const response = await request.json();
+        const { features } = response;
+        setFeatures(features);
+      } catch (e) {
+        console.log("e:", e);
+      }
+    }
+    if (ids && ids.length && !features.length) {
+      fetchData();
+    }
+  }, [ids]);
+  return features;
 }

@@ -3,28 +3,11 @@ import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { DARK_BLUE, vibeColors, WHITE } from "../shared/styles";
 import { css, jsx } from "@emotion/core";
+import { ButtonLink } from "./SwapManager";
+import { useFeatures } from "../lib/hooks";
 
-const Vibes = ({ playlist }) => {
-  const ids = playlist.tracks.items.map((item) => item.track.id);
-  const [features, setFeatures] = useState<Record<string, number>[]>([]);
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const request = await fetch(
-          `/api/spotify/playlists/${playlist.id}/features?ids=${ids}`
-        );
-        const response = await request.json();
-        const { features } = response;
-        setFeatures(features);
-      } catch (e) {
-        console.log("e:", e);
-      }
-    }
-    if (ids.length && !features.length) {
-      fetchData();
-    }
-  }, [ids]);
-  if (!ids.length || !features.length) return null;
+const Vibes = ({ features }) => {
+  if (!features.length) return null;
   const averageFeatures = features.reduce(
     (accumulator, feature, i) => {
       Object.keys(accumulator).forEach((key) => {
@@ -47,8 +30,7 @@ const Vibes = ({ playlist }) => {
     }
   );
   return (
-    <div>
-      <h3>vibes</h3>
+    <VibesContainer>
       {Object.keys(averageFeatures).map((vibe) => {
         return (
           <Vibe opacity={averageFeatures[vibe]} rgb={vibeColors[vibe]}>
@@ -56,18 +38,26 @@ const Vibes = ({ playlist }) => {
           </Vibe>
         );
       })}
-    </div>
+    </VibesContainer>
   );
 };
+
+const VibesContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
 const Vibe = styled.div<{ opacity: number; rgb: string }>`
   background: ${({ opacity, rgb }) => `rgba(${rgb}, ${opacity})`};
   display: inline-block;
-  padding: 1rem;
+  padding: 0.5rem;
   color: ${({ opacity }) => (opacity > 0.5 ? WHITE : DARK_BLUE)};
   border-radius: 0.5rem;
-  margin-right: 1rem;
   border: ${({ rgb }) => `1px solid rgba(${rgb}, 1)`};
+  margin-right: 0.5rem;
+  font-size: 0.75rem;
+  &:last-of-type {
+    margin-right: 0;
+  }
 `;
-
 export default Vibes;

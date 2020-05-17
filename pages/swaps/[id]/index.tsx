@@ -8,6 +8,8 @@ import { SwapProvider } from "../../../contexts/swap-context";
 import { serialize } from "../../../lib/utils";
 import { useRouter } from "next/router";
 import { ButtonLink } from "../../../components/SwapManager";
+import { BackButton } from "../../../components/BackButton";
+import React from "react";
 
 export default function ({
   swap,
@@ -16,14 +18,9 @@ export default function ({
   swap: Swap & { owner_display_name: string };
   currentSwapMember: SwapMember;
 }) {
-  const router = useRouter();
   return (
     <SwapProvider>
-      <BackButton>
-        <i className="material-icons" onClick={router.back}>
-          arrow_back
-        </i>
-      </BackButton>
+      <BackButton />
       <Title>
         <span>{swap.title}</span>
       </Title>
@@ -76,8 +73,4 @@ const Owner = styled.p`
   padding: 0;
   font-size: 1rem;
   margin: 0 0 1rem 0;
-`;
-
-const BackButton = styled(ButtonLink)`
-  margin-top: -1rem;
 `;

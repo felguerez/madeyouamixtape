@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 import { PlaylistCard } from "../../components/PlaylistCard";
+import { BackButton } from "../../components/BackButton";
 
 const SpotifyProfile = () => {
   const router = useRouter();
@@ -37,6 +38,7 @@ const SpotifyProfile = () => {
   }, [spotify_id]);
   return (
     <div>
+      <BackButton />
       <h2>Profile for {router.query.spotify_id}</h2>
       {spotifyProfile && (
         <div>

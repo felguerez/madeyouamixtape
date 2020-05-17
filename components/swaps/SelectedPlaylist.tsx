@@ -1,5 +1,5 @@
 import fetch from "isomorphic-fetch";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
 import { ContentCard } from "../../shared/styles";
@@ -7,12 +7,15 @@ import { ButtonLink } from "../SwapManager";
 import Link from "next/link";
 import PlaylistTracks from "../../pages/swaps/[id]/PlaylistTracks";
 import Vibes from "../Vibes";
+import { useFeatures } from "../../lib/hooks";
 
 export const SelectedPlaylist = ({
   currentSwapMember: { selected_playlist_id },
 }) => {
   const dispatch = useSwapDispatch();
   const { selectedPlaylist, selectedPlaylistId } = useSwapState();
+  const [isOpen, setIsOpen] = useState(false);
+
   useEffect(() => {
     if (!selectedPlaylistId) {
       dispatch({
@@ -38,6 +41,11 @@ export const SelectedPlaylist = ({
       });
     }
   }, [selectedPlaylistId]);
+
+  const features = useFeatures({
+    ids: selectedPlaylist?.tracks?.items?.map((item) => item.track.id),
+    playlistId: selectedPlaylist?.id,
+  });
   if (!selectedPlaylist)
     return (
       <BodyContent>
@@ -77,23 +85,33 @@ export const SelectedPlaylist = ({
                   __html: selectedPlaylist.description,
                 }}
               />
+              <Toggler onClick={() => setIsOpen((isOpen) => !isOpen)}>
+                {isOpen ? "Close" : "Check the vibes"}
+              </Toggler>
             </Copy>
-            <Creator>
-              By{" "}
-              <Link
-                as={`/users/${selectedPlaylist.owner.id}`}
-                href="/users/[spotify_id]"
-              >
-                <a>{selectedPlaylist.owner.display_name}</a>
-              </Link>
-            </Creator>
-            <TracksCount>
-              {selectedPlaylist.tracks.items.length} tracks
-            </TracksCount>
+            {!isOpen ? (
+              <>
+                <Creator>
+                  By{" "}
+                  <Link
+                    as={`/users/${selectedPlaylist.owner.id}`}
+                    href="/users/[spotify_id]"
+                  >
+                    <a>{selectedPlaylist.owner.display_name}</a>
+                  </Link>
+                </Creator>
+                <TracksCount>
+                  {selectedPlaylist.tracks.items.length} tracks
+                </TracksCount>
+              </>
+            ) : (
+              <Vibes
+                features={features}
+              />
+            )}
           </Metadata>
         </ContentCard>
       </Container>
-      <Vibes playlist={selectedPlaylist} />
       <PlaylistTracks playlist={selectedPlaylist} />
     </BodyContent>
   );
@@ -143,4 +161,9 @@ const TracksCount = styled.p`
   margin: 0;
   color: rgb(179, 179, 179);
   font-size: 12px;
+`;
+
+const Toggler = styled(ButtonLink)`
+  margin-bottom: 0;
+  cursor: pointer;
 `;
