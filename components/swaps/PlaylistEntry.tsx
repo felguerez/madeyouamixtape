@@ -1,4 +1,4 @@
-import { Playlists } from "../Playlists";
+import { CurrentUsersPlaylists } from "../CurrentUsersPlaylists";
 import { SelectedPlaylist } from "./SelectedPlaylist";
 import styled from "@emotion/styled";
 import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
@@ -68,7 +68,7 @@ const PlaylistEntry = ({ swap, currentSwapMember }) => {
               />
             )}
           {playlistViewer === "selector" && (
-            <Playlists currentSwapMember={currentSwapMember} />
+            <CurrentUsersPlaylists currentSwapMember={currentSwapMember} />
           )}
         </>
       )}
@@ -104,7 +104,7 @@ const Button = styled.button<{ isActive: boolean }>`
     return isActive ? `1px solid ${DARK_BLUE}` : `1px solid ${GRAY}`;
   }};
   &:first-of-type {
-  padding-left: 0;
+    padding-left: 0;
   }
 `;
 

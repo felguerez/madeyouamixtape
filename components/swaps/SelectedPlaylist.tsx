@@ -4,7 +4,6 @@ import styled from "@emotion/styled";
 import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
 import { ContentCard } from "../../shared/styles";
 import { ButtonLink } from "../SwapManager";
-import { useRouter } from "next/router";
 import Link from "next/link";
 import PlaylistTracks from "../../pages/swaps/[id]/PlaylistTracks";
 import Vibes from "../Vibes";
@@ -13,7 +12,6 @@ export const SelectedPlaylist = ({
   currentSwapMember: { selected_playlist_id },
 }) => {
   const dispatch = useSwapDispatch();
-  const router = useRouter();
   const { selectedPlaylist, selectedPlaylistId } = useSwapState();
   useEffect(() => {
     if (!selectedPlaylistId) {
@@ -46,14 +44,6 @@ export const SelectedPlaylist = ({
         <h2>Loading...</h2>
       </BodyContent>
     );
-  if (router.pathname.includes("selected_playlist")) {
-    return (
-      <BodyContent>
-        <p>playlist goes here</p>
-      </BodyContent>
-    );
-  }
-  console.log("selectedPlaylist:", selectedPlaylist);
   return (
     <BodyContent>
       <Container>

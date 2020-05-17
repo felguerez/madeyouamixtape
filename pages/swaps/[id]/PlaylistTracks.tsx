@@ -5,7 +5,6 @@ import { PlaylistTrack } from "../../../components/swaps/PlaylistTrack";
 const PlaylistTracks = ({ playlist }) => {
   if (!playlist) return null;
   const ids = playlist.tracks.items.map((item) => item.track.id);
-  console.log("ids:", ids);
   useEffect(() => {
     if (ids.length) {
       fetch(`/api/spotify/playlists/${playlist.id}/features?ids=${ids}`);

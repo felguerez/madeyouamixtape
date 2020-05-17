@@ -1,18 +1,17 @@
 import styled from "@emotion/styled";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSwapDispatch } from "../contexts/swap-context";
 import {
   DARK_BLUE,
-  GRAY,
   DARK_GREEN,
   OFF_WHITE,
   LIGHT_GREEN,
   SEPIA,
   WHITE,
-  DARK_GRAY,
 } from "../shared/styles";
 import { SwapMember } from "../lib/models/swapMember";
-import Link from "next/link";
+import { PlaylistCard } from "./PlaylistCard";
+import { updateSelectedPlaylist } from "../lib/api";
 
 export const PlaylistGallery = ({
   currentSwapMember,
@@ -34,17 +33,18 @@ export const PlaylistGallery = ({
   const onClick = async (id) => {
     const currentSelectedId = selectedPlaylistId;
     dispatch({ type: "SET_SELECTED_PLAYLIST_ID", selectedPlaylistId: id });
-    const response = await fetch(
-      `/api/swap_members/${currentSwapMember.id}/update`,
-      {
-        method: "post",
-        body: JSON.stringify({
-          selected_playlist_id: id,
-          swap_id: currentSwapMember.swap_id,
-        }),
-      }
-    );
-    if (!response.ok) {
+    try {
+      await updateSelectedPlaylist({
+        swap_member_id: currentSwapMember.id,
+        selected_playlist_id: id,
+        swap_id: currentSwapMember.id,
+      });
+      dispatch({
+        type: "SET_SELECTED_PLAYLIST_ID",
+        selectedPlaylistId: id,
+      });
+    } catch (err) {
+      console.log("err:", err);
       dispatch({
         type: "SET_SELECTED_PLAYLIST_ID",
         selectedPlaylistId: currentSelectedId,
@@ -65,28 +65,13 @@ export const PlaylistGallery = ({
       {playlists.map((playlist) => {
         const isActive = selectedPlaylistId === playlist.id;
         return (
-          <Playlist key={playlist.id}>
-            {playlist.images.length && (
-              <CoverArt src={playlist.images[0].url} />
-            )}
-            <Metadata>
-              <PlaylistName>{playlist.name}</PlaylistName>
-              <Creator>
-                by{" "}
-                <Link
-                  href={`/users/[spotify_id]`}
-                  as={`/users/${playlist.owner.id}`}
-                >
-                  <a>{playlist.owner.display_name}</a>
-                </Link>
-              </Creator>
-            </Metadata>
+          <PlaylistCard key={playlist.id} playlist={playlist}>
             {currentSwapMember.isEnrolled && (
               <Button isActive={isActive} onClick={() => onClick(playlist.id)}>
                 {isActive ? "Selected" : "Select"}
               </Button>
             )}
-          </Playlist>
+          </PlaylistCard>
         );
       })}
     </Container>
@@ -99,46 +84,6 @@ const Container = styled.ul`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 1rem;
-`;
-
-const Playlist = styled.li`
-  grid-column: span 1;
-  background: ${GRAY};
-  box-shadow: 0 2px 2px -2px ${DARK_GRAY};
-  border: 1px solid ${DARK_GRAY};
-  font-size: 14px;
-  font-weight: bold;
-  border-radius: 8px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-`;
-
-const Creator = styled.span`
-  color: rgb(179, 179, 179);
-  font-size: 12px;
-  display: inline-block;
-`;
-
-const Metadata = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const CoverArt = styled.img`
-  height: auto;
-  width: 160px;
-  border-radius: 8px;
-  align-self: center;
-  margin-bottom: 1rem;
-`;
-
-const PlaylistName = styled.strong`
-  text-overflow: ellipsis;
-  width: 160px;
-  overflow: hidden;
-  white-space: nowrap;
-  margin-bottom: 0.5rem;
 `;
 
 const Button = styled.button<{ isActive: boolean }>`

@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { ButtonLink } from "../../components/SwapManager";
-import { PlaylistGallery } from "../../components/PlaylistGallery";
-import { useSwapState } from "../../contexts/swap-context";
+import styled from "@emotion/styled";
+import { PlaylistCard } from "../../components/PlaylistCard";
 
 const SpotifyProfile = () => {
   const router = useRouter();
@@ -26,6 +25,16 @@ const SpotifyProfile = () => {
       fetchData();
     }
   }, [spotify_id]);
+  useEffect(() => {
+    async function fetchData() {
+      const request = await fetch(`/api/spotify/users/${spotify_id}/playlists`);
+      const playlists = await request.json();
+      setPlaylists(playlists.items);
+    }
+    if (spotify_id) {
+      fetchData();
+    }
+  }, [spotify_id]);
   return (
     <div>
       <h2>Profile for {router.query.spotify_id}</h2>
@@ -33,29 +42,22 @@ const SpotifyProfile = () => {
         <div>
           <h3>{spotifyProfile.display_name}</h3>
           <p>{spotifyProfile.followers.total} followers</p>
-          <ButtonLink
-            onClick={async () => {
-              const request = await fetch(
-                `/api/spotify/users/${spotify_id}/playlists`
-              );
-              const playlists = await request.json();
-              setPlaylists(playlists.items);
-              console.log("playlists:", playlists);
-            }}
-          >
-            Load {spotifyProfile.display_name}'s playlists
-          </ButtonLink>
-          {playlists.map(playlist => {
-            return (
-              <div key={playlist.id}>
-                {playlist.name}
-              </div>
-            );
-          })}
+          <Container>
+            {playlists.map((playlist) => {
+              return <PlaylistCard key={playlist.id} playlist={playlist} />;
+            })}
+          </Container>
         </div>
       )}
     </div>
   );
 };
 
+const Container = styled.ul`
+  list-style: none;
+  padding-left: 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 1rem;
+`;
 export default SpotifyProfile;

@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 import { useSwapDispatch, useSwapState } from "../contexts/swap-context";
 import { SwapMember } from "../lib/models/swapMember";
 
-export const Playlists = ({
+export const CurrentUsersPlaylists = ({
   currentSwapMember,
   currentSwapMember: { spotifyId },
 }: {
@@ -52,11 +52,3 @@ export const Playlists = ({
     </div>
   );
 };
-
-const BodyContent = styled.div`
-  padding: 0;
-`;
-
-const Title = styled.h2`
-  margin: 1.3rem 0 0 0;
-`;
