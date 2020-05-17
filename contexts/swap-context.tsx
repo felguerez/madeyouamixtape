@@ -26,7 +26,7 @@ export const initialState = {
 export type Action =
   | {
       type: typeof SET_ACTIVE_TAB;
-      activeTab: "selection" | "selector" | "received" | "members";
+      activeTab: "selection" | "selector" | "received" | "members" | "settings";
     }
   | {
       type: typeof SWAP_RECEIVED;

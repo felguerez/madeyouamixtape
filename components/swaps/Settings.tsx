@@ -45,26 +45,6 @@ const Settings = ({ swap }: { swap: Swap }) => {
           setNotification={setNotification}
         />
       )}
-      <p>
-        Manage your playlist swap's title and description{" "}
-        <ButtonLink onClick={() => setIsFormOpen((isFormOpen) => !isFormOpen)}>
-          here
-        </ButtonLink>
-        .
-      </p>
-      {isFormOpen && (
-        <Form
-          onSubmit={handleSubmit}
-          errorMessage={error}
-          initialValues={{ title: swap.title, description: swap.description }}
-        />
-      )}
-      <h3>Complete the swap & shuffle playlists</h3>
-      <p>
-        When the group is ready, you can shuffle and distribute playlists here,
-        too. Each member will have the option to subscribe to their new
-        playlist.
-      </p>
       <button
         onClick={async (e) => {
           const shuffle = await fetch(`/api/swaps/${swap.id}/`, {
@@ -78,6 +58,18 @@ const Settings = ({ swap }: { swap: Swap }) => {
         Shuffle 'em
       </button>
       <p>
+        When you've got 2 or more people in your swap group you can exchange
+        playlists. Do it as many times as you want. Everyone's playlist gets
+        shuffled each time. Each member will have the option to subscribe to
+        their new playlist.
+      </p>
+      <p>Manage your playlist swap's title and description here.</p>
+      <Form
+        onSubmit={handleSubmit}
+        errorMessage={error}
+        initialValues={{ title: swap.title, description: swap.description }}
+      />
+      <p>
         Share this link with others to have them join your group:{" "}
         <a href={`/swaps/${swap.id}/join`}>link</a>
       </p>
@@ -88,5 +80,5 @@ const Settings = ({ swap }: { swap: Swap }) => {
 export default Settings;
 
 const BodyContent = styled.div`
-  padding: 2rem 0;
+  width: 520px;
 `;

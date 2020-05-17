@@ -5,6 +5,7 @@ import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
 import { DARK_BLUE, DARK_GRAY, GRAY } from "../../shared/styles";
 import Members from "./Members";
 import { ReceivedPlaylist } from "./Received";
+import Settings from "./Settings";
 
 const PlaylistEntry = ({ swap, currentSwapMember }) => {
   const { activeTab } = useSwapState();
@@ -53,6 +54,21 @@ const PlaylistEntry = ({ swap, currentSwapMember }) => {
             </Button>
           </Tab>
         )}
+        {currentSwapMember.id === swap.owner_id && (
+          <Tab>
+            <Button
+              onClick={() =>
+                dispatch({
+                  type: "SET_ACTIVE_TAB",
+                  activeTab: "settings",
+                })
+              }
+              isActive={activeTab === "settings"}
+            >
+              Settings
+            </Button>
+          </Tab>
+        )}
       </Tabs>
       {activeTab === "members" && <Members swap={swap} />}
       {currentSwapMember && (
@@ -70,6 +86,7 @@ const PlaylistEntry = ({ swap, currentSwapMember }) => {
           {activeTab === "selector" && (
             <CurrentUsersPlaylists currentSwapMember={currentSwapMember} />
           )}
+          {activeTab === "settings" && <Settings swap={swap} />}
         </>
       )}
     </div>
