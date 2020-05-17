@@ -8,6 +8,7 @@ import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
 import { Notification } from "../Notification";
 import { GRAY } from "../../shared/styles";
 import PlaylistTracks from "../../pages/swaps/[id]/PlaylistTracks";
+import Vibes from "../Vibes";
 
 export const ReceivedPlaylist = ({
   swap,
@@ -91,6 +92,7 @@ export const ReceivedPlaylist = ({
               </ButtonLink>
             </Metadata>
           </PlaylistCard>
+          <Vibes playlist={receivedPlaylist} />
           <PlaylistTracks playlist={receivedPlaylist} />
         </Container>
       )}

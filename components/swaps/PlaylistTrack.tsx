@@ -1,28 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ms from "ms";
 import styled from "@emotion/styled";
 import { GRAY, OFF_WHITE } from "../../shared/styles";
 import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
 
-export const PlaylistTrack = ({ item }: { item: any }) => {
+export const PlaylistTrack = ({
+  item,
+  index,
+}: {
+  item: any;
+  index: number;
+}) => {
   const audioRef = React.createRef<HTMLAudioElement>();
   const [isPlaying, setIsPlaying] = useState(false);
   const dispatch = useSwapDispatch();
-  const { node } = useSwapState();
+  const { node, playingIndex } = useSwapState();
   const playAudio = (_e) => {
-    setIsPlaying((isPlaying) => !isPlaying);
     if (audioRef && audioRef.current) {
-      if (isPlaying) {
-        node.pause();
-        node.currentTime = 0;
-        audioRef.current.pause();
-        audioRef.current.currentTime = 0;
-        return;
-      }
-      dispatch({ type: "SET_PLAYING_NODE", node: audioRef.current });
-      audioRef.current.play();
+      dispatch({ type: "SET_PLAYING_NODE", node: audioRef.current, index });
     }
   };
+
+  useEffect(() => {
+    if (node && !node.paused) {
+      setIsPlaying(playingIndex === index);
+    }
+  }, [node, playingIndex]);
   return (
     <Track key={item.id}>
       <PlayButtonContainer background={item.track.album.images[0]?.url}>

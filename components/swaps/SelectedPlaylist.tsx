@@ -103,8 +103,8 @@ export const SelectedPlaylist = ({
           </Metadata>
         </ContentCard>
       </Container>
-      <PlaylistTracks playlist={selectedPlaylist} />
       <Vibes playlist={selectedPlaylist} />
+      <PlaylistTracks playlist={selectedPlaylist} />
     </BodyContent>
   );
 };

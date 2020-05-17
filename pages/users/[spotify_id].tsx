@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { ButtonLink } from "../../components/SwapManager";
+import { PlaylistGallery } from "../../components/PlaylistGallery";
+import { useSwapState } from "../../contexts/swap-context";
 
 const SpotifyProfile = () => {
   const router = useRouter();

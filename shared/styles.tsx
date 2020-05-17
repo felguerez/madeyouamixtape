@@ -141,3 +141,14 @@ export const ContentCard = styled.div`
   display: flex;
   box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
 `;
+
+export const vibeColors = {
+  danceability: `5, 102, 141`,
+  energy: `2, 128, 144`,
+  loudness: `0, 168, 150`,
+  speechiness: `2, 195, 154`,
+  acousticness: `5, 102, 141`,
+  instrumentalness: `2, 128, 144`,
+  liveness: `0, 168, 150`,
+  valence: `2, 195, 154`,
+};

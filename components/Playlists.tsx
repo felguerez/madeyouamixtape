@@ -4,7 +4,6 @@ import { PlaylistGallery } from "./PlaylistGallery";
 import styled from "@emotion/styled";
 import { useSwapDispatch, useSwapState } from "../contexts/swap-context";
 import { SwapMember } from "../lib/models/swapMember";
-import { CopyContainer } from "../shared/styles";
 
 export const Playlists = ({
   currentSwapMember,

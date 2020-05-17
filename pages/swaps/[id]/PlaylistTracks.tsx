@@ -14,8 +14,8 @@ const PlaylistTracks = ({ playlist }) => {
   return (
     <TrackList>
       {playlist.tracks &&
-        playlist.tracks.items.map((item) => (
-          <PlaylistTrack item={item} key={item.track.id} />
+        playlist.tracks.items.map((item, index) => (
+          <PlaylistTrack item={item} key={item.track.id} index={index} />
         ))}
       <style jsx global>{`
         .material-icons {

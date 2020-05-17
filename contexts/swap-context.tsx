@@ -6,6 +6,7 @@ const SET_SELECTED_PLAYLIST_ID = "SET_SELECTED_PLAYLIST_ID";
 const SET_SELECTED_PLAYLIST = "SET_SELECTED_PLAYLIST";
 const SET_RECEIVED_PLAYLIST = "SET_RECEIVED_PLAYLIST";
 const SET_PLAYING_NODE = "SET_PLAYING_NODE";
+const STOP_PLAYING_NODE = "STOP_PLAYING_NODE";
 
 export const initialState = {
   swap: undefined,
@@ -20,6 +21,7 @@ export const initialState = {
   selectedPlaylist: undefined,
   receivedPlaylist: undefined,
   node: undefined,
+  playingIndex: undefined,
 };
 
 export type Action =
@@ -66,6 +68,7 @@ export type Action =
   | {
       type: typeof SET_PLAYING_NODE;
       node: HTMLAudioElement;
+      index: number;
     };
 
 import React, { Dispatch } from "react";
@@ -109,10 +112,21 @@ export const reducer = (state, action) => {
         receivedPlaylist: action.playlist,
       };
     case "SET_PLAYING_NODE":
+      if (state.node) {
+        state.node.pause();
+        state.node.currentTime = 0;
+      }
+      if (state.node !== action.node) {
+        action.node.play();
+      }
       return {
         ...state,
         node: action.node,
+        playingIndex: action.index,
       };
+    case "STOP_PLAYING_NODE":
+      state.node.pause();
+      state.node.currentTime = 0;
     default:
       return state;
   }
