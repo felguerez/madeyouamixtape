@@ -1,7 +1,13 @@
 import Link from "next/link";
 import styled from "@emotion/styled";
 import { useUser } from "../lib/hooks";
-import {TRANSPARENT, GRAY, LIGHT_BLUE, WHITE, DARK_GRAY} from "../shared/styles";
+import {
+  TRANSPARENT,
+  GRAY,
+  LIGHT_BLUE,
+  WHITE,
+  DARK_GRAY,
+} from "../shared/styles";
 
 const Header = () => {
   const user = useUser();
@@ -91,11 +97,18 @@ const LoginLink = styled.a`
   display: flex;
   align-items: center;
   color: ${WHITE};
-  font-weight: normal;
+  font-weight: 500;
+  font-size: 0.85rem;
   &:hover {
-    color: ${WHITE}
+    color: ${WHITE};
   }
 `;
+
+const Cassette = styled.img`
+  display: inline-block;
+  height: 24px;
+  width: auto;
+`
 
 const Logo = styled.img`
   margin-left: 0.5rem;
