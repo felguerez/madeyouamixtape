@@ -47,7 +47,6 @@ const Vibes = ({ playlist }) => {
       valence: 0,
     }
   );
-  console.log("averageFeatures:", averageFeatures);
   return (
     <div>
       <h3>vibes</h3>
@@ -55,11 +54,6 @@ const Vibes = ({ playlist }) => {
         return (
           <Vibe opacity={averageFeatures[vibe]} rgb={vibeColors[vibe]}>
             <span>{vibe}</span>
-            <span
-              css={css`
-                width: ${averageFeatures[vibe] * 100}%;
-              `}
-            />
           </Vibe>
         );
       })}

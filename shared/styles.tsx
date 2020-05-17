@@ -143,12 +143,12 @@ export const ContentCard = styled.div`
 `;
 
 export const vibeColors = {
-  danceability: `5, 102, 141`,
-  energy: `2, 128, 144`,
+  danceability: `0, 168, 150`,
+  energy: `0, 168, 150`,
   loudness: `0, 168, 150`,
-  speechiness: `2, 195, 154`,
-  acousticness: `5, 102, 141`,
-  instrumentalness: `2, 128, 144`,
+  speechiness: `0, 168, 150`,
+  acousticness: `0, 168, 150`,
+  instrumentalness: `0, 168, 150`,
   liveness: `0, 168, 150`,
-  valence: `2, 195, 154`,
+  valence: `0, 168, 150`,
 };
