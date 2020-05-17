@@ -1,7 +1,7 @@
 import Link from "next/link";
 import styled from "@emotion/styled";
 import { useUser } from "../lib/hooks";
-import { GRAY, LIGHT_BLUE, WHITE } from "../shared/styles";
+import {TRANSPARENT, GRAY, LIGHT_BLUE, WHITE, DARK_GRAY} from "../shared/styles";
 
 const Header = () => {
   const user = useUser();
@@ -33,7 +33,10 @@ const Header = () => {
           ) : (
             <li>
               <Link href="/api/auth/spotify">
-                <a>Login with Spotify</a>
+                <LoginLink>
+                  Login with
+                  <Logo src="spotify.svg" alt="" />
+                </LoginLink>
               </Link>
             </li>
           )}
@@ -81,5 +84,20 @@ const Header = () => {
 
 const HomeNavItem = styled.li`
   margin-right: auto;
+`;
+
+const LoginLink = styled.a`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: ${WHITE};
+  font-weight: normal;
+  &:hover {
+    color: ${WHITE}
+  }
+`;
+
+const Logo = styled.img`
+  margin-left: 0.5rem;
 `;
 export default Header;

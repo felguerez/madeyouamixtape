@@ -11,9 +11,9 @@ export const WHITE = "#ffffff";
 export const OFF_WHITE = "#f9f9f9";
 export const GRAY = "#ebebeb";
 export const DARK_GRAY = "rgba(0, 0, 0, 0.1)";
-export const CHARCOAL = "rgba(0, 0, 0, 0)";
+export const TRANSPARENT = "rgba(0, 0, 0, 0)";
 export const lightLinearGradient = css`
-  background-image: linear-gradient(to bottom, ${CHARCOAL}, ${DARK_GRAY});
+  background-image: linear-gradient(to bottom, ${TRANSPARENT}, ${DARK_GRAY});
 `;
 
 const globals: SerializedStyles = css`
