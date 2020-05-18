@@ -2,7 +2,7 @@ import fetch from "isomorphic-fetch";
 import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
-import { ContentCard } from "../../shared/styles";
+import {CHARCOAL, ContentCard, DARK_GRAY, GRAY} from "../../shared/styles";
 import { ButtonLink } from "../SwapManager";
 import Link from "next/link";
 import PlaylistTracks from "../../pages/swaps/[id]/PlaylistTracks";
@@ -155,6 +155,7 @@ const CoverArt = styled.img`
   border-radius: 8px;
   align-self: center;
   margin-right: 1rem;
+  border: 1px solid ${DARK_GRAY};
 `;
 
 const TracksCount = styled.p`

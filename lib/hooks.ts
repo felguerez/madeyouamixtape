@@ -61,7 +61,6 @@ export function useFeatures({ ids, playlistId }) {
   // passing in a playlist id here is unnecessary and confusing
   const [features, setFeatures] = useState<Record<string, number> | null>(null);
   useEffect(() => {
-    console.log("features:", features);
     async function fetchData() {
       try {
         const request = await fetch(

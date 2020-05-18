@@ -17,8 +17,8 @@ export default async (req, res) => {
     );
     const json = await request.json();
     const { audio_features } = json;
-    if (!audio_features.filter((f) => f)) {
-      res.status(200).json({ features: [] });
+    if (!audio_features.filter((f) => f).length) {
+      return res.status(200).json({});
     }
     const features = audio_features.reduce(
       (accumulator, feature, i) => {
@@ -44,5 +44,6 @@ export default async (req, res) => {
     res.status(200).json({ features });
   } catch (e) {
     console.log("Error in playlists ", e);
+    res.status(500).json({});
   }
 };
