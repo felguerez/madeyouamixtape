@@ -87,8 +87,6 @@ const globals: SerializedStyles = css`
   input {
     padding: 8px;
     margin: 0.3rem 0 1rem;
-  }
-  input[type='text'] {
     box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
     border: 1px solid ${GRAY};
     border-radius: 4px;
@@ -115,7 +113,7 @@ const globals: SerializedStyles = css`
     margin: 1rem 0 0;
   }
   form {
-    max-width: 21rem;
+    max-width: 32.5rem;
     padding: 1rem;
     border: 1px solid ${DARK_BLUE};
     border-radius: 4px;
