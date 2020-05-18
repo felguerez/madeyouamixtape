@@ -1,6 +1,5 @@
-import { CopyContainer, GRAY, WHITE } from "../../shared/styles";
-import styled from "@emotion/styled";
-import { Spotify } from "../svg/Spotify";
+import {Button, CopyContainer} from "../../shared/styles";
+import {Spotify} from "../svg/Spotify";
 import Link from "next/link";
 
 export const Welcome = () => {
@@ -18,22 +17,3 @@ export const Welcome = () => {
   );
 };
 
-const Button = styled.button`
-  font-family: "Circular Spotify Text", "Helvetica Neue", Verdana, sans-serif;
-  display: flex;
-  align-items: center;
-  border-radius: 2rem;
-  padding: 1rem 2rem;
-  color: ${GRAY};
-  &:hover {
-    color: ${WHITE};
-    svg,
-    g,
-    path {
-      fill: ${WHITE};
-    }
-  }
-  svg {
-    margin-left: 0.5rem;
-  }
-`;

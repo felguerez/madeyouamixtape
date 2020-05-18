@@ -2,7 +2,7 @@ import fetch from "isomorphic-fetch";
 import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
-import {CHARCOAL, ContentCard, DARK_GRAY, GRAY} from "../../shared/styles";
+import { CHARCOAL, ContentCard, DARK_GRAY, GRAY } from "../../shared/styles";
 import { ButtonLink } from "../SwapManager";
 import Link from "next/link";
 import PlaylistTracks from "../../pages/swaps/[id]/PlaylistTracks";
@@ -60,19 +60,6 @@ export const SelectedPlaylist = ({
           This playlist will be shared with someone else in your group. You'll
           get a new playlist in return.
         </p>
-        <p>
-          Don't like this one?{" "}
-          <ButtonLink
-            onClick={() =>
-              dispatch({
-                type: "SET_ACTIVE_TAB",
-                activeTab: "selector",
-              })
-            }
-          >
-            Choose a new playlist to share
-          </ButtonLink>
-        </p>
         <ContentCard>
           {selectedPlaylist.images?.length && (
             <CoverArt src={selectedPlaylist.images[0].url} />
@@ -89,6 +76,21 @@ export const SelectedPlaylist = ({
                 <Toggler onClick={() => setIsOpen((isOpen) => !isOpen)}>
                   {isOpen ? "Close" : "Check the vibes"}
                 </Toggler>
+              )}
+              {!features && (
+                <p>
+                  Don't like this one?{" "}
+                  <ButtonLink
+                    onClick={() =>
+                      dispatch({
+                        type: "SET_ACTIVE_TAB",
+                        activeTab: "selector",
+                      })
+                    }
+                  >
+                    Choose a new playlist to share
+                  </ButtonLink>
+                </p>
               )}
             </Copy>
             {!isOpen ? (
@@ -107,7 +109,22 @@ export const SelectedPlaylist = ({
                 </TracksCount>
               </>
             ) : (
-              <Vibes features={features} />
+              <>
+                <p>
+                  Don't like this one?{" "}
+                  <ButtonLink
+                    onClick={() =>
+                      dispatch({
+                        type: "SET_ACTIVE_TAB",
+                        activeTab: "selector",
+                      })
+                    }
+                  >
+                    Choose a new playlist to share
+                  </ButtonLink>
+                </p>
+                <Vibes features={features} />
+              </>
             )}
           </Metadata>
         </ContentCard>

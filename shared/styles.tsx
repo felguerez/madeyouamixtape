@@ -1,5 +1,5 @@
-import { css, Global, SerializedStyles } from "@emotion/core";
-import { ReactElement } from "react";
+import {css, Global, SerializedStyles} from "@emotion/core";
+import {ReactElement} from "react";
 import styled from "@emotion/styled";
 
 export const DARK_BLUE = "#05668D";
@@ -11,6 +11,7 @@ export const WHITE = "#ffffff";
 export const OFF_WHITE = "#f9f9f9";
 export const GRAY = "#ebebeb";
 export const CHARCOAL = "#666";
+export const LIGHT_CHARCOAL = "#999";
 export const DARK_GRAY = "rgba(0, 0, 0, 0.1)";
 export const TRANSPARENT = "rgba(0, 0, 0, 0)";
 export const lightLinearGradient = css`
@@ -44,7 +45,7 @@ const globals: SerializedStyles = css`
     }
   }
   input {
-    font-size: 12px;
+    font-size: 1rem;
     &:focus {
       outline: 0;
       box-shadow: 0 0 0 3px ${DARK_BLUE};
@@ -87,9 +88,11 @@ const globals: SerializedStyles = css`
   input {
     padding: 8px;
     margin: 0.3rem 0 1rem;
-    box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
     border: 1px solid ${GRAY};
     border-radius: 4px;
+    &::placeholder {
+      color: ${LIGHT_CHARCOAL}
+    }
   }
   .submit {
     display: flex;
@@ -146,3 +149,22 @@ export const vibeColors = {
   liveness: `0, 168, 150`,
   valence: `0, 168, 150`,
 };
+export const Button = styled.button`
+  font-family: "Circular Spotify Text", "Helvetica Neue", Verdana, sans-serif;
+  display: flex;
+  align-items: center;
+  border-radius: 2rem;
+  padding: 1rem 2rem;
+  color: ${GRAY};
+  &:hover {
+    color: ${WHITE};
+    svg,
+    g,
+    path {
+      fill: ${WHITE};
+    }
+  }
+  svg {
+    margin-left: 0.5rem;
+  }
+`;

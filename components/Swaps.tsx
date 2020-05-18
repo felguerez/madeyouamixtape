@@ -5,7 +5,8 @@ import { useState } from "react";
 import Form from "./home/form";
 import { User } from "../lib/models/user";
 import Router from "next/router";
-import { CopyContainer } from "../shared/styles";
+import { Button, CopyContainer } from "../shared/styles";
+import styled from "@emotion/styled";
 
 const Swaps = ({ user }: { user: User }) => {
   const swaps = useSwaps();
@@ -43,36 +44,33 @@ const Swaps = ({ user }: { user: User }) => {
     <>
       <h1>Made You A Mixtape</h1>
       <p>
-        Hey welcome back. Check out a group below and join to share playlists.
-        Share some music with people you know or random strangers.
+        Share some music with people you know or random strangers. Join an
+        existing playlist exchange group below or start your own.
       </p>
-      <p>
-        If you want to start a new swap group feel free.{" "}
-        <ButtonLink onClick={() => setIsOpen((isOpen) => !isOpen)}>
-          Click here
-        </ButtonLink>{" "}
-        and give your swap group a name and a short description.
-      </p>
-      {isOpen && (
-        <Form
-          errorMessage={error}
-          onSubmit={handleSubmit}
-          spotifyId={user.spotify_id}
-        />
-      )}
-      {swaps && (
-        <p>
-          The following {swaps.length} swap{" "}
-          {swaps.length > 1 ? "groups" : "group"} are happening right now:
-        </p>
-      )}
-      {swaps ? (
-        <SwapList swaps={swaps} />
-      ) : (
-          <p>Loading...</p>
-      )}
+      <NewSwapContainer>
+        <Button onClick={() => setIsOpen((isOpen) => !isOpen)}>
+          <SwapIcon className="material-icons">swap_horizontal_circle</SwapIcon>
+          <span>Start a new swap</span>
+        </Button>
+        {isOpen && (
+          <Form
+            errorMessage={error}
+            onSubmit={handleSubmit}
+            spotifyId={user.spotify_id}
+          />
+        )}
+      </NewSwapContainer>
+      {swaps ? <SwapList swaps={swaps} /> : <p>Loading...</p>}
     </>
   );
 };
+
+const SwapIcon = styled.i`
+  margin-right: 1rem;
+`;
+
+const NewSwapContainer = styled.div`
+  margin-bottom: 1rem;
+`;
 
 export default Swaps;
