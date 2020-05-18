@@ -17,7 +17,30 @@ export default async (req, res) => {
     );
     const json = await request.json();
     const { audio_features } = json;
-    const features = audio_features.filter((f) => f);
+    if (!audio_features.filter((f) => f)) {
+      res.status(200).json({ features: [] });
+    }
+    const features = audio_features.reduce(
+      (accumulator, feature, i) => {
+        Object.keys(accumulator).forEach((key) => {
+          accumulator[key] = accumulator[key] + feature[key];
+          if (i === audio_features.length - 1) {
+            accumulator[key] = accumulator[key] / i;
+          }
+        });
+        return accumulator;
+      },
+      {
+        danceability: 0,
+        energy: 0,
+        loudness: 0,
+        speechiness: 0,
+        acousticness: 0,
+        instrumentalness: 0,
+        liveness: 0,
+        valence: 0,
+      }
+    );
     res.status(200).json({ features });
   } catch (e) {
     console.log("Error in playlists ", e);

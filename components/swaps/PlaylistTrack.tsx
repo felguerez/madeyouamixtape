@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ms from "ms";
 import styled from "@emotion/styled";
-import { GRAY, OFF_WHITE } from "../../shared/styles";
+import {DARK_BLUE, DARK_GREEN, GRAY, OFF_WHITE} from "../../shared/styles";
 import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
 
 export const PlaylistTrack = ({
@@ -70,6 +70,7 @@ const PlayButtonContainer = styled.div<{ background: string }>`
   position: relative;
   height: 64px;
   width: 64px;
+  border-radius: 0.5rem;
   background-image: ${({ background }) =>
     `linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)), url(${background})`};
   background-size: cover;
@@ -117,7 +118,9 @@ const Details = styled.p`
 
 const Track = styled.li`
   display: flex;
-  margin-bottom: 1rem;
+  margin: 1rem 0;
+  border-bottom: 1px solid ${DARK_BLUE};
+  padding-bottom: 1rem;
   &:last-of-type {
     margin-bottom: 0;
   }

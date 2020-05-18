@@ -7,33 +7,12 @@ import { ButtonLink } from "./SwapManager";
 import { useFeatures } from "../lib/hooks";
 
 const Vibes = ({ features }) => {
-  if (!features.length) return null;
-  const averageFeatures = features.reduce(
-    (accumulator, feature, i) => {
-      Object.keys(accumulator).forEach((key) => {
-        accumulator[key] = accumulator[key] + feature[key];
-        if (i === features.length - 1) {
-          accumulator[key] = accumulator[key] / i;
-        }
-      });
-      return accumulator;
-    },
-    {
-      danceability: 0,
-      energy: 0,
-      loudness: 0,
-      speechiness: 0,
-      acousticness: 0,
-      instrumentalness: 0,
-      liveness: 0,
-      valence: 0,
-    }
-  );
+  if (!features) return null;
   return (
     <VibesContainer>
-      {Object.keys(averageFeatures).map((vibe) => {
+      {Object.keys(features).map((vibe) => {
         return (
-          <Vibe opacity={averageFeatures[vibe]} rgb={vibeColors[vibe]}>
+          <Vibe opacity={features[vibe]} rgb={vibeColors[vibe]}>
             <span>{vibe}</span>
           </Vibe>
         );

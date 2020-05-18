@@ -85,9 +85,11 @@ export const SelectedPlaylist = ({
                   __html: selectedPlaylist.description,
                 }}
               />
-              <Toggler onClick={() => setIsOpen((isOpen) => !isOpen)}>
-                {isOpen ? "Close" : "Check the vibes"}
-              </Toggler>
+              {features && (
+                <Toggler onClick={() => setIsOpen((isOpen) => !isOpen)}>
+                  {isOpen ? "Close" : "Check the vibes"}
+                </Toggler>
+              )}
             </Copy>
             {!isOpen ? (
               <>
@@ -105,9 +107,7 @@ export const SelectedPlaylist = ({
                 </TracksCount>
               </>
             ) : (
-              <Vibes
-                features={features}
-              />
+              <Vibes features={features} />
             )}
           </Metadata>
         </ContentCard>

@@ -10,6 +10,7 @@ export const SEPIA = "#f0f3bd";
 export const WHITE = "#ffffff";
 export const OFF_WHITE = "#f9f9f9";
 export const GRAY = "#ebebeb";
+export const CHARCOAL = "#666";
 export const DARK_GRAY = "rgba(0, 0, 0, 0.1)";
 export const TRANSPARENT = "rgba(0, 0, 0, 0)";
 export const lightLinearGradient = css`

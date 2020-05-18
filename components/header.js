@@ -8,6 +8,7 @@ import {
   WHITE,
   DARK_GRAY,
 } from "../shared/styles";
+import { Spotify } from "./svg/Spotify";
 
 const Header = () => {
   const user = useUser();
@@ -41,7 +42,9 @@ const Header = () => {
               <Link href="/api/auth/spotify">
                 <LoginLink>
                   Login with
-                  <Logo src="spotify.svg" alt="" />
+                  <Logo>
+                    <Spotify />
+                  </Logo>
                 </LoginLink>
               </Link>
             </li>
@@ -96,21 +99,21 @@ const LoginLink = styled.a`
   cursor: pointer;
   display: flex;
   align-items: center;
-  color: ${WHITE};
+  color: ${GRAY};
   font-weight: 500;
   font-size: 0.85rem;
+  line-height: 1;
   &:hover {
     color: ${WHITE};
+    svg,
+    g,
+    path {
+      fill: ${WHITE};
+    }
   }
 `;
 
-const Cassette = styled.img`
-  display: inline-block;
-  height: 24px;
-  width: auto;
-`
-
-const Logo = styled.img`
+const Logo = styled.span`
   margin-left: 0.5rem;
 `;
 export default Header;

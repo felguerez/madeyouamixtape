@@ -59,8 +59,9 @@ export function useFeatures({ ids, playlistId }) {
   // TODO: remove playlistId from this function
   // features endpoint doesn't require a playlist id - it's there out of convenience
   // passing in a playlist id here is unnecessary and confusing
-  const [features, setFeatures] = useState<Record<string, number>[]>([]);
+  const [features, setFeatures] = useState<Record<string, number> | null>(null);
   useEffect(() => {
+    console.log("features:", features);
     async function fetchData() {
       try {
         const request = await fetch(
@@ -73,7 +74,7 @@ export function useFeatures({ ids, playlistId }) {
         console.log("e:", e);
       }
     }
-    if (ids && ids.length && !features.length) {
+    if (ids && !features) {
       fetchData();
     }
   }, [ids]);

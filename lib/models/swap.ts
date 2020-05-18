@@ -1,6 +1,7 @@
 import * as db from "../db";
 import escape from "sql-template-strings";
 import { SwapMember } from "./swapMember";
+import { flatten } from "@hapi/hoek";
 
 export type Swap = {
   title: string;
@@ -48,6 +49,7 @@ export const swap = {
         swap_member.received_playlist_id,
         swap_member.swap_id, 
         user.display_name,
+        user.spotify_id,
         user.id AS user_id
       FROM swap_member
       INNER JOIN user ON swap_member.user_id = user.id
