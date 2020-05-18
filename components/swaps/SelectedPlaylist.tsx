@@ -2,7 +2,13 @@ import fetch from "isomorphic-fetch";
 import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
-import { CHARCOAL, ContentCard, DARK_GRAY, GRAY } from "../../shared/styles";
+import {
+  Button,
+  CHARCOAL,
+  ContentCard,
+  DARK_GRAY,
+  GRAY,
+} from "../../shared/styles";
 import { ButtonLink } from "../SwapManager";
 import Link from "next/link";
 import PlaylistTracks from "../../pages/swaps/[id]/PlaylistTracks";
@@ -10,6 +16,7 @@ import Vibes from "../Vibes";
 import { useFeatures } from "../../lib/hooks";
 
 export const SelectedPlaylist = ({
+  currentSwapMember,
   currentSwapMember: { selected_playlist_id },
 }) => {
   const dispatch = useSwapDispatch();
@@ -46,6 +53,25 @@ export const SelectedPlaylist = ({
     ids: selectedPlaylist?.tracks?.items?.map((item) => item.track.id),
     playlistId: selectedPlaylist?.id,
   });
+  if (!selected_playlist_id) {
+    return (
+      <BodyContent>
+        <p>You haven't selected a playlist yet.</p>
+        <Container>
+          <Button
+            onClick={() =>
+              dispatch({
+                type: "SET_ACTIVE_TAB",
+                activeTab: "selector",
+              })
+            }
+          >
+            Choose a playlist to share
+          </Button>
+        </Container>
+      </BodyContent>
+    );
+  }
   if (!selectedPlaylist)
     return (
       <BodyContent>
