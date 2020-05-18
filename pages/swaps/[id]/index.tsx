@@ -7,16 +7,19 @@ import { SwapMember } from "../../../lib/models/swapMember";
 import { SwapProvider } from "../../../contexts/swap-context";
 import { serialize } from "../../../lib/utils";
 import { useRouter } from "next/router";
-import { ButtonLink } from "../../../components/SwapManager";
+import { ButtonLink, SwapManager } from "../../../components/SwapManager";
 import { BackButton } from "../../../components/BackButton";
 import React from "react";
+import { User } from "../../../lib/models/user";
 
 export default function ({
   swap,
   currentSwapMember,
+  user,
 }: {
   swap: Swap & { owner_display_name: string };
-  currentSwapMember: SwapMember;
+  currentSwapMember: SwapMember & { isEnrolled: false };
+  user: User;
 }) {
   return (
     <SwapProvider>
@@ -26,7 +29,13 @@ export default function ({
       </Title>
       <Owner>By {swap.owner_display_name}</Owner>
       <Description>{swap.description}</Description>
-      <PlaylistEntry swap={swap} currentSwapMember={currentSwapMember} />
+      {currentSwapMember.isEnrolled ? (
+        <PlaylistEntry swap={swap} currentSwapMember={currentSwapMember} />
+      ) : (
+        <SwapManager spotify_id={user.spotify_id} user_id={user.id}>
+          You aren't enrolled. Join now.
+        </SwapManager>
+      )}
     </SwapProvider>
   );
 }
@@ -52,6 +61,10 @@ export async function getServerSideProps({ req, params, res }) {
         isEnrolled,
         spotifyId: user.spotify_id,
       }),
+      user: {
+        spotify_id: user.spotify_id,
+        id: user.id,
+      },
     },
   };
 }
