@@ -54,16 +54,12 @@ export const ReceivedPlaylist = ({ swap, receivedPlaylistId }) => {
   )[0];
   return (
     <div>
-      <Title>
-        {!user ? "Loading your account ..." : `You've received a new playlist!`}
-      </Title>
       {notification && (
         <Notification
           notification={notification}
           setNotification={setNotification}
         />
       )}
-      <p>{sender ? sender.display_name : "anon"} sent you a playlist:</p>
       {receivedPlaylist && (
         <Container>
           <PlaylistCard>
@@ -78,11 +74,13 @@ export const ReceivedPlaylist = ({ swap, receivedPlaylistId }) => {
                     <i className="material-icons">favorite</i>
                   </Favorite>
                 </PlaylistName>
-                <Description
-                  dangerouslySetInnerHTML={{
-                    __html: receivedPlaylist.description,
-                  }}
-                />
+                {receivedPlaylist.description && (
+                  <Description
+                    dangerouslySetInnerHTML={{
+                      __html: receivedPlaylist.description,
+                    }}
+                  />
+                )}
                 <Toggler onClick={() => setIsOpen((isOpen) => !isOpen)}>
                   {isOpen ? "Close" : "Check the vibes"}
                 </Toggler>
@@ -104,6 +102,13 @@ export const ReceivedPlaylist = ({ swap, receivedPlaylistId }) => {
               )}
             </Metadata>
           </PlaylistCard>
+          <p
+            css={css`
+              margin-left: 1rem;
+            `}
+          >
+            {sender ? sender.display_name : "anon"} sent you a playlist:
+          </p>
           <PlaylistTracks playlist={receivedPlaylist} />
         </Container>
       )}

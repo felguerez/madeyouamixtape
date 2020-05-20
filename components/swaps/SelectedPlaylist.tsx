@@ -14,14 +14,19 @@ import Link from "next/link";
 import PlaylistTracks from "../../pages/swaps/[id]/PlaylistTracks";
 import Vibes from "../Vibes";
 import { useFeatures } from "../../lib/hooks";
+import { useRouter } from "next/router";
+import { css } from "@emotion/core";
 
 export const SelectedPlaylist = ({
-  currentSwapMember,
   currentSwapMember: { selected_playlist_id },
 }) => {
   const dispatch = useSwapDispatch();
   const { selectedPlaylist, selectedPlaylistId } = useSwapState();
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
+  const {
+    query: { id },
+  } = router;
 
   useEffect(() => {
     if (!selectedPlaylistId) {
@@ -55,21 +60,28 @@ export const SelectedPlaylist = ({
   });
   if (!selected_playlist_id) {
     return (
-      <BodyContent>
+      <ContentCard
+        css={css`
+          display: block;
+        `}
+      >
         <p>You haven't selected a playlist yet.</p>
         <Container>
           <Button
             onClick={() =>
-              dispatch({
-                type: "SET_ACTIVE_TAB",
-                activeTab: "selector",
-              })
+              router.push(
+                "/swaps/[id]?tab=browser",
+                `/swaps/${id}?tab=browser`,
+                {
+                  shallow: true,
+                }
+              )
             }
           >
             Choose a playlist to share
           </Button>
         </Container>
-      </BodyContent>
+      </ContentCard>
     );
   }
   if (!selectedPlaylist)
@@ -81,11 +93,6 @@ export const SelectedPlaylist = ({
   return (
     <BodyContent>
       <Container>
-        <h2>Selection</h2>
-        <p>
-          This playlist will be shared with someone else in your group. You'll
-          get a new playlist in return.
-        </p>
         <ContentCard>
           {selectedPlaylist.images?.length && (
             <CoverArt src={selectedPlaylist.images[0].url} />
@@ -93,30 +100,21 @@ export const SelectedPlaylist = ({
           <Metadata>
             <Copy>
               <PlaylistName>{selectedPlaylist.name}</PlaylistName>
-              <Description
-                dangerouslySetInnerHTML={{
-                  __html: selectedPlaylist.description,
-                }}
-              />
+              {console.log(
+                "selectedPlaylist.description:",
+                selectedPlaylist.description
+              )}
+              {selectedPlaylist.description && (
+                <Description
+                  dangerouslySetInnerHTML={{
+                    __html: selectedPlaylist.description,
+                  }}
+                />
+              )}
               {features && (
                 <Toggler onClick={() => setIsOpen((isOpen) => !isOpen)}>
                   {isOpen ? "Close" : "Check the vibes"}
                 </Toggler>
-              )}
-              {!features && (
-                <p>
-                  Don't like this one?{" "}
-                  <SecretlyButton
-                    onClick={() =>
-                      dispatch({
-                        type: "SET_ACTIVE_TAB",
-                        activeTab: "selector",
-                      })
-                    }
-                  >
-                    Choose a new playlist to share
-                  </SecretlyButton>
-                </p>
               )}
             </Copy>
             {!isOpen ? (
@@ -130,35 +128,48 @@ export const SelectedPlaylist = ({
                     <a>{selectedPlaylist.owner.display_name}</a>
                   </Link>
                 </Creator>
-                <TracksCount>
+                <GrayCopy>
                   {selectedPlaylist.tracks.items.length} tracks
-                </TracksCount>
+                </GrayCopy>
               </>
             ) : (
-              <>
-                <p>
-                  Don't like this one?{" "}
-                  <SecretlyButton
-                    onClick={() =>
-                      dispatch({
-                        type: "SET_ACTIVE_TAB",
-                        activeTab: "selector",
-                      })
-                    }
-                  >
-                    Choose a new playlist to share
-                  </SecretlyButton>
-                </p>
-                <Vibes features={features} />
-              </>
+              <Vibes features={features} />
             )}
           </Metadata>
         </ContentCard>
       </Container>
+      <p
+        css={css`
+          margin-left: 1rem;
+        `}
+      >
+        <OpenBrowserLink>
+          Don't like this one?{" "}
+          <SecretlyButton
+            onClick={() =>
+              router.push(
+                "/swaps/[id]?tab=browser",
+                `/swaps/${id}?tab=browser`,
+                {
+                  shallow: true,
+                }
+              )
+            }
+          >
+            Choose a new playlist to share.
+          </SecretlyButton>
+        </OpenBrowserLink>{" "}
+        This playlist will be shared with someone else in your group. You'll get
+        a new playlist in return.
+      </p>
       <PlaylistTracks playlist={selectedPlaylist} />
     </BodyContent>
   );
 };
+
+const OpenBrowserLink = styled.span`
+  margin-top: 0.5rem;
+`;
 
 const BodyContent = styled.div`
   padding: 0;
@@ -201,7 +212,7 @@ const CoverArt = styled.img`
   border: 1px solid ${DARK_GRAY};
 `;
 
-const TracksCount = styled.p`
+const GrayCopy = styled.p`
   margin: 0;
   color: rgb(179, 179, 179);
   font-size: 12px;

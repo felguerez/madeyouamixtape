@@ -115,10 +115,10 @@ const PlaylistEntry = ({ swap, currentSwapMember }) => {
               }
             />
           )}
-          {activeTab === "selector" && (
+          {tab === "browser" && (
             <CurrentUsersPlaylists currentSwapMember={currentSwapMember} />
           )}
-          {activeTab === "settings" && <Settings swap={swap} />}
+          {tab === "settings" && <Settings swap={swap} />}
         </>
       )}
     </div>
