@@ -26,19 +26,21 @@ const PlaylistEntry = ({ swap, currentSwapMember }) => {
             Members
           </Button>
         </Tab>
-        <Tab>
-          <Button
-            onClick={() =>
-              dispatch({
-                type: "SET_ACTIVE_TAB",
-                activeTab: "selection",
-              })
-            }
-            isActive={activeTab === "selection"}
-          >
-            Selected playlist
-          </Button>
-        </Tab>
+        {currentSwapMember.isEnrolled && (
+          <Tab>
+            <Button
+              onClick={() =>
+                dispatch({
+                  type: "SET_ACTIVE_TAB",
+                  activeTab: "selection",
+                })
+              }
+              isActive={activeTab === "selection"}
+            >
+              Selected playlist
+            </Button>
+          </Tab>
+        )}
         {currentSwapMember.received_playlist_id && (
           <Tab>
             <Button
@@ -70,7 +72,9 @@ const PlaylistEntry = ({ swap, currentSwapMember }) => {
           </Tab>
         )}
       </Tabs>
-      {activeTab === "members" && <Members swap={swap} />}
+      {activeTab === "members" && (
+        <Members swap={swap} currentSwapMember={currentSwapMember} />
+      )}
       {currentSwapMember && (
         <>
           {activeTab === "selection" && (

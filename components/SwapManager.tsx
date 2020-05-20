@@ -18,16 +18,15 @@ export const SwapManager = ({
   id,
 }: {
   children: React.ReactNode;
-  spotify_id: string;
+  spotify_id?: string;
   action?: "join" | "create";
-  user_id: number;
+  user_id?: number;
   id?: number;
 }) => {
   switch (action) {
     case "join":
       return (
         <FormButton method="post" action={`/api/swaps/${id}/join`}>
-          <input type="hidden" name="spotify_id" value={spotify_id} />
           <ButtonLink type="submit" name="submit" value="true">
             {children}
           </ButtonLink>

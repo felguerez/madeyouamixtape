@@ -136,7 +136,6 @@ export const ContentCard = styled.div`
   background: ${GRAY};
   border-radius: 8px;
   padding: 1rem;
-  display: flex;
   box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
 `;
 

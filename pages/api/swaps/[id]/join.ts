@@ -20,6 +20,10 @@ export default async function swaps(req, res) {
         res.end();
         return;
       }
+      await models.swapMember.create({
+        swap_id: req.query.id,
+        user_id: session.id,
+      });
       // TODO: respond with 200
       // TODO: make request via XHR
       res.writeHead(302, { Location: `/swaps/${req.query.id}` });

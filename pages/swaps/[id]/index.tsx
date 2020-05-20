@@ -30,20 +30,7 @@ export default function ({
       </Title>
       <Owner>By {swap.owner_display_name}</Owner>
       <Description>{swap.description}</Description>
-      {currentSwapMember.isEnrolled ? (
-        <PlaylistEntry swap={swap} currentSwapMember={currentSwapMember} />
-      ) : (
-        <Button>
-          <SwapManager
-            spotify_id={user.spotify_id}
-            user_id={user.id}
-            action="join"
-            id={swap.id}
-          >
-            You aren't enrolled. Join now.
-          </SwapManager>
-        </Button>
-      )}
+      <PlaylistEntry swap={swap} currentSwapMember={currentSwapMember} />
     </SwapProvider>
   );
 }

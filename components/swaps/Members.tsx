@@ -1,8 +1,10 @@
 import styled from "@emotion/styled";
-import { ContentCard, LIGHT_GREEN } from "../../shared/styles";
+import { Button, ContentCard, LIGHT_GREEN } from "../../shared/styles";
 import Link from "next/link";
+import { SwapManager } from "../SwapManager";
+import React from "react";
 
-const Members = ({ swap }) => {
+const Members = ({ swap, currentSwapMember }) => {
   return (
     <>
       <h2>Members</h2>
@@ -32,6 +34,16 @@ const Members = ({ swap }) => {
             );
           })}
         </List>
+        {!currentSwapMember.isEnrolled && (
+          <Button>
+            <SwapManager
+              action="join"
+              id={swap.id}
+            >
+              You aren't enrolled. Join now.
+            </SwapManager>
+          </Button>
+        )}
       </ContentCard>
     </>
   );
