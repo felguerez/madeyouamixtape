@@ -27,18 +27,18 @@ export const SwapManager = ({
     case "join":
       return (
         <FormButton method="post" action={`/api/swaps/${id}/join`}>
-          <ButtonLink type="submit" name="submit" value="true">
+          <SecretlyButton type="submit" name="submit" value="true">
             {children}
-          </ButtonLink>
+          </SecretlyButton>
         </FormButton>
       );
     default: {
       return (
         <FormButton method="post" action={`/api/users/${user_id}/swaps`}>
           <input type="hidden" name="spotify_id" value={spotify_id} />
-          <ButtonLink type="submit" name="submit" value="true">
+          <SecretlyButton type="submit" name="submit" value="true">
             {children}
-          </ButtonLink>
+          </SecretlyButton>
           <style jsx>{`
             form {
               border: 0;
@@ -54,7 +54,7 @@ export const SwapManager = ({
   }
 };
 
-export const ButtonLink = styled.button`
+export const SecretlyButton = styled.button`
   background: none;
   border: none;
   padding: 0;
@@ -63,9 +63,12 @@ export const ButtonLink = styled.button`
   cursor: pointer;
   font-weight: bold;
   font-size: 1em;
+  color: ${DARK_GREEN};
+  border: 0;
 `;
 
 const FormButton = styled.form`
   padding: 0;
   display: inline;
+  border: 0;
 `;

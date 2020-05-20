@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { DARK_BLUE, vibeColors, WHITE } from "../shared/styles";
 import { css, jsx } from "@emotion/core";
-import { ButtonLink } from "./SwapManager";
+import { SecretlyButton } from "./SwapManager";
 import { useFeatures } from "../lib/hooks";
 
 const Vibes = ({ features }) => {
@@ -23,7 +23,6 @@ const Vibes = ({ features }) => {
 
 const VibesContainer = styled.div`
   display: flex;
-  justify-content: space-between;
 `;
 
 const Vibe = styled.div<{ opacity: number; rgb: string }>`

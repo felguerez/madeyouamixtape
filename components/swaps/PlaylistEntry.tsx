@@ -6,22 +6,40 @@ import { DARK_BLUE, DARK_GRAY, GRAY } from "../../shared/styles";
 import Members from "./Members";
 import { ReceivedPlaylist } from "./Received";
 import Settings from "./Settings";
+import Router, { useRouter } from "next/router";
+import { ParsedUrlQuery } from "querystring";
+import { useEffect } from "react";
 
 const PlaylistEntry = ({ swap, currentSwapMember }) => {
   const { activeTab, receivedPlaylistId } = useSwapState();
   const dispatch = useSwapDispatch();
+  const router = useRouter();
+  const {
+    query: { id, tab },
+  }: { query: ParsedUrlQuery } = router;
+
+  useEffect(() => {
+    if (!tab) {
+      router.replace(`/swaps[id]?tab=members`, `/swaps/${id}?tab=members`, {
+        shallow: true,
+      });
+    }
+  }, [tab]);
   return (
     <div>
       <Tabs>
         <Tab>
           <Button
             onClick={() =>
-              dispatch({
-                type: "SET_ACTIVE_TAB",
-                activeTab: "members",
-              })
+              router.push(
+                "/swaps/[id]?tab=members",
+                `/swaps/${id}?tab=members`,
+                {
+                  shallow: true,
+                }
+              )
             }
-            isActive={activeTab === "members"}
+            isActive={!tab || tab === "members"}
           >
             Members
           </Button>
@@ -30,12 +48,15 @@ const PlaylistEntry = ({ swap, currentSwapMember }) => {
           <Tab>
             <Button
               onClick={() =>
-                dispatch({
-                  type: "SET_ACTIVE_TAB",
-                  activeTab: "selection",
-                })
+                router.push(
+                  "/swaps/[id]?tab=selection",
+                  `/swaps/${id}?tab=selection`,
+                  {
+                    shallow: true,
+                  }
+                )
               }
-              isActive={activeTab === "selection"}
+              isActive={tab === "selection"}
             >
               Selected playlist
             </Button>
@@ -45,12 +66,15 @@ const PlaylistEntry = ({ swap, currentSwapMember }) => {
           <Tab>
             <Button
               onClick={() =>
-                dispatch({
-                  type: "SET_ACTIVE_TAB",
-                  activeTab: "received",
-                })
+                router.push(
+                  "/swaps/[id]?tab=received",
+                  `/swaps/${id}?tab=received`,
+                  {
+                    shallow: true,
+                  }
+                )
               }
-              isActive={activeTab === "received"}
+              isActive={tab === "received"}
             >
               Your New Playlist
             </Button>
@@ -60,35 +84,37 @@ const PlaylistEntry = ({ swap, currentSwapMember }) => {
           <Tab>
             <Button
               onClick={() =>
-                dispatch({
-                  type: "SET_ACTIVE_TAB",
-                  activeTab: "settings",
-                })
+                router.push(
+                  "/swaps/[id]?tab=settings",
+                  `/swaps/${id}?tab=settings`,
+                  {
+                    shallow: true,
+                  }
+                )
               }
-              isActive={activeTab === "settings"}
+              isActive={tab === "settings"}
             >
               Settings
             </Button>
           </Tab>
         )}
       </Tabs>
-      {activeTab === "members" && (
+      {tab === "members" && (
         <Members swap={swap} currentSwapMember={currentSwapMember} />
       )}
       {currentSwapMember && (
         <>
-          {activeTab === "selection" && (
+          {tab === "selection" && (
             <SelectedPlaylist currentSwapMember={currentSwapMember} />
           )}
-          {activeTab === "received" &&
-            currentSwapMember.received_playlist_id && (
-              <ReceivedPlaylist
-                swap={swap}
-                receivedPlaylistId={
-                  receivedPlaylistId || currentSwapMember.received_playlist_id
-                }
-              />
-            )}
+          {tab === "received" && currentSwapMember.received_playlist_id && (
+            <ReceivedPlaylist
+              swap={swap}
+              receivedPlaylistId={
+                receivedPlaylistId || currentSwapMember.received_playlist_id
+              }
+            />
+          )}
           {activeTab === "selector" && (
             <CurrentUsersPlaylists currentSwapMember={currentSwapMember} />
           )}

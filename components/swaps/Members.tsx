@@ -3,12 +3,16 @@ import { Button, ContentCard, LIGHT_GREEN } from "../../shared/styles";
 import Link from "next/link";
 import { SwapManager } from "../SwapManager";
 import React from "react";
+import { css } from "@emotion/core";
 
 const Members = ({ swap, currentSwapMember }) => {
   return (
     <>
-      <h2>Members</h2>
-      <ContentCard>
+      <ContentCard
+        css={css`
+          display: block;
+        `}
+      >
         <List>
           {swap.members.map((member) => {
             const readyToShare = Boolean(member.selected_playlist_id);
@@ -36,11 +40,15 @@ const Members = ({ swap, currentSwapMember }) => {
         </List>
         {!currentSwapMember.isEnrolled && (
           <Button>
-            <SwapManager
-              action="join"
-              id={swap.id}
-            >
-              You aren't enrolled. Join now.
+            <SwapManager action="join" id={swap.id}>
+              <span
+                css={css`
+                  color: white;
+                  font-weight: normal;
+                `}
+              >
+                You aren't enrolled. Join now.
+              </span>
             </SwapManager>
           </Button>
         )}

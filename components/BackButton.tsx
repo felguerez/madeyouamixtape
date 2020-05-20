@@ -1,6 +1,7 @@
 import Router from "next/router";
 import styled from "@emotion/styled";
-import { ButtonLink } from "./SwapManager";
+import { SecretlyButton } from "./SwapManager";
+import { DARK_GREEN } from "../shared/styles";
 
 export const BackButton = () => {
   return (
@@ -12,8 +13,9 @@ export const BackButton = () => {
   );
 };
 
-const Container = styled(ButtonLink)`
+const Container = styled(SecretlyButton)`
   margin-top: -1rem;
   max-height: 24px;
   line-height: 1.5rem;
+  color: ${DARK_GREEN};
 `;

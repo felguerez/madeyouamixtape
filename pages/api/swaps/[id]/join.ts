@@ -26,7 +26,7 @@ export default async function swaps(req, res) {
       });
       // TODO: respond with 200
       // TODO: make request via XHR
-      res.writeHead(302, { Location: `/swaps/${req.query.id}` });
+      res.writeHead(302, { Location: `/swaps/${req.query.id}?tab=selection` });
       res.end();
       break;
     default:

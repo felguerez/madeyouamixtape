@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ButtonLink } from "../components/SwapManager";
+import { SecretlyButton } from "../components/SwapManager";
 import Form from "../components/home/form";
 import { useUser } from "../lib/hooks";
 import { useState } from "react";
@@ -52,9 +52,9 @@ const About = () => {
           <a>playlist swaps</a>
         </Link>{" "}
         happening right now or you can{" "}
-        <ButtonLink onClick={() => setIsOpen((isOpen) => !isOpen)}>
+        <SecretlyButton onClick={() => setIsOpen((isOpen) => !isOpen)}>
           start a new playlist swap.
-        </ButtonLink>
+        </SecretlyButton>
       </p>
       {isOpen && (
         <Form

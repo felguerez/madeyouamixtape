@@ -1,6 +1,6 @@
 import { useSwaps } from "../lib/hooks";
 import { SwapList } from "./SwapList";
-import { ButtonLink } from "./SwapManager";
+import { SecretlyButton } from "./SwapManager";
 import { useState } from "react";
 import Form from "./home/form";
 import { User } from "../lib/models/user";

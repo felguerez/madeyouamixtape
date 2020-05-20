@@ -137,6 +137,8 @@ export const ContentCard = styled.div`
   border-radius: 8px;
   padding: 1rem;
   box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
+  display: flex;
+  margin-top: 1rem;
 `;
 
 export const vibeColors = {
@@ -155,16 +157,4 @@ export const Button = styled.button`
   align-items: center;
   border-radius: 2rem;
   padding: 1rem 2rem;
-  color: ${GRAY};
-  &:hover {
-    color: ${WHITE};
-    svg,
-    g,
-    path {
-      fill: ${WHITE};
-    }
-  }
-  svg {
-    margin-left: 0.5rem;
-  }
 `;

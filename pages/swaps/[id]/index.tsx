@@ -7,7 +7,7 @@ import { SwapMember } from "../../../lib/models/swapMember";
 import { SwapProvider } from "../../../contexts/swap-context";
 import { serialize } from "../../../lib/utils";
 import { useRouter } from "next/router";
-import { ButtonLink, SwapManager } from "../../../components/SwapManager";
+import { SecretlyButton, SwapManager } from "../../../components/SwapManager";
 import { BackButton } from "../../../components/BackButton";
 import React from "react";
 import { User } from "../../../lib/models/user";
@@ -16,11 +16,9 @@ import { Button } from "../../../shared/styles";
 export default function ({
   swap,
   currentSwapMember,
-  user,
 }: {
   swap: Swap & { owner_display_name: string };
   currentSwapMember: SwapMember & { isEnrolled: false };
-  user: User;
 }) {
   return (
     <SwapProvider>
@@ -56,10 +54,6 @@ export async function getServerSideProps({ req, params, res }) {
         isEnrolled,
         spotifyId: user.spotify_id,
       }),
-      user: {
-        spotify_id: user.spotify_id,
-        id: user.id,
-      },
     },
   };
 }

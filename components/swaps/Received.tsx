@@ -2,7 +2,7 @@ import fetch from "isomorphic-fetch";
 import { useEffect, useState } from "react";
 import { useFeatures, useUser } from "../../lib/hooks";
 import styled from "@emotion/styled";
-import { ButtonLink } from "../SwapManager";
+import { SecretlyButton } from "../SwapManager";
 import { css } from "@emotion/core";
 import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
 import { Notification } from "../Notification";
@@ -161,7 +161,7 @@ const TracksCount = styled.p`
   color: rgb(179, 179, 179);
   font-size: 12px;
 `;
-const Toggler = styled(ButtonLink)`
+const Toggler = styled(SecretlyButton)`
   margin-bottom: 0;
   cursor: pointer;
 `;
@@ -170,7 +170,7 @@ const Copy = styled.div`
   margin: 0 0 auto 0;
 `;
 
-const Favorite = styled(ButtonLink)`
+const Favorite = styled(SecretlyButton)`
   display: inline;
   margin-left: 1rem;
 `;

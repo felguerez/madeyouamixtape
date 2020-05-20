@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { Swap } from "../../lib/models/swap";
 import Form from "../settings/form";
 import { useState } from "react";
-import { ButtonLink } from "../SwapManager";
+import { SecretlyButton } from "../SwapManager";
 import { Notification } from "../Notification";
 import { useSwapDispatch } from "../../contexts/swap-context";
 

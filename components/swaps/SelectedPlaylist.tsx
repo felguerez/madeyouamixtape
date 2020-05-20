@@ -9,7 +9,7 @@ import {
   DARK_GRAY,
   GRAY,
 } from "../../shared/styles";
-import { ButtonLink } from "../SwapManager";
+import { SecretlyButton } from "../SwapManager";
 import Link from "next/link";
 import PlaylistTracks from "../../pages/swaps/[id]/PlaylistTracks";
 import Vibes from "../Vibes";
@@ -106,7 +106,7 @@ export const SelectedPlaylist = ({
               {!features && (
                 <p>
                   Don't like this one?{" "}
-                  <ButtonLink
+                  <SecretlyButton
                     onClick={() =>
                       dispatch({
                         type: "SET_ACTIVE_TAB",
@@ -115,7 +115,7 @@ export const SelectedPlaylist = ({
                     }
                   >
                     Choose a new playlist to share
-                  </ButtonLink>
+                  </SecretlyButton>
                 </p>
               )}
             </Copy>
@@ -138,7 +138,7 @@ export const SelectedPlaylist = ({
               <>
                 <p>
                   Don't like this one?{" "}
-                  <ButtonLink
+                  <SecretlyButton
                     onClick={() =>
                       dispatch({
                         type: "SET_ACTIVE_TAB",
@@ -147,7 +147,7 @@ export const SelectedPlaylist = ({
                     }
                   >
                     Choose a new playlist to share
-                  </ButtonLink>
+                  </SecretlyButton>
                 </p>
                 <Vibes features={features} />
               </>
@@ -207,7 +207,7 @@ const TracksCount = styled.p`
   font-size: 12px;
 `;
 
-const Toggler = styled(ButtonLink)`
+const Toggler = styled(SecretlyButton)`
   margin-bottom: 0;
   cursor: pointer;
 `;
