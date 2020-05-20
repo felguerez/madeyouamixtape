@@ -11,6 +11,7 @@ import { ButtonLink, SwapManager } from "../../../components/SwapManager";
 import { BackButton } from "../../../components/BackButton";
 import React from "react";
 import { User } from "../../../lib/models/user";
+import { Button } from "../../../shared/styles";
 
 export default function ({
   swap,
@@ -32,9 +33,16 @@ export default function ({
       {currentSwapMember.isEnrolled ? (
         <PlaylistEntry swap={swap} currentSwapMember={currentSwapMember} />
       ) : (
-        <SwapManager spotify_id={user.spotify_id} user_id={user.id}>
-          You aren't enrolled. Join now.
-        </SwapManager>
+        <Button>
+          <SwapManager
+            spotify_id={user.spotify_id}
+            user_id={user.id}
+            action="join"
+            id={swap.id}
+          >
+            You aren't enrolled. Join now.
+          </SwapManager>
+        </Button>
       )}
     </SwapProvider>
   );

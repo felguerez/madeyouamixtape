@@ -45,6 +45,7 @@ export const swap = {
     const members = await db.query(escape`
       SELECT 
         swap_member.id,
+        swap_member.user_id,
         swap_member.selected_playlist_id,
         swap_member.received_playlist_id,
         swap_member.swap_id, 

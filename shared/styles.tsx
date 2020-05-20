@@ -1,5 +1,5 @@
-import {css, Global, SerializedStyles} from "@emotion/core";
-import {ReactElement} from "react";
+import { css, Global, SerializedStyles } from "@emotion/core";
+import { ReactElement } from "react";
 import styled from "@emotion/styled";
 
 export const DARK_BLUE = "#05668D";
@@ -57,8 +57,9 @@ const globals: SerializedStyles = css`
     padding: 1rem;
     margin: 0;
     text-decoration: none;
-    font-family: sans-serif;
     font-size: 1rem;
+    font-family: "Circular Spotify Text", "Helvetica Neue", Arial, Verdana,
+      "sans-serif";
     cursor: pointer;
     text-align: center;
     transition: background 250ms ease-in-out, transform 150ms ease;
@@ -91,7 +92,7 @@ const globals: SerializedStyles = css`
     border: 1px solid ${GRAY};
     border-radius: 4px;
     &::placeholder {
-      color: ${LIGHT_CHARCOAL}
+      color: ${LIGHT_CHARCOAL};
     }
   }
   .submit {

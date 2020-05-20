@@ -14,7 +14,7 @@ export default async function swaps(req, res) {
         swap_id: swap.id,
         user_id: session.id,
       });
-      res.writeHead(302, { Location: "/swaps" });
+      res.writeHead(302, { Location: "/" });
       res.end();
       break;
     case "GET":

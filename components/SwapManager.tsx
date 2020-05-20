@@ -6,7 +6,9 @@ import {
   DARK_GREEN,
   LIGHT_BLUE,
   LIGHT_GREEN,
+  WHITE,
 } from "../shared/styles";
+import { ChangeEvent, FormEvent } from "react";
 
 export const SwapManager = ({
   children,
@@ -24,33 +26,30 @@ export const SwapManager = ({
   switch (action) {
     case "join":
       return (
-        <form
-          method="post"
-          action={`/api/swaps/${id}/join`}
-          css={css`
-            display: inline;
-          `}
-        >
+        <FormButton method="post" action={`/api/swaps/${id}/join`}>
           <input type="hidden" name="spotify_id" value={spotify_id} />
           <ButtonLink type="submit" name="submit" value="true">
             {children}
           </ButtonLink>
-        </form>
+        </FormButton>
       );
     default: {
       return (
-        <form
-          method="post"
-          action={`/api/users/${user_id}/swaps`}
-          css={css`
-            display: inline;
-          `}
-        >
+        <FormButton method="post" action={`/api/users/${user_id}/swaps`}>
           <input type="hidden" name="spotify_id" value={spotify_id} />
           <ButtonLink type="submit" name="submit" value="true">
             {children}
           </ButtonLink>
-        </form>
+          <style jsx>{`
+            form {
+              border: 0;
+              padding: 0;
+            }
+            form.formBtn {
+              padding: 0;
+            }
+          `}</style>
+        </FormButton>
       );
     }
   }
@@ -62,14 +61,12 @@ export const ButtonLink = styled.button`
   padding: 0;
   margin: 0;
   text-align: left;
-  color: ${DARK_GREEN};
-  &:visited {
-    color: ${DARK_GREEN};
-  }
-  &:hover {
-    color: ${LIGHT_GREEN};
-  }
   cursor: pointer;
   font-weight: bold;
   font-size: 1em;
+`;
+
+const FormButton = styled.form`
+  padding: 0;
+  display: inline;
 `;
