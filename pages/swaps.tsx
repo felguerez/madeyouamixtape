@@ -1,8 +1,8 @@
 import { useSwaps } from "../lib/hooks";
-import { SwapList } from "./SwapList";
-import { SecretlyButton } from "./SwapManager";
+import { SwapList } from "../components/SwapList";
+import { SecretlyButton } from "../components/SwapManager";
 import { useState } from "react";
-import Form from "./home/form";
+import Form from "../components/home/form";
 import { User } from "../lib/models/user";
 import Router from "next/router";
 import { Button, CopyContainer } from "../shared/styles";

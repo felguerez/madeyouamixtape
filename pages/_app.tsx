@@ -10,11 +10,12 @@ import Layout from "../components/layout";
 
 export default class App extends NextApp {
   render() {
-    const { Component, pageProps } = this.props;
+    const { Component, pageProps, router } = this.props;
+    const { pathname } = router;
     return (
       <CacheProvider value={cache}>
         {globalStyles}
-        <Layout>
+        <Layout isHome={pathname === "/"}>
           <Component {...pageProps} />
         </Layout>
       </CacheProvider>

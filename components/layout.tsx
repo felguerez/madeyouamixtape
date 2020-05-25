@@ -1,7 +1,13 @@
 import Head from "next/head";
 import Header from "./header";
+import styled from "@emotion/styled";
+import { ReactNode } from "react";
 
-const Layout = (props) => (
+type Props = {
+  isHome: boolean;
+  children: ReactNode;
+};
+const Layout = ({ isHome, children }: Props) => (
   <>
     <Head>
       <link
@@ -35,17 +41,15 @@ const Layout = (props) => (
     <Header />
 
     <main>
-      <div className="container">{props.children}</div>
+      <Container isHome={isHome}>{children}</Container>
     </main>
-
-    <style jsx global>{`
-      .container {
-        max-width: 68.75rem;
-        margin: 0 auto;
-        padding: 2rem 1.25rem;
-      }
-    `}</style>
   </>
 );
+
+const Container = styled.div<{ isHome: boolean }>`
+  max-width: ${({ isHome }) => (isHome ? "100%" : "68.75rem")};
+  margin: 0 auto;
+  padding: ${({ isHome }) => (isHome ? `0` : `2rem 1.25rem`)};
+`;
 
 export default Layout;

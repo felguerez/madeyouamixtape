@@ -7,6 +7,8 @@ import {
   LIGHT_BLUE,
   WHITE,
   DARK_GRAY,
+  DARK_BLUE,
+  DARK_GREEN,
 } from "../shared/styles";
 import { Spotify } from "./svg/Spotify";
 
@@ -52,19 +54,22 @@ const Header = () => {
         </ul>
       </nav>
       <style jsx>{`
+        header {
+          border-bottom: 6px solid ${DARK_BLUE};
+        }
         nav {
           max-width: 68.75rem;
           margin: 0 auto;
           padding: 0.2rem 0;
         }
         a {
-          color: ${WHITE};
+          color: ${DARK_BLUE};
         }
         a:visited {
-          color: ${WHITE};
+          color: ${DARK_BLUE};
         }
         a:hover {
-          color: ${GRAY};
+          color: ${DARK_GREEN};
         }
         ul {
           display: flex;
@@ -82,8 +87,8 @@ const Header = () => {
           margin-right: 0;
         }
         header {
-          color: #fff;
-          background: ${LIGHT_BLUE};
+          color: ${DARK_BLUE};
+          background: ${WHITE};
           box-shadow: 0 8px 6px -6px #999;
         }
       `}</style>
@@ -99,16 +104,19 @@ const LoginLink = styled.a`
   cursor: pointer;
   display: flex;
   align-items: center;
-  color: ${GRAY};
+  color: ${DARK_BLUE};
   font-weight: 500;
   font-size: 0.85rem;
   line-height: 1;
   &:hover {
-    color: ${WHITE};
-    svg,
-    g,
-    path {
-      fill: ${WHITE};
+    color: ${DARK_GREEN};
+  }
+  svg,
+  g,
+  path {
+    fill: ${DARK_BLUE};
+    &:hover {
+      color: ${DARK_GREEN};
     }
   }
 `;

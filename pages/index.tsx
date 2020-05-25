@@ -1,19 +1,22 @@
 import { useUser } from "../lib/hooks";
 import { Welcome } from "../components/home/Welcome";
-import Swaps from "../components/Swaps";
 import { CopyContainer } from "../shared/styles";
+import { getSession } from "../lib/iron";
 
-const Home = () => {
-  const user = useUser();
-  if (user === undefined) {
-    return (
-      <CopyContainer>
-        <h1>Loading...</h1>
-      </CopyContainer>
-    );
+const Home = () => <Welcome />;
+
+export async function getServerSideProps({ req, res }) {
+  const user = await getSession(req);
+  if (user) {
+    res.writeHead(302, {
+      Location: "/swaps",
+    });
+    res.end();
   }
-  if (user === null) return <Welcome />;
-  return <Swaps user={user} />;
-};
-
+  return {
+    props: {
+      user,
+    },
+  };
+}
 export default Home;

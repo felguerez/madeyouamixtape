@@ -26,7 +26,7 @@ export default nextConnect()
       const token = await encryptSession(session);
       setTokenCookie(res, token);
       res.writeHead(302, {
-        Location: "/",
+        Location: "/swaps",
       });
       res.end();
     } catch (error) {

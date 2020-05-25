@@ -122,9 +122,6 @@ const globals: SerializedStyles = css`
     border: 1px solid ${DARK_BLUE};
     border-radius: 4px;
   }
-  i {
-    cursor: pointer;
-  }
 `;
 
 export const globalStyles: ReactElement = <Global styles={globals} />;
