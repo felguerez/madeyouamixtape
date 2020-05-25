@@ -78,6 +78,36 @@ const PlaylistEntry = ({ swap, currentSwapMember }) => {
             >
               Your New Playlist
             </Button>
+            <Button
+              isActive={false}
+              onClick={async () => {
+                const response = await fetch(
+                  `/api/swap_members/${currentSwapMember.id}/update`,
+                  {
+                    method: "post",
+                    body: JSON.stringify({
+                      swap_id: swap.id,
+                      current_received_playlist_id:
+                        receivedPlaylistId ||
+                        currentSwapMember.received_playlist_id,
+                    }),
+                  }
+                );
+                if (response.ok) {
+                  const payload = await response.json();
+                  if (payload.receivedPlaylistId) {
+                    dispatch({
+                      type: "SET_RECEIVED_PLAYLIST_ID",
+                      receivedPlaylistId: payload.receivedPlaylistId,
+                    });
+                  }
+                } else {
+                  console.log("response:", response);
+                }
+              }}
+            >
+              Shuffle
+            </Button>
           </Tab>
         )}
         {currentSwapMember.id === swap.owner_id && (

@@ -11,7 +11,7 @@ import {
 } from "../shared/styles";
 import { SwapMember } from "../lib/models/swapMember";
 import { PlaylistCard } from "./PlaylistCard";
-import { updateSelectedPlaylist } from "../lib/api";
+import { updateSwapMember } from "../lib/api";
 
 export const PlaylistGallery = ({
   currentSwapMember,
@@ -34,7 +34,7 @@ export const PlaylistGallery = ({
     const currentSelectedId = selectedPlaylistId;
     dispatch({ type: "SET_SELECTED_PLAYLIST_ID", selectedPlaylistId: id });
     try {
-      await updateSelectedPlaylist({
+      await updateSwapMember({
         swap_member_id: currentSwapMember.id,
         selected_playlist_id: id,
         swap_id: currentSwapMember.id,

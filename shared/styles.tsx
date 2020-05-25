@@ -165,6 +165,9 @@ export const BackgroundSheet = styled.div`
   p {
     margin: 0;
   }
+  @media (max-width: 960px) {
+    max-width: 40rem;
+  }
 `
 export const Creator = styled.p`
   display: inline-block;
