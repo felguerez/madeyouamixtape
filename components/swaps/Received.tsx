@@ -6,7 +6,12 @@ import { SecretlyButton } from "../SwapManager";
 import { css } from "@emotion/core";
 import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
 import { Notification } from "../Notification";
-import { BackgroundSheet, ContentCard, GRAY } from "../../shared/styles";
+import {
+  BackgroundSheet,
+  ContentCard,
+  GRAY,
+  Creator,
+} from "../../shared/styles";
 import PlaylistTracks from "../../pages/swaps/[id]/PlaylistTracks";
 import Vibes from "../Vibes";
 
@@ -118,20 +123,8 @@ export const ReceivedPlaylist = ({ swap, receivedPlaylistId }) => {
   );
 };
 
-const Title = styled.h2`
-  padding: 0;
-`;
-
 const Container = styled.div`
   margin-top: 1rem;
-`;
-
-const PlaylistCard = styled.div`
-  background: ${GRAY};
-  border-radius: 8px;
-  padding: 1rem;
-  display: flex;
-  box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
 `;
 
 const PlaylistName = styled.h3`
@@ -142,12 +135,6 @@ const PlaylistName = styled.h3`
 
 const Description = styled.p`
   margin: 0 0 0.5rem 0;
-`;
-
-const Creator = styled.span`
-  color: rgb(179, 179, 179);
-  font-size: 12px;
-  display: inline-block;
 `;
 
 const Metadata = styled.div`

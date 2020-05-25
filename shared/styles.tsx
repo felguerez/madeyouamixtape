@@ -166,3 +166,7 @@ export const BackgroundSheet = styled.div`
     margin: 0;
   }
 `
+export const Creator = styled.p`
+  display: inline-block;
+  margin-bottom: 0;
+`;

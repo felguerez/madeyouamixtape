@@ -2,7 +2,7 @@ import fetch from "isomorphic-fetch";
 import {useEffect, useState} from "react";
 import styled from "@emotion/styled";
 import {useSwapDispatch, useSwapState} from "../../contexts/swap-context";
-import {BackgroundSheet, Button, ContentCard, DARK_GRAY,} from "../../shared/styles";
+import {BackgroundSheet, Button, ContentCard, Creator, DARK_GRAY,} from "../../shared/styles";
 import {SecretlyButton} from "../SwapManager";
 import Link from "next/link";
 import PlaylistTracks from "../../pages/swaps/[id]/PlaylistTracks";
@@ -186,11 +186,6 @@ const Copy = styled.div`
 
 const Description = styled.p`
   margin: 0;
-`;
-
-const Creator = styled.p`
-  display: inline-block;
-  margin-bottom: 0;
 `;
 
 const Metadata = styled.div`
