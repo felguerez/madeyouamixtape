@@ -65,7 +65,7 @@ export const ReceivedPlaylist = ({ swap, receivedPlaylistId }) => {
           setNotification={setNotification}
         />
       )}
-      {receivedPlaylist && (
+      {receivedPlaylist ? (
         <Container>
           <ContentCard>
             {receivedPlaylist.images.length && (
@@ -118,6 +118,18 @@ export const ReceivedPlaylist = ({ swap, receivedPlaylistId }) => {
             <PlaylistTracks playlist={receivedPlaylist} />
           </BackgroundSheet>
         </Container>
+      ) : (
+        <Container>
+          <ContentCard>
+            <CoverArt isLoading src="https://via.placeholder.com/160" />
+            <Metadata>
+              <Copy>
+                <PlaylistName>Loading...</PlaylistName>
+                <Description>your new playlist...</Description>
+              </Copy>
+            </Metadata>
+          </ContentCard>
+        </Container>
       )}
     </div>
   );
@@ -142,12 +154,13 @@ const Metadata = styled.div`
   flex-direction: column;
 `;
 
-const CoverArt = styled.img`
-  height: auto;
+const CoverArt = styled.img<{ isLoading: boolean }>`
+  height: 160px;
   width: 160px;
   border-radius: 8px;
   align-self: center;
   margin-right: 1rem;
+  background: ${GRAY};
 `;
 
 const TracksCount = styled.p`

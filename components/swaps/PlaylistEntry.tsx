@@ -141,7 +141,7 @@ const PlaylistEntry = ({ swap, currentSwapMember }) => {
           {tab === "selection" && (
             <SelectedPlaylist currentSwapMember={currentSwapMember} />
           )}
-          {tab === "received" && currentSwapMember.received_playlist_id && (
+          {tab === "received" && (
             <ReceivedPlaylist
               swap={swap}
               receivedPlaylistId={
