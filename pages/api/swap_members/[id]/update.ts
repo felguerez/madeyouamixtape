@@ -20,7 +20,7 @@ export default async function swapMembers(req, res) {
         const { swap_id, current_received_playlist_id } = body;
         const swap = await models.swap.getById(swap_id);
         const eligiblePlaylists = swap.members
-          .filter((swapMember) => swapMember.id !== swap_member_id)
+          .filter((swapMember) => swapMember.id !== Number(swap_member_id))
           .map((member) => member.selected_playlist_id)
           .filter(
             (selectedPlaylistId) =>

@@ -62,7 +62,7 @@ const PlaylistEntry = ({ swap, currentSwapMember }) => {
             </Button>
           </Tab>
         )}
-        {currentSwapMember.received_playlist_id && (
+        {(receivedPlaylistId || currentSwapMember.received_playlist_id) && (
           <Tab>
             <Button
               onClick={() =>
@@ -78,6 +78,10 @@ const PlaylistEntry = ({ swap, currentSwapMember }) => {
             >
               Your New Playlist
             </Button>
+          </Tab>
+        )}
+        {currentSwapMember.selected_playlist_id && (
+          <Tab>
             <Button
               isActive={false}
               onClick={async () => {

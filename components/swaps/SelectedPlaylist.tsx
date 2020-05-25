@@ -57,6 +57,9 @@ export const SelectedPlaylist = ({
       <ContentCard
         css={css`
           display: block;
+          p {
+            margin-top: 0;
+          }
         `}
       >
         <p>You haven't selected a playlist yet.</p>
@@ -94,10 +97,6 @@ export const SelectedPlaylist = ({
           <Metadata>
             <Copy>
               <PlaylistName>{selectedPlaylist.name}</PlaylistName>
-              {console.log(
-                "selectedPlaylist.description:",
-                selectedPlaylist.description
-              )}
               {selectedPlaylist.description && (
                 <Description
                   dangerouslySetInnerHTML={{
