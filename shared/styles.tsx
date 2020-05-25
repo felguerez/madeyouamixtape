@@ -1,5 +1,5 @@
-import { css, Global, SerializedStyles } from "@emotion/core";
-import { ReactElement } from "react";
+import {css, Global, SerializedStyles} from "@emotion/core";
+import {ReactElement} from "react";
 import styled from "@emotion/styled";
 
 export const DARK_BLUE = "#05668D";
@@ -155,3 +155,14 @@ export const Button = styled.button`
   border-radius: 2rem;
   padding: 1rem 2rem;
 `;
+export const BackgroundSheet = styled.div`
+  max-width: 50rem;
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
+  margin: 0 auto;
+  padding: 2rem;
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  p {
+    margin: 0;
+  }
+`

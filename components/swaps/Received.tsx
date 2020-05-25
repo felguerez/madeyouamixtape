@@ -6,7 +6,7 @@ import { SecretlyButton } from "../SwapManager";
 import { css } from "@emotion/core";
 import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
 import { Notification } from "../Notification";
-import { GRAY } from "../../shared/styles";
+import { BackgroundSheet, ContentCard, GRAY } from "../../shared/styles";
 import PlaylistTracks from "../../pages/swaps/[id]/PlaylistTracks";
 import Vibes from "../Vibes";
 
@@ -62,7 +62,7 @@ export const ReceivedPlaylist = ({ swap, receivedPlaylistId }) => {
       )}
       {receivedPlaylist && (
         <Container>
-          <PlaylistCard>
+          <ContentCard>
             {receivedPlaylist.images.length && (
               <CoverArt src={receivedPlaylist.images[0].url} />
             )}
@@ -101,15 +101,17 @@ export const ReceivedPlaylist = ({ swap, receivedPlaylistId }) => {
                 <Vibes features={features} />
               )}
             </Metadata>
-          </PlaylistCard>
-          <p
-            css={css`
-              margin-left: 1rem;
-            `}
-          >
-            {sender ? sender.display_name : "anon"} sent you a playlist:
-          </p>
-          <PlaylistTracks playlist={receivedPlaylist} />
+          </ContentCard>
+          <BackgroundSheet>
+            <p
+              css={css`
+                margin-left: 1rem;
+              `}
+            >
+              {sender ? sender.display_name : "anon"} sent you a playlist:
+            </p>
+            <PlaylistTracks playlist={receivedPlaylist} />
+          </BackgroundSheet>
         </Container>
       )}
     </div>

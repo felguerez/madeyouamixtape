@@ -1,21 +1,15 @@
 import fetch from "isomorphic-fetch";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import styled from "@emotion/styled";
-import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
-import {
-  Button,
-  CHARCOAL,
-  ContentCard,
-  DARK_GRAY,
-  GRAY,
-} from "../../shared/styles";
-import { SecretlyButton } from "../SwapManager";
+import {useSwapDispatch, useSwapState} from "../../contexts/swap-context";
+import {BackgroundSheet, Button, ContentCard, DARK_GRAY,} from "../../shared/styles";
+import {SecretlyButton} from "../SwapManager";
 import Link from "next/link";
 import PlaylistTracks from "../../pages/swaps/[id]/PlaylistTracks";
 import Vibes from "../Vibes";
-import { useFeatures } from "../../lib/hooks";
-import { useRouter } from "next/router";
-import { css } from "@emotion/core";
+import {useFeatures} from "../../lib/hooks";
+import {useRouter} from "next/router";
+import {css} from "@emotion/core";
 
 export const SelectedPlaylist = ({
   currentSwapMember: { selected_playlist_id },
@@ -176,18 +170,6 @@ const OpenBrowserLink = styled.span`
 const BodyContent = styled.div`
   padding: 0;
 `;
-
-const BackgroundSheet = styled.div`
-  max-width: 50rem;
-  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
-  margin: 0 auto;
-  padding: 2rem;
-  border-bottom-left-radius: 0.5rem;
-  border-bottom-right-radius: 0.5rem;
-  p {
-    margin: 0;
-  }
-`
 
 const Container = styled.div`
   margin-top: 1rem;
