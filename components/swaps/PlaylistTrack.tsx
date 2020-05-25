@@ -102,7 +102,7 @@ const Bullet = styled.span`
 const TrackMetadata = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0;
+  margin: 0 0 0 0.5rem;
   p {
     margin: 0 0 0 1rem;
   }
@@ -123,6 +123,7 @@ const Track = styled.li`
   padding-bottom: 1rem;
   &:last-of-type {
     margin-bottom: 0;
+    border-bottom: 0;
   }
 `;
 

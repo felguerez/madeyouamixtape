@@ -58,6 +58,7 @@ const Header = () => {
           border-bottom: 6px solid ${DARK_BLUE};
         }
         nav {
+          border-top: 4px solid ${DARK_GREEN};
           max-width: 68.75rem;
           margin: 0 auto;
           padding: 0.2rem 0;

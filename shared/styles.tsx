@@ -21,7 +21,7 @@ export const lightLinearGradient = css`
 const globals: SerializedStyles = css`
   html {
     font-family: Sans-Serif, Helvetica, serif;
-    ${lightLinearGradient};
+    //${lightLinearGradient};
     background-repeat: no-repeat;
     background-attachment: fixed;
   }
@@ -130,12 +130,12 @@ export const CopyContainer = styled.div`
   padding: 0 2rem;
 `;
 export const ContentCard = styled.div`
-  background: ${GRAY};
-  border-radius: 8px;
-  padding: 1rem;
-  box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
+  background: ${OFF_WHITE};
   display: flex;
   margin-top: 1rem;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
 `;
 
 export const vibeColors = {

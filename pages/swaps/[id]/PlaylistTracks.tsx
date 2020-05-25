@@ -23,6 +23,8 @@ const PlaylistTracks = ({ playlist }) => {
 const TrackList = styled.div`
   padding: 1rem 0 1rem 1rem;
   list-style: none;
+  max-width: 50rem;
+  margin: 0 auto;
 `;
 
 export default PlaylistTracks;

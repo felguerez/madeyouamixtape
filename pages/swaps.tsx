@@ -1,4 +1,4 @@
-import { useSwaps } from "../lib/hooks";
+import { useSwaps, useUser } from "../lib/hooks";
 import { SwapList } from "../components/SwapList";
 import { SecretlyButton } from "../components/SwapManager";
 import { useState } from "react";
@@ -8,8 +8,9 @@ import Router from "next/router";
 import { Button, CopyContainer } from "../shared/styles";
 import styled from "@emotion/styled";
 
-const Swaps = ({ user }: { user: User }) => {
-  const swaps = useSwaps();
+const Swaps = () => {
+  const swaps = useSwaps() || [];
+  const user = useUser();
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState("");
   async function handleSubmit(e) {
@@ -42,16 +43,25 @@ const Swaps = ({ user }: { user: User }) => {
   }
   return (
     <>
-      <h1>Made You A Mixtape</h1>
+      <Headline>
+        Made You A Mixtape{" "}
+        <AddButton onClick={() => setIsOpen((isOpen) => !isOpen)}>
+          <SwapIcon className="material-icons">queue</SwapIcon> New Swap Group
+        </AddButton>
+      </Headline>
       <p>
         Share some music with people you know or random strangers. Join an
         existing playlist exchange group below or start your own.
       </p>
+      {swaps.length ? (
+        <SwapTitle>
+          The following {swaps.length} swap{" "}
+          {swaps.length > 1 ? "groups" : "group"} are happening right now:
+        </SwapTitle>
+      ) : (
+        <SwapTitle>Loading groups</SwapTitle>
+      )}
       <NewSwapContainer>
-        <Button onClick={() => setIsOpen((isOpen) => !isOpen)}>
-          <SwapIcon className="material-icons">swap_horizontal_circle</SwapIcon>
-          <span>Start a new swap</span>
-        </Button>
         {isOpen && (
           <Form
             errorMessage={error}
@@ -71,6 +81,20 @@ const SwapIcon = styled.i`
 
 const NewSwapContainer = styled.div`
   margin-bottom: 1rem;
+`;
+
+const Headline = styled.h1`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const AddButton = styled(Button)`
+  display: flex;
+  justify-content: center;
+`;
+
+const SwapTitle = styled.h4`
+  margin-top: 0;
 `;
 
 export default Swaps;

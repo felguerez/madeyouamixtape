@@ -138,31 +138,33 @@ export const SelectedPlaylist = ({
           </Metadata>
         </ContentCard>
       </Container>
-      <p
-        css={css`
-          margin-left: 1rem;
-        `}
-      >
-        <OpenBrowserLink>
-          Don't like this one?{" "}
-          <SecretlyButton
-            onClick={() =>
-              router.push(
-                "/swaps/[id]?tab=browser",
-                `/swaps/${id}?tab=browser`,
-                {
-                  shallow: true,
-                }
-              )
-            }
-          >
-            Choose a new playlist to share.
-          </SecretlyButton>
-        </OpenBrowserLink>{" "}
-        This playlist will be shared with someone else in your group. You'll get
-        a new playlist in return.
-      </p>
-      <PlaylistTracks playlist={selectedPlaylist} />
+      <BackgroundSheet>
+        <p
+          css={css`
+            margin-left: 1rem;
+          `}
+        >
+          <OpenBrowserLink>
+            Don't like this one?{" "}
+            <SecretlyButton
+              onClick={() =>
+                router.push(
+                  "/swaps/[id]?tab=browser",
+                  `/swaps/${id}?tab=browser`,
+                  {
+                    shallow: true,
+                  }
+                )
+              }
+            >
+              Choose a new playlist to share.
+            </SecretlyButton>
+          </OpenBrowserLink>{" "}
+          This playlist will be shared with someone else in your group. You'll
+          get a new playlist in return.
+        </p>
+        <PlaylistTracks playlist={selectedPlaylist} />
+      </BackgroundSheet>
     </BodyContent>
   );
 };
@@ -174,6 +176,18 @@ const OpenBrowserLink = styled.span`
 const BodyContent = styled.div`
   padding: 0;
 `;
+
+const BackgroundSheet = styled.div`
+  max-width: 50rem;
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
+  margin: 0 auto;
+  padding: 2rem;
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  p {
+    margin: 0;
+  }
+`
 
 const Container = styled.div`
   margin-top: 1rem;

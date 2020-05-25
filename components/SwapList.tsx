@@ -1,7 +1,14 @@
 import { Swap } from "../lib/models/swap";
 import styled from "@emotion/styled";
 import Link from "next/link";
-import { GRAY, DARK_GREEN, OFF_WHITE } from "../shared/styles";
+import {
+  GRAY,
+  DARK_GREEN,
+  OFF_WHITE,
+  lightLinearGradient,
+  WHITE,
+} from "../shared/styles";
+import { css } from "@emotion/core";
 
 export const SwapList = ({
   swaps,
@@ -10,21 +17,29 @@ export const SwapList = ({
 }) => {
   return swaps.length ? (
     <SwapCards>
-      <SwapTitle>
-        The following {swaps.length} swap{" "}
-        {swaps.length > 1 ? "groups" : "group"} are happening right now:
-      </SwapTitle>
       {swaps.map(
         ({ id, title, description, owner_display_name, swap_member_count }) => (
           <SwapCard key={id}>
-            <Title>
-              <Link as={`/swaps/${id}`} href="/swaps/[id]">
-                <a>{title}</a>
-              </Link>
-            </Title>
-            <Description>{description}</Description>
-            <OwnerLabel>by {owner_display_name}</OwnerLabel>
-            {swap_member_count > 1 && <p>{swap_member_count} members</p>}
+            <PrimaryInformation>
+              <Title>
+                <Link as={`/swaps/${id}`} href="/swaps/[id]">
+                  <a>{title}</a>
+                </Link>
+              </Title>
+              <Description>{description}</Description>
+            </PrimaryInformation>
+            <AdditionalInformation>
+              <OwnerLabel>by {owner_display_name}</OwnerLabel>
+              <span
+                css={css`
+                  margin: 0 0.5rem;
+                `}
+              >
+                {" "}
+                &bull;{" "}
+              </span>
+              {swap_member_count > 1 && <p>{swap_member_count} members</p>}
+            </AdditionalInformation>
           </SwapCard>
         )
       )}
@@ -36,24 +51,19 @@ export const SwapList = ({
   );
 };
 
-const SwapTitle = styled.h4`
-  margin-top: 0;
-`;
-
 const SwapCards = styled.div`
   background-color: ${OFF_WHITE};
-  padding: 1rem;
+  padding: 2rem;
   border-radius: 0.5rem;
-  box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
-  border: 1px solid ${GRAY};
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
 `;
 
 const SwapCard = styled.div`
-  background: ${GRAY};
-  box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
-  padding: 1rem;
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
+  background: ${WHITE};
+  padding: 0;
   border-radius: 0.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   &:last-of-type {
     margin-bottom: 0;
   }
@@ -68,5 +78,19 @@ const Description = styled.span`
 `;
 
 const OwnerLabel = styled.p`
-  margin: 0;
+  //margin: 0;
+`;
+
+const PrimaryInformation = styled.div`
+  padding: 2rem;
+`;
+
+const AdditionalInformation = styled.div`
+  background: ${GRAY};
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  p {
+    margin: 0.5rem 0;
+  }
 `;
