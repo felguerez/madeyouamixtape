@@ -24,7 +24,7 @@ const Profile = () => {
         body: JSON.stringify(body),
       });
       if (res.status === 200) {
-        setNotification("updated swap information");
+        setNotification("Updated user information.");
       } else {
         throw new Error(await res.text());
       }

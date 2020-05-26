@@ -10,6 +10,7 @@ import {
 import { Spotify } from "../svg/Spotify";
 import Link from "next/link";
 import styled from "@emotion/styled";
+import { css } from "@emotion/core";
 
 export const Welcome = () => {
   return (
@@ -75,16 +76,22 @@ export const Welcome = () => {
             </li>
           </ul>
         </CenteredCopy>
-        <CenteredCopy>
-          <h2>Elevate your consciousness</h2>
-          <p>Along with those around you.</p>
-          <ul>
-            <li>Make a playlist</li>
-            <li>Trade a playlist</li>
-            <li>Explore new music</li>
-          </ul>
-        </CenteredCopy>
       </MainContainer>
+      <CenteredCopy
+        css={css`
+          background: ${GRAY};
+          padding: 2rem 0;
+          margin-bottom: 0;
+        `}
+      >
+        <h2>Listen to something new</h2>
+        <p>Get swapping now</p>
+        <Link href="/api/auth/spotify">
+          <FinalCTA>
+            Login with <Spotify />
+          </FinalCTA>
+        </Link>
+      </CenteredCopy>
     </div>
   );
 };
@@ -104,6 +111,10 @@ const LoginButton = styled(Button)`
   svg {
     margin-left: 0.5rem;
   }
+`;
+
+const FinalCTA = styled(LoginButton)`
+  margin-left: auto;
 `;
 
 const Headline = styled.h1`
