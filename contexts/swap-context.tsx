@@ -94,6 +94,10 @@ export const reducer = (state, action) => {
     case "SET_SELECTED_PLAYLIST_ID":
       return {
         ...state,
+        currentSwapMember: {
+          ...state.currentSwapMember,
+          selected_playlist_id: action.selectedPlaylistId,
+        },
         selectedPlaylistId: action.selectedPlaylistId,
         selectedPlaylist: undefined,
       };

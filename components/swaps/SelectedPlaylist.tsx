@@ -1,15 +1,21 @@
 import fetch from "isomorphic-fetch";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import {useSwapDispatch, useSwapState} from "../../contexts/swap-context";
-import {BackgroundSheet, Button, ContentCard, Creator, DARK_GRAY,} from "../../shared/styles";
-import {SecretlyButton} from "../SwapManager";
+import { useSwapDispatch, useSwapState } from "../../contexts/swap-context";
+import {
+  BackgroundSheet,
+  Button,
+  ContentCard,
+  Creator,
+  DARK_GRAY,
+} from "../../shared/styles";
+import { SecretlyButton } from "../SwapManager";
 import Link from "next/link";
 import PlaylistTracks from "../../pages/swaps/[id]/PlaylistTracks";
 import Vibes from "../Vibes";
-import {useFeatures} from "../../lib/hooks";
-import {useRouter} from "next/router";
-import {css} from "@emotion/core";
+import { useFeatures } from "../../lib/hooks";
+import { useRouter } from "next/router";
+import { css } from "@emotion/core";
 
 export const SelectedPlaylist = ({
   currentSwapMember: { selected_playlist_id },
@@ -33,6 +39,7 @@ export const SelectedPlaylist = ({
 
   useEffect(() => {
     async function fetchData() {
+      console.log("calling fetchData");
       const request = await fetch(
         `/api/spotify/playlists/${selectedPlaylistId}`
       ).catch((err) => {
@@ -52,7 +59,7 @@ export const SelectedPlaylist = ({
     ids: selectedPlaylist?.tracks?.items?.map((item) => item.track.id),
     playlistId: selectedPlaylist?.id,
   });
-  if (!selected_playlist_id) {
+  if (!selectedPlaylistId && !selected_playlist_id) {
     return (
       <ContentCard
         css={css`

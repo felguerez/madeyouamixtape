@@ -121,7 +121,7 @@ export const ReceivedPlaylist = ({ swap, receivedPlaylistId }) => {
       ) : (
         <Container>
           <ContentCard>
-            <CoverArt isLoading src="https://via.placeholder.com/160" />
+            <PlaceholderArt />
             <Metadata>
               <Copy>
                 <PlaylistName>Loading...</PlaylistName>
@@ -154,7 +154,7 @@ const Metadata = styled.div`
   flex-direction: column;
 `;
 
-const CoverArt = styled.img<{ isLoading: boolean }>`
+const CoverArt = styled.img`
   height: 160px;
   width: 160px;
   border-radius: 8px;
@@ -162,6 +162,14 @@ const CoverArt = styled.img<{ isLoading: boolean }>`
   margin-right: 1rem;
   background: ${GRAY};
 `;
+
+const PlaceholderArt = styled.div`
+  height: 160px;
+  width: 160px;
+  border-radius: 8px;
+  margin-right: 1rem;
+  background: ${GRAY};
+`
 
 const TracksCount = styled.p`
   margin: 0;

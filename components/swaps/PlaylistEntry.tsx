@@ -11,7 +11,7 @@ import { ParsedUrlQuery } from "querystring";
 import { useEffect } from "react";
 
 const PlaylistEntry = ({ swap, currentSwapMember }) => {
-  const { activeTab, receivedPlaylistId } = useSwapState();
+  const { selectedPlaylistId, receivedPlaylistId } = useSwapState();
   const dispatch = useSwapDispatch();
   const router = useRouter();
   const {
@@ -80,7 +80,7 @@ const PlaylistEntry = ({ swap, currentSwapMember }) => {
             </Button>
           </Tab>
         )}
-        {currentSwapMember.selected_playlist_id && (
+        {(selectedPlaylistId || currentSwapMember.selected_playlist_id) && (
           <Tab>
             <Button
               isActive={false}
