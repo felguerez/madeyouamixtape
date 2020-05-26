@@ -25,6 +25,7 @@
     "query-string": "^6.12.1",
     "react": "latest",
     "react-dom": "latest",
+    "react-modal": "^3.11.2",
     "serverless-mysql": "^1.5.4",
     "sql-template-strings": "^2.2.2",
     "swr": "0.1.16"

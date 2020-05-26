@@ -1,5 +1,12 @@
+import {GRAY, lightLinearGradient} from "../../shared/styles";
+
 const Form = ({ errorMessage, onSubmit, spotifyId }) => (
   <form onSubmit={onSubmit}>
+    <h2>Make a new swap group</h2>
+    <p>
+      Give it a theme. Let your friends know what kinda vibe you're expecting.
+      What's the genre, mood, challenge you're looking for?
+    </p>
     <label>
       <span>Name your swap group</span>
       <input
@@ -27,7 +34,13 @@ const Form = ({ errorMessage, onSubmit, spotifyId }) => (
     {errorMessage && <p className="error">{errorMessage}</p>}
     <style jsx>{`
       form {
-        margin: 1rem 0 0 0;
+        padding: 2rem;
+        opacity: 1;
+        z-index: 10;
+      }
+      h2,
+      p {
+        margin-top: 0;
       }
     `}</style>
   </form>

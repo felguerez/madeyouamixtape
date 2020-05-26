@@ -45,9 +45,16 @@ export const SwapList = ({
       )}
     </SwapCards>
   ) : (
-    <div>
-      <p>You aren't participating in any swaps. </p>
-    </div>
+    <SwapCards>
+      <SwapCard>
+        <PrimaryInformation>
+          <Title>Loading swap data</Title>
+          <Description>
+            about active swaps, who started them, who's participating
+          </Description>
+        </PrimaryInformation>
+      </SwapCard>
+    </SwapCards>
   );
 };
 

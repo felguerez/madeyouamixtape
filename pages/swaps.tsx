@@ -7,40 +7,13 @@ import { User } from "../lib/models/user";
 import Router from "next/router";
 import { Button, CopyContainer } from "../shared/styles";
 import styled from "@emotion/styled";
+import { ModalForm } from "../components/home/ModalForm";
 
 const Swaps = () => {
   const swaps = useSwaps() || [];
   const user = useUser();
   const [isOpen, setIsOpen] = useState(false);
-  const [error, setError] = useState("");
-  async function handleSubmit(e) {
-    event.preventDefault();
 
-    if (error) setError("");
-
-    const body = {
-      spotify_id: e.currentTarget.spotify_id.value,
-      title: e.currentTarget.title.value,
-      description: e.currentTarget.description.value,
-    };
-
-    try {
-      const res = await fetch(`/api/users/${user.id}/swaps`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      if (res.status === 200) {
-        Router.push("/");
-        setIsOpen(false);
-      } else {
-        throw new Error(await res.text());
-      }
-    } catch (error) {
-      console.error("An unexpected error happened occurred:", error);
-      setError(error.message);
-    }
-  }
   return (
     <>
       <Headline>
@@ -62,13 +35,7 @@ const Swaps = () => {
         <SwapTitle>Loading groups</SwapTitle>
       )}
       <NewSwapContainer>
-        {isOpen && (
-          <Form
-            errorMessage={error}
-            onSubmit={handleSubmit}
-            spotifyId={user.spotify_id}
-          />
-        )}
+        {isOpen && <ModalForm user={user} setIsOpen={setIsOpen} />}
       </NewSwapContainer>
       {swaps ? <SwapList swaps={swaps} /> : <p>Loading...</p>}
     </>
