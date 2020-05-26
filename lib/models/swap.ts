@@ -132,7 +132,7 @@ export const swap = {
       `;
     await db.query(query);
     const swaps = await this.getSwapsByOwnerId(owner_id);
-    return swaps[0];
+    return swaps[swaps.length - 1];
   },
   updateMetadata: async function updateMetadata({
     title,
